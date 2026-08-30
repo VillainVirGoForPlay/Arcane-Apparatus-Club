@@ -969,13 +969,46 @@ export default function ArcaneApparatusClub() {
 
           {/* --- 1. รายละเอียด & กิจกรรมชมรม & Tip เพิ่มเติม --- */}
           <ScrollReveal direction="up" delay={0.1}>
-            <MagicalCard sx={{ mb: 4, p: { xs: 4, md: 5 } }}>
+            <MagicalCard sx={{ mb: 4, p: { xs: 4, md: 5 }, bgcolor: "rgba(10, 8, 12, 0.85)" }}>
               <SectionTitle
                 icon={AutoStoriesIcon}
                 title="รายละเอียดและกิจกรรมชมรม"
               />
 
-              <Box sx={{ mb: 5, position: "relative", zIndex: 1 }}>
+              {/* --- กล่องข้อความสไตล์หน้ากระดาษเวทมนตร์ (เลียนแบบกรอบในภาพเรฟ) --- */}
+              <Box
+                sx={{
+                  position: "relative",
+                  p: { xs: 4, md: 5 },
+                  mb: 6,
+                  mt: 2,
+                  bgcolor: "rgba(22, 17, 13, 0.6)",
+                  border: "1px solid rgba(212, 175, 55, 0.4)",
+                  boxShadow: "inset 0 0 30px rgba(0,0,0,0.8)",
+                  display: "flex",
+                  flexDirection: "column",
+                  zIndex: 1,
+                }}
+              >
+                {/* ดาวตกแต่งที่มุมทั้ง 4 */}
+                <Box sx={{ position: "absolute", top: -14, left: -12, color: "#D4AF37", fontSize: 24, bgcolor: "transparent" }}>✦</Box>
+                <Box sx={{ position: "absolute", top: -14, right: -12, color: "#D4AF37", fontSize: 24, bgcolor: "transparent" }}>✦</Box>
+                <Box sx={{ position: "absolute", bottom: -14, left: -12, color: "#D4AF37", fontSize: 24, bgcolor: "transparent" }}>✦</Box>
+                <Box sx={{ position: "absolute", bottom: -14, right: -12, color: "#D4AF37", fontSize: 24, bgcolor: "transparent" }}>✦</Box>
+
+                {/* เส้นกรอบด้านใน (Inner Border) */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 10,
+                    left: 10,
+                    right: 10,
+                    bottom: 10,
+                    border: "1px solid rgba(212, 175, 55, 0.15)",
+                    pointerEvents: "none",
+                  }}
+                />
+
                 <Typography
                   variant="body1"
                   sx={{
@@ -983,7 +1016,9 @@ export default function ArcaneApparatusClub() {
                     mb: 2,
                     textAlign: "justify",
                     textJustify: "inter-word",
-                    fontFamily: "'Sarabun', sans-serif", // กำหนดเป็น Sarabun
+                    fontFamily: "'Sarabun', sans-serif",
+                    position: "relative",
+                    zIndex: 2,
                   }}
                 >
                   <span
@@ -994,7 +1029,7 @@ export default function ArcaneApparatusClub() {
                       paddingTop: "8px",
                       paddingRight: "12px",
                       color: "#D4AF37",
-                      fontFamily: "'Charm', cursive", // ยกเว้น "ช" ให้เป็นตัวเขียน Charm
+                      fontFamily: "'Charm', cursive",
                       textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
                     }}
                   >
@@ -1011,21 +1046,22 @@ export default function ArcaneApparatusClub() {
                     mb: 3,
                     textAlign: "justify",
                     fontFamily: "'Sarabun', sans-serif",
+                    position: "relative",
+                    zIndex: 2,
                   }}
                 >
-                  ประตูชมรมแห่งนี้เปิดกว้างต้อนรับทุกคนเสมอ
-                  ไม่เว้นแม้แต่ผู้ที่ไม่ได้เป็นสมาชิก
+                  ประตูชมรมแห่งนี้เปิดกว้างต้อนรับทุกคนเสมอ ไม่เว้นแม้แต่ผู้ที่ไม่ได้เป็นสมาชิก
                   ทุกคนสามารถก้าวเท้าเข้ามาเยี่ยมชมบรรยากาศได้โดยไม่จำเป็นต้องเอ่ยปากขออนุญาต
                 </Typography>
 
                 <Box
                   sx={{
                     p: 2.5,
-                    bgcolor: "rgba(7, 9, 15, 0.5)",
+                    bgcolor: "rgba(0, 0, 0, 0.4)",
                     borderLeft: "4px solid #D4AF37",
-                    borderRadius: "0 8px 8px 0",
                     position: "relative",
                     overflow: "hidden",
+                    zIndex: 2,
                   }}
                 >
                   <Box
@@ -1037,9 +1073,7 @@ export default function ArcaneApparatusClub() {
                       transform: "rotate(-15deg)",
                     }}
                   >
-                    <WarningAmberIcon
-                      sx={{ fontSize: 100, color: "#D4AF37" }}
-                    />
+                    <WarningAmberIcon sx={{ fontSize: 100, color: "#D4AF37" }} />
                   </Box>
                   <Typography
                     variant="body2"
@@ -1068,8 +1102,8 @@ export default function ArcaneApparatusClub() {
                     ของพวกเขาเข้า)
                   </Typography>
                 </Box>
-              </Box>
-
+              </Box> 
+             
               <Typography
                 variant="body2"
                 sx={{
@@ -1260,6 +1294,7 @@ export default function ArcaneApparatusClub() {
               </WarningCard>
             </MagicalCard>
           </ScrollReveal>
+
 
           {/* --- 2. คุณสมบัติสมาชิก --- */}
           <ScrollReveal direction="left" delay={0.1}>
