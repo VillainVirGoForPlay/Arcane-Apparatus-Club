@@ -28,6 +28,7 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import CastleIcon from "@mui/icons-material/Castle";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import ArticleIcon from "@mui/icons-material/Article";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 // --- CSS ---
 import "./index.css"; // import ไฟล์ css ที่เราประกาศฟอนต์ไว้
@@ -829,11 +830,11 @@ export default function ArcaneApparatusClub() {
                   top: "20%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
-                  width: 150,
-                  height: 150,
+                  width: 200,
+                  height: 200,
                   background:
-                    "radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%)",
-                  filter: "blur(20px)",
+                    "radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 60%)",
+                  filter: "blur(25px)",
                   zIndex: -1,
                   pointerEvents: "none",
                 }}
@@ -843,11 +844,11 @@ export default function ArcaneApparatusClub() {
                 src="logo.gif"
                 alt="Arcane Apparatus Club Logo"
                 sx={{
-                  width: 100,
+                  width: 110,
                   height: "auto",
-                  mb: 2,
-                  filter: "drop-shadow(0 0 10px rgba(212,175,55,0.4))",
-                  animation: "float 4s ease-in-out infinite",
+                  mb: 3,
+                  filter: "drop-shadow(0 0 15px rgba(212,175,55,0.5))",
+                  animation: "float 5s ease-in-out infinite",
                 }}
               />
               <Typography
@@ -858,8 +859,9 @@ export default function ArcaneApparatusClub() {
                   display: "block",
                   mb: 1,
                   opacity: 0.9,
-                  letterSpacing: 4,
-                  textShadow: "0 0 15px rgba(212, 175, 55, 0.3)",
+                  letterSpacing: { xs: 2, md: 5 },
+                  textShadow: "0 0 15px rgba(212, 175, 55, 0.4)",
+                  fontSize: { xs: "0.8rem", md: "1rem" },
                 }}
               >
                 Hogwarts School of Witchcraft and Wizardry
@@ -868,60 +870,87 @@ export default function ArcaneApparatusClub() {
                 variant="h1"
                 sx={{
                   fontFamily: "'MagicSchoolOne', sans-serif",
-                  fontSize: { xs: "1.8rem", sm: "2.5rem", md: "4rem" },
+                  fontSize: { xs: "2.2rem", sm: "3rem", md: "4.5rem" },
                   mb: 2,
                   background:
                     "linear-gradient(45deg, #FFFDE4, #D4AF37, #AA7C11)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
-                  textShadow: "0px 4px 20px rgba(212, 175, 55, 0.4)",
+                  textShadow: "0px 4px 20px rgba(212, 175, 55, 0.3)",
                   letterSpacing: 2,
                 }}
               >
                 Arcane Apparatus Club
               </Typography>
-              <Typography
-                variant="h6"
+              <Box
                 sx={{
-                  color: "text.secondary",
-                  letterSpacing: 2,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   mb: 5,
-                  fontWeight: 300,
-                  fontFamily: "'Sarabun', 'Maitree', sans-serif", // ให้แน่ใจว่าภาษาไทยอ่านง่าย
+                  gap: 2,
                 }}
               >
-                — ชมรมวิจัยอุปกรณ์เวทย์มนต์ —
-              </Typography>
+                <Box
+                  sx={{
+                    height: "1px",
+                    width: "40px",
+                    background: "linear-gradient(90deg, transparent, #D4AF37)",
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "text.secondary",
+                    letterSpacing: 2,
+                    fontWeight: 300,
+                    fontFamily: "'Sarabun', 'Maitree', sans-serif",
+                  }}
+                >
+                  ชมรมวิจัยอุปกรณ์เวทย์มนต์
+                </Typography>
+                <Box
+                  sx={{
+                    height: "1px",
+                    width: "40px",
+                    background: "linear-gradient(270deg, transparent, #D4AF37)",
+                  }}
+                />
+              </Box>
 
               {/* Glowing Tag */}
               <Box
                 sx={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 1,
-                  bgcolor: "rgba(212, 175, 55, 0.05)",
-                  backdropFilter: "blur(10px)",
-                  border: "1px solid rgba(212, 175, 55, 0.3)",
+                  gap: 1.5,
+                  bgcolor: "rgba(212, 175, 55, 0.08)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(212, 175, 55, 0.4)",
                   px: 4,
                   py: 1.2,
                   borderRadius: "50px",
-                  boxShadow: "0 4px 20px rgba(212, 175, 55, 0.15)",
-                  transition: "all 0.3s ease",
+                  boxShadow:
+                    "0 8px 25px rgba(212, 175, 55, 0.15), inset 0 0 10px rgba(212, 175, 55, 0.1)",
+                  transition:
+                    "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                   "&:hover": {
-                    bgcolor: "rgba(212, 175, 55, 0.1)",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 6px 25px rgba(212, 175, 55, 0.3)",
+                    bgcolor: "rgba(212, 175, 55, 0.15)",
+                    transform: "translateY(-3px)",
+                    boxShadow:
+                      "0 12px 30px rgba(212, 175, 55, 0.25), inset 0 0 15px rgba(212, 175, 55, 0.2)",
                   },
                 }}
               >
-                <AutoFixHighIcon sx={{ fontSize: 18, color: "primary.main" }} />
+                <AutoFixHighIcon sx={{ fontSize: 20, color: "primary.main" }} />
                 <Typography
                   variant="body2"
                   sx={{
                     color: "primary.main",
-                    fontFamily: "'Charm', sans-serif", // เพิ่ม Charm
+                    fontFamily: "'Charm', sans-serif",
                     letterSpacing: 1.5,
                     pt: 0.5,
+                    fontWeight: 600,
                   }}
                 >
                   #HWWW_ArcaneAClub
@@ -936,16 +965,18 @@ export default function ArcaneApparatusClub() {
               <Paper
                 elevation={0}
                 sx={{
-                  bgcolor: "rgba(26, 23, 18, 0.6)",
-                  backdropFilter: "blur(8px)",
+                  bgcolor: "rgba(25, 20, 15, 0.4)",
+                  backdropFilter: "blur(12px)",
                   border: "1px solid rgba(212, 175, 55, 0.2)",
-                  borderRadius: "100px",
+                  borderLeft: "3px solid #D4AF37",
+                  borderRight: "3px solid #D4AF37",
+                  borderRadius: "8px",
                   px: { xs: 3, md: 5 },
                   py: 1.5,
                   display: "flex",
                   alignItems: "center",
                   gap: 2,
-                  boxShadow: "inset 0 0 20px rgba(0,0,0,0.5)",
+                  boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
                 }}
               >
                 <Typography
@@ -954,11 +985,18 @@ export default function ArcaneApparatusClub() {
                     color: "text.secondary",
                     fontStyle: "italic",
                     letterSpacing: 0.5,
-                    fontFamily: "'Sarabun', 'Maitree', sans-serif",
+                    fontFamily: "'Sarabun', sans-serif",
+                    textAlign: "center",
                   }}
                 >
-                  <strong style={{ color: "#D4AF37", fontWeight: 500 }}>
-                    หมายเหตุ :{" "}
+                  <strong
+                    style={{
+                      color: "#D4AF37",
+                      fontWeight: 500,
+                      marginRight: "8px",
+                    }}
+                  >
+                    หมายเหตุ :
                   </strong>
                   เป็นเพียงข้อมูลสำหรับประกอบการโรลเพลย์
                   ตัวละครไม่จำเป็นต้องมีเงื่อนไขตามที่กำหนด
@@ -969,7 +1007,13 @@ export default function ArcaneApparatusClub() {
 
           {/* --- 1. รายละเอียด & กิจกรรมชมรม & Tip เพิ่มเติม --- */}
           <ScrollReveal direction="up" delay={0.1}>
-            <MagicalCard sx={{ mb: 4, p: { xs: 4, md: 5 }, bgcolor: "rgba(10, 8, 12, 0.85)" }}>
+            <MagicalCard
+              sx={{
+                mb: 4,
+                p: { xs: 4, md: 5 },
+                bgcolor: "rgba(10, 8, 12, 0.85)",
+              }}
+            >
               <SectionTitle
                 icon={AutoStoriesIcon}
                 title="รายละเอียดและกิจกรรมชมรม"
@@ -991,10 +1035,54 @@ export default function ArcaneApparatusClub() {
                 }}
               >
                 {/* ดาวตกแต่งที่มุมทั้ง 4 */}
-                <Box sx={{ position: "absolute", top: -14, left: -12, color: "#D4AF37", fontSize: 24, bgcolor: "transparent" }}>✦</Box>
-                <Box sx={{ position: "absolute", top: -14, right: -12, color: "#D4AF37", fontSize: 24, bgcolor: "transparent" }}>✦</Box>
-                <Box sx={{ position: "absolute", bottom: -14, left: -12, color: "#D4AF37", fontSize: 24, bgcolor: "transparent" }}>✦</Box>
-                <Box sx={{ position: "absolute", bottom: -14, right: -12, color: "#D4AF37", fontSize: 24, bgcolor: "transparent" }}>✦</Box>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: -14,
+                    left: -12,
+                    color: "#D4AF37",
+                    fontSize: 24,
+                    bgcolor: "transparent",
+                  }}
+                >
+                  ✦
+                </Box>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: -14,
+                    right: -12,
+                    color: "#D4AF37",
+                    fontSize: 24,
+                    bgcolor: "transparent",
+                  }}
+                >
+                  ✦
+                </Box>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: -14,
+                    left: -12,
+                    color: "#D4AF37",
+                    fontSize: 24,
+                    bgcolor: "transparent",
+                  }}
+                >
+                  ✦
+                </Box>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: -14,
+                    right: -12,
+                    color: "#D4AF37",
+                    fontSize: 24,
+                    bgcolor: "transparent",
+                  }}
+                >
+                  ✦
+                </Box>
 
                 {/* เส้นกรอบด้านใน (Inner Border) */}
                 <Box
@@ -1050,7 +1138,8 @@ export default function ArcaneApparatusClub() {
                     zIndex: 2,
                   }}
                 >
-                  ประตูชมรมแห่งนี้เปิดกว้างต้อนรับทุกคนเสมอ ไม่เว้นแม้แต่ผู้ที่ไม่ได้เป็นสมาชิก
+                  ประตูชมรมแห่งนี้เปิดกว้างต้อนรับทุกคนเสมอ
+                  ไม่เว้นแม้แต่ผู้ที่ไม่ได้เป็นสมาชิก
                   ทุกคนสามารถก้าวเท้าเข้ามาเยี่ยมชมบรรยากาศได้โดยไม่จำเป็นต้องเอ่ยปากขออนุญาต
                 </Typography>
 
@@ -1073,7 +1162,9 @@ export default function ArcaneApparatusClub() {
                       transform: "rotate(-15deg)",
                     }}
                   >
-                    <WarningAmberIcon sx={{ fontSize: 100, color: "#D4AF37" }} />
+                    <WarningAmberIcon
+                      sx={{ fontSize: 100, color: "#D4AF37" }}
+                    />
                   </Box>
                   <Typography
                     variant="body2"
@@ -1102,8 +1193,8 @@ export default function ArcaneApparatusClub() {
                     ของพวกเขาเข้า)
                   </Typography>
                 </Box>
-              </Box> 
-             
+              </Box>
+
               <Typography
                 variant="body2"
                 sx={{
@@ -1250,12 +1341,12 @@ export default function ArcaneApparatusClub() {
                 </Box>
                 <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
                   <Typography
-                    variant="subtitle1"
+                    variant="h6"
                     sx={{
-                      color: "primary.main", // เปลี่ยนข้อความเป็นสีทอง
+                      color: "primary.main",
                       fontFamily: "'Sarabun', sans-serif",
-                      fontWeight: 600,
-                      mb: 1,
+                      fontWeight: 700,
+                      mb: 1.5,
                       letterSpacing: 1,
                     }}
                   >
@@ -1264,37 +1355,56 @@ export default function ArcaneApparatusClub() {
                   <Box
                     sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}
                   >
-                    <Typography
-                      variant="body2"
+                    <Box
                       sx={{
-                        color: "rgba(234, 224, 213, 0.9)",
-                        fontSize: "0.9rem",
-                        lineHeight: 1.7,
-                        fontFamily: "'Sarabun', sans-serif",
+                        display: "flex",
+                        gap: 1.5,
+                        alignItems: "flex-start",
                       }}
                     >
-                      ห้องชมรมรกมาก
-                      มันเต็มไปด้วยอุปกรณ์เวทย์มนต์เกลื่อนกลาดตามพื้นรวมไปถึงลอยอยู่กลางอากาศ
-                      ระวังเท้าและหัวของคุณเอาไว้ให้ดี
-                    </Typography>
-                    <Typography
-                      variant="body2"
+                      <ChevronRightIcon
+                        sx={{ color: "primary.main", fontSize: 20, mt: 0.2 }}
+                      />
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "rgba(234, 224, 213, 0.9)",
+                          lineHeight: 1.7,
+                          fontFamily: "'Sarabun', sans-serif",
+                        }}
+                      >
+                        ห้องชมรมรกมาก
+                        เต็มไปด้วยอุปกรณ์เวทย์มนต์เกลื่อนกลาดและลอยอยู่กลางอากาศ
+                        ระวังเท้าและหัวของคุณเอาไว้ให้ดี
+                      </Typography>
+                    </Box>
+                    <Box
                       sx={{
-                        color: "rgba(234, 224, 213, 0.9)",
-                        fontSize: "0.9rem",
-                        lineHeight: 1.7,
-                        fontFamily: "'Sarabun', sans-serif",
+                        display: "flex",
+                        gap: 1.5,
+                        alignItems: "flex-start",
                       }}
                     >
-                      มีชื่อเสียงโจษจันว่าเป็นชมรมที่มีทุกอย่างยกเว้นทางเดิน
-                      (แต่ดูเหมือนว่าปัญหานี้กำลังจะหายไปเพราะรองประธานชมรม)
-                    </Typography>
+                      <ChevronRightIcon
+                        sx={{ color: "primary.main", fontSize: 20, mt: 0.2 }}
+                      />
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "rgba(234, 224, 213, 0.9)",
+                          lineHeight: 1.7,
+                          fontFamily: "'Sarabun', sans-serif",
+                        }}
+                      >
+                        มีชื่อเสียงโจษจันว่าเป็นชมรมที่มีทุกอย่างยกเว้นทางเดิน
+                        (แต่ดูเหมือนว่าปัญหานี้กำลังจะหายไปเพราะรองประธานชมรม)
+                      </Typography>
+                    </Box>
                   </Box>
                 </Box>
               </WarningCard>
             </MagicalCard>
           </ScrollReveal>
-
 
           {/* --- 2. คุณสมบัติสมาชิก --- */}
           <ScrollReveal direction="left" delay={0.1}>
