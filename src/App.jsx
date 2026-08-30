@@ -16,7 +16,9 @@ import {
   Fade,
   TableRow,
   Avatar,
+  Link,
 } from "@mui/material";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail"; // ไอคอนสำหรับแอคเคาท์ (หรือใช้ TwitterIcon ก็ได้)
 
 // --- Icons ---
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
@@ -338,6 +340,59 @@ const SectionTitle = ({ icon: Icon, title }) => (
     </Typography>
   </Box>
 );
+
+const members = [
+  {
+    role: "ประธาน (การตลาด)",
+    name: "วิลโลว์ เบลรีฟ",
+    year: "6",
+    house: "Hufflepuff",
+    account: "@hwww2-willow",
+    accountUrl: "https://twitter.com/hwww2-willow", 
+    doc: "[HWWW_SS2] Willow",
+    docUrl: "https://docs.google.com/document/d/...", 
+  },
+  {
+    role: "รองประธาน (นักกรุยทาง)",
+    name: "กาเรธ อีแวนส์",
+    year: "6",
+    house: "Hufflepuff",
+    account: "@hwww2-gareth",
+    accountUrl: "#",
+    doc: "ผู้ชายที่ดื่มเนเจอกิ้ฟ [HWWW_SS2] แบบฟอร์มตัวละครนักเรียน",
+    docUrl: "#",
+  },
+  {
+    role: "สมาชิก 1",
+    name: "เนียโร แลงคาสเตอร์",
+    year: "6",
+    house: "Ravenclaw",
+    account: "@hwww2-nero",
+    accountUrl: "#",
+    doc: "เนียโร [HWWW_SS2] แบบฟอร์มตัวละครนักเรียน",
+    docUrl: "#",
+  },
+  {
+    role: "สมาชิก 2",
+    name: "มิลเลอร์ ลอว์สัน",
+    year: "6",
+    house: "Gryffindor",
+    account: "@hwww2-miller",
+    accountUrl: "#",
+    doc: "[HWWW_SS2] มิลเลอร์",
+    docUrl: "#",
+  },
+  {
+    role: "สมาชิก 3",
+    name: "วาลเดซ บีญาร์เรอัล",
+    year: "6",
+    house: "Ravenclaw",
+    account: "@hwww2-valdez",
+    accountUrl: "#",
+    doc: "[HWWW_SS2] ฉันไม่ใช่ผู้วิเศษ",
+    docUrl: "#",
+  },
+];
 
 // --- Main Application ---
 export default function ArcaneApparatusClub() {
@@ -1199,7 +1254,7 @@ export default function ArcaneApparatusClub() {
                 variant="body2"
                 sx={{
                   color: "text.primary",
-                  mb: 3,
+                  mb: 2, // ลดระยะห่างลงจาก 3 เป็น 2
                   fontStyle: "italic",
                   fontWeight: 500,
                   fontFamily: "'Sarabun', sans-serif",
@@ -1209,101 +1264,196 @@ export default function ArcaneApparatusClub() {
                 ขึ้นอยู่กับความถนัดของสมาชิกแต่ละคนว่าต้องการทำงานแบบใด
                 รวบรวมไว้ได้คร่าว ๆ ดังนี้ :
               </Typography>
-
-              <Grid container spacing={3} alignItems="stretch">
-                {[
-                  {
-                    icon: BuildIcon,
-                    title: "รับซ่อมอุปกรณ์เวทย์มนต์",
-                    desc: "อาทิ ไม้กวาด (ทั้งนี้รวมไปถึงของจิปาถะอย่าง กระเป๋า เสื้อ รองเท้า ด้วย)",
-                    color: "primary.main",
-                    bg: "rgba(212, 175, 55, 0.1)",
-                  },
-                  {
-                    icon: ChatIcon,
-                    title: "ให้คำปรึกษาเกี่ยวกับอุปกรณ์เวทย์มนต์",
-                    desc: "(เป็นเพียงคำปรึกษาแสนดาษดื่น หากอยากได้อะไรที่มีประโยชน์เชิญเข้าร้านที่ตรอกไดอากอนแทน)",
-                    color: "primary.main",
-                    bg: "rgba(212, 175, 55, 0.1)",
-                  },
-                  {
-                    icon: CleaningServicesIcon,
-                    title: "สำคัญ",
-                    desc: "ทำความสะอาดห้องชมรมทุกสุดสัปดาห์",
-                    color: "secondary.main",
-                    bg: "rgba(155, 17, 30, 0.15)",
-                  },
-                ].map((item, index) => (
-                  <Grid
-                    item
-                    xs={12}
-                    md={4}
-                    key={index}
-                    sx={{ display: "flex", flexDirection: "column" }}
+              {/* --- ชุดกิจกรรมชมรม (ปรับให้กล่องเตี้ยลง กระชับขึ้น) --- */}
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+                {/* --- กิจกรรมที่ 1 --- */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    p: { xs: 1.5, md: 2 }, // ลดความหนาของกล่องลงจาก 2.5/3
+                    bgcolor: "rgba(20, 15, 10, 0.4)",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(212, 175, 55, 0.1)",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      bgcolor: "rgba(212, 175, 55, 0.08)",
+                      borderColor: "rgba(212, 175, 55, 0.3)",
+                      transform: "translateY(-2px)",
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      p: 1, // ลดขนาดกรอบไอคอนลง
+                      borderRadius: "6px",
+                      bgcolor: "rgba(212, 175, 55, 0.1)",
+                      display: "flex",
+                      mr: 2, // ปรับระยะห่างให้พอดีกับกล่องที่เล็กลง
+                      flexShrink: 0,
+                    }}
                   >
-                    <Box
+                    <BuildIcon sx={{ color: "primary.main", fontSize: 22 }} />
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="body1"
                       sx={{
-                        display: "flex",
-                        gap: 2,
-                        alignItems: "flex-start",
-                        mb: 2,
+                        color: "primary.main",
+                        fontWeight: 600,
+                        fontSize: "1rem", // ปรับฟอนต์ให้สมดุล
+                        mb: 0.2, // ลดระยะห่างบรรทัด
+                        fontFamily: "'Sarabun', sans-serif",
                       }}
                     >
-                      <Box
-                        sx={{
-                          p: 1.2,
-                          borderRadius: "8px",
-                          bgcolor: item.bg,
-                          display: "flex",
-                        }}
-                      >
-                        <item.icon sx={{ color: item.color, fontSize: 20 }} />
-                      </Box>
-                      <Box>
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            color: item.color,
-                            fontWeight: 600,
-                            mb: 0.5,
-                            lineHeight: 1.2,
-                            fontFamily: "'Sarabun', sans-serif",
-                          }}
-                        >
-                          {item.title}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            color: "text.secondary",
-                            fontSize: "0.85rem",
-                            lineHeight: 1.5,
-                            fontFamily: "'Sarabun', sans-serif",
-                          }}
-                        >
-                          {item.desc}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
+                      รับซ่อมอุปกรณ์เวทย์มนต์
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "text.secondary",
+                        fontSize: "0.85rem",
+                        lineHeight: 1.5,
+                        fontFamily: "'Sarabun', sans-serif",
+                      }}
+                    >
+                      อาทิ ไม้กวาด (รวมไปถึงของจิปาถะอย่าง กระเป๋า เสื้อ รองเท้า
+                      ด้วย)
+                    </Typography>
+                  </Box>
+                </Box>
+
+                {/* --- กิจกรรมที่ 2 --- */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    p: { xs: 1.5, md: 2 },
+                    bgcolor: "rgba(20, 15, 10, 0.4)",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(212, 175, 55, 0.1)",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      bgcolor: "rgba(212, 175, 55, 0.08)",
+                      borderColor: "rgba(212, 175, 55, 0.3)",
+                      transform: "translateY(-2px)",
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      p: 1,
+                      borderRadius: "6px",
+                      bgcolor: "rgba(212, 175, 55, 0.1)",
+                      display: "flex",
+                      mr: 2,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <ChatIcon sx={{ color: "primary.main", fontSize: 22 }} />
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "primary.main",
+                        fontWeight: 600,
+                        fontSize: "1rem",
+                        mb: 0.2,
+                        fontFamily: "'Sarabun', sans-serif",
+                      }}
+                    >
+                      ให้คำปรึกษาเกี่ยวกับอุปกรณ์ฯ
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "text.secondary",
+                        fontSize: "0.85rem",
+                        lineHeight: 1.5,
+                        fontFamily: "'Sarabun', sans-serif",
+                      }}
+                    >
+                      (เป็นคำปรึกษาทั่วไป
+                      หากอยากได้ของมีประโยชน์เชิญร้านที่ตรอกไดอากอน)
+                    </Typography>
+                  </Box>
+                </Box>
+
+                {/* --- กิจกรรมที่ 3 --- */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    p: { xs: 1.5, md: 2 },
+                    bgcolor: "rgba(20, 15, 10, 0.4)",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(212, 175, 55, 0.1)",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      bgcolor: "rgba(212, 175, 55, 0.08)",
+                      borderColor: "rgba(212, 175, 55, 0.3)",
+                      transform: "translateY(-2px)",
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      p: 1,
+                      borderRadius: "6px",
+                      bgcolor: "rgba(155, 17, 30, 0.15)",
+                      display: "flex",
+                      mr: 2,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <CleaningServicesIcon
+                      sx={{ color: "secondary.main", fontSize: 22 }}
+                    />
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "secondary.main",
+                        fontWeight: 600,
+                        fontSize: "1rem",
+                        mb: 0.2,
+                        fontFamily: "'Sarabun', sans-serif",
+                      }}
+                    >
+                      สำคัญ
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "text.secondary",
+                        fontSize: "0.85rem",
+                        lineHeight: 1.5,
+                        fontFamily: "'Sarabun', sans-serif",
+                      }}
+                    >
+                      ทำความสะอาดห้องชมรมทุกสุดสัปดาห์ (ขาดไม่ได้!)
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+
+              {/* --- WarningCard (Tip เพิ่มเติม) --- */}
               <WarningCard
                 sx={{
-                  mt: 4,
+                  mt: 3,
                   p: { xs: 3, md: 3 },
                   display: "flex",
                   flexDirection: { xs: "column", sm: "row" },
                   alignItems: "center",
                   gap: 3,
-                  // ปรับขอบและสีพื้นหลังให้เป็นโทนทอง/น้ำตาลแทนสีแดง
                   bgcolor: "rgba(30, 25, 15, 0.7)",
                   border: "1px solid rgba(212, 175, 55, 0.4)",
-                  animation: "none", // ปิด animation กระพริบสีแดงเดิม
-                  boxShadow: "0 4px 20px rgba(212, 175, 55, 0.15)", // เปลี่ยนแสงเงาเป็นสีทอง
+                  animation: "none",
+                  boxShadow: "0 4px 20px rgba(212, 175, 55, 0.15)",
                 }}
               >
-                {/* แถบสีด้านบนของ Card เปลี่ยนเป็นสีทอง */}
                 <Box
                   sx={{
                     position: "absolute",
@@ -1319,23 +1469,9 @@ export default function ArcaneApparatusClub() {
                 <Box sx={{ position: "relative", flexShrink: 0 }}>
                   <LightbulbIcon
                     sx={{
-                      color: "primary.main", // เปลี่ยนเป็นสีทอง
+                      color: "primary.main",
                       fontSize: 40,
-                      filter: "drop-shadow(0 0 10px rgba(212,175,55,0.6))", // เงาสีทอง
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: 60,
-                      height: 60,
-                      border: "2px dashed #D4AF37", // เปลี่ยนกรอบหมุนๆ เป็นสีทอง
-                      borderRadius: "50%",
-                      animation: "spinGlow 10s linear infinite",
-                      opacity: 0.4, // ปรับความสว่างให้เห็นชัดขึ้นเล็กน้อย
+                      filter: "drop-shadow(0 0 10px rgba(212,175,55,0.6))",
                     }}
                   />
                 </Box>
@@ -1410,269 +1546,77 @@ export default function ArcaneApparatusClub() {
           <ScrollReveal direction="left" delay={0.1}>
             <MagicalCard sx={{ mb: 6, p: { xs: 4, md: 5 } }}>
               <SectionTitle icon={AutoFixHighIcon} title="คุณสมบัติของสมาชิก" />
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+
+              <Grid item xs={12} sm={6}>
+                <Box sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
                   <Box
-                    sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}
+                    sx={{
+                      mt: 0.5,
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      bgcolor: "primary.main",
+                      flexShrink: 0,
+                      boxShadow: "0 0 5px #D4AF37",
+                    }}
+                  />
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "text.primary",
+                      lineHeight: 1.6,
+                      fontFamily: "'Sarabun', sans-serif",
+                    }}
                   >
-                    <Box
-                      sx={{
-                        mt: 0.5,
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        bgcolor: "primary.main",
-                        flexShrink: 0,
-                        boxShadow: "0 0 5px #D4AF37",
-                      }}
-                    />
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "text.primary",
-                        lineHeight: 1.6,
+                    ชื่นชอบการสร้างสรรค์ / ค้นคว้า / ประดิษฐ์ สิ่งของ <br />
+                    <span
+                      style={{
+                        color: "#B0B8C1",
+                        fontSize: "0.85rem",
                         fontFamily: "'Sarabun', sans-serif",
                       }}
                     >
-                      ชื่นชอบการสร้างสรรค์ / ค้นคว้า / ประดิษฐ์ สิ่งของ <br />
-                      <span
-                        style={{
-                          color: "#B0B8C1",
-                          fontSize: "0.85rem",
-                          fontFamily: "'Sarabun', sans-serif",
-                        }}
-                      >
-                        (ไม่จำเป็นว่าต้องเป็นอุปกรณ์เวทย์มนต์)
-                      </span>
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                      (ไม่จำเป็นว่าต้องเป็นอุปกรณ์เวทย์มนต์)
+                    </span>
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    alignItems: "flex-start",
+                    mt: 2,
+                  }}
+                >
                   <Box
-                    sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}
+                    sx={{
+                      mt: 0.5,
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      bgcolor: "primary.main",
+                      flexShrink: 0,
+                      boxShadow: "0 0 5px #D4AF37",
+                    }}
+                  />
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "text.primary",
+                      lineHeight: 1.6,
+                      fontFamily: "'Sarabun', sans-serif",
+                    }}
                   >
-                    <Box
-                      sx={{
-                        mt: 0.5,
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        bgcolor: "primary.main",
-                        flexShrink: 0,
-                        boxShadow: "0 0 5px #D4AF37",
-                      }}
-                    />
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "text.primary",
-                        lineHeight: 1.6,
-                        fontFamily: "'Sarabun', sans-serif",
-                      }}
-                    >
-                      มีสัญชาตญาณเอาตัวรอดสูง(?)
-                    </Typography>
-                  </Box>
-                </Grid>
+                    มีสัญชาตญาณเอาตัวรอดสูง(?)
+                  </Typography>
+                </Box>
               </Grid>
             </MagicalCard>
           </ScrollReveal>
 
-          {/* --- Member Table (Ledger Style) --- */}
-          <ScrollReveal direction="up" delay={0.1}>
-            <MagicalCard sx={{ p: { xs: 4, md: 5 } }}>
-              <Box sx={{ mb: 4, textAlign: "center" }}>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    color: "primary.main",
-                    fontFamily: "'Sarabun', sans-serif", // เปลี่ยนส่วนนี้เป็น Sarabun
-                    fontWeight: 600,
-                  }}
-                >
-                  รายชื่อสมาชิก
-                </Typography>
-              </Box>
-
-              <TableContainer
-                sx={{
-                  overflowX: "auto",
-                  "&::-webkit-scrollbar": { height: "6px" },
-                  "&::-webkit-scrollbar-thumb": {
-                    background: "rgba(212,175,55,0.3)",
-                    borderRadius: "3px",
-                  },
-                }}
-              >
-                <Table
-                  sx={{
-                    minWidth: 800,
-                    borderCollapse: "separate",
-                    borderSpacing: "0 8px",
-                  }}
-                >
-                  <TableHead>
-                    <TableRow>
-                      {[
-                        "มีรูปติดบัตร",
-                        "ตำแหน่ง",
-                        "ชื่อตัวละคร",
-                        "ชั้นปี",
-                        "บ้าน",
-                        "แอคเคาท์",
-                        "ด็อค",
-                      ].map((head, i) => (
-                        <TableCell
-                          key={i}
-                          sx={{
-                            color: "primary.main",
-                            fontFamily: "'Sarabun', sans-serif", // หัวตารางเป็น Sarabun
-                            borderBottom: "2px solid rgba(212, 175, 55, 0.3)",
-                            fontSize: "1rem",
-                            fontWeight: 600,
-                            pb: 2,
-                            pt: 0,
-                            textAlign: i === 0 || i === 6 ? "center" : "left",
-                          }}
-                        >
-                          {head}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {[
-                      {
-                        role: "ประธาน",
-                        name: "รอการอัปเดต",
-                        year: "-",
-                        house: "-",
-                        account: "-",
-                      },
-                      {
-                        role: "สมาชิก 1",
-                        name: "รอการอัปเดต",
-                        year: "-",
-                        house: "-",
-                        account: "-",
-                      },
-                      {
-                        role: "สมาชิก 2",
-                        name: "รอการอัปเดต",
-                        year: "-",
-                        house: "-",
-                        account: "-",
-                      },
-                    ].map((row, index) => (
-                      <TableRow
-                        key={index}
-                        sx={{
-                          bgcolor: "rgba(7, 9, 15, 0.4)",
-                          transition: "all 0.3s ease",
-                          "&:hover": {
-                            bgcolor: "rgba(212, 175, 55, 0.08)",
-                            transform: "scale(1.01)",
-                            boxShadow: "0 4px 10px rgba(0,0,0,0.5)",
-                          },
-                        }}
-                      >
-                        <TableCell
-                          sx={{
-                            borderBottom: "none",
-                            borderRadius: "8px 0 0 8px",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Avatar
-                            sx={{
-                              bgcolor: "rgba(212, 175, 55, 0.2)",
-                              border: "1px solid rgba(212, 175, 55, 0.5)",
-                              color: "primary.main",
-                              width: 40,
-                              height: 40,
-                              fontFamily: "'Sarabun', sans-serif",
-                            }}
-                          >
-                            ?
-                          </Avatar>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            color: "primary.main",
-                            borderBottom: "none",
-                            fontWeight: 600,
-                            fontFamily: "'Sarabun', sans-serif",
-                          }}
-                        >
-                          {row.role}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            color: "text.primary",
-                            borderBottom: "none",
-                            fontFamily: "'Sarabun', sans-serif",
-                            fontStyle: row.name.includes("รอ")
-                              ? "italic"
-                              : "normal",
-                            opacity: row.name.includes("รอ") ? 0.5 : 1,
-                          }}
-                        >
-                          {row.name}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            color: "text.secondary",
-                            borderBottom: "none",
-                            fontFamily: "'Sarabun', sans-serif",
-                          }}
-                        >
-                          {row.year}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            color: "text.secondary",
-                            borderBottom: "none",
-                            fontFamily: "'Sarabun', sans-serif",
-                          }}
-                        >
-                          {row.house}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            color: "text.secondary",
-                            borderBottom: "none",
-                            fontFamily: "'Sarabun', sans-serif",
-                          }}
-                        >
-                          {row.account}
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            color: "text.secondary",
-                            borderBottom: "none",
-                            borderRadius: "0 8px 8px 0",
-                            textAlign: "center",
-                          }}
-                        >
-                          <ArticleIcon
-                            sx={{
-                              color: "rgba(255,255,255,0.2)",
-                              "&:hover": {
-                                color: "primary.main",
-                                cursor: "pointer",
-                              },
-                            }}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </MagicalCard>
-          </ScrollReveal>
+          
         </Box>
       </Fade>
     </ThemeProvider>
