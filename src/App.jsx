@@ -31,6 +31,8 @@ import CastleIcon from "@mui/icons-material/Castle";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import ArticleIcon from "@mui/icons-material/Article";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import bgMusicFile from "./assets/bg-music.mp3";
+import bookOpeningSound from "./assets/book-opening.mp3";
 
 // --- CSS ---
 import "./index.css"; // import ไฟล์ css ที่เราประกาศฟอนต์ไว้
@@ -348,9 +350,9 @@ const members = [
     year: "6",
     house: "Hufflepuff",
     account: "@hwww2-willow",
-    accountUrl: "https://twitter.com/hwww2-willow", 
+    accountUrl: "https://twitter.com/hwww2-willow",
     doc: "[HWWW_SS2] Willow",
-    docUrl: "https://docs.google.com/document/d/...", 
+    docUrl: "https://docs.google.com/document/d/...",
   },
   {
     role: "รองประธาน (นักกรุยทาง)",
@@ -396,30 +398,55 @@ const members = [
 
 // --- Main Application ---
 export default function ArcaneApparatusClub() {
+  // 1. เพิ่ม State เพื่อเช็คว่าผู้ใช้กดปุ่มเข้าเว็บหรือยัง
+  const [hasEntered, setHasEntered] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [isOpening, setIsOpening] = useState(false);
   const [renderContent, setRenderContent] = useState(false);
 
+  // ตั้งค่า Audio
+  const pageTurnSound = useRef(
+    typeof Audio !== "undefined" ? new Audio(bookOpeningSound) : null,
+  );
+  const bgMusic = useRef(
+    typeof Audio !== "undefined" ? new Audio(bgMusicFile) : null,
+  );
+
   useEffect(() => {
-    const openTimer = setTimeout(() => {
-      setIsOpening(true);
-    }, 2500);
-
-    const contentTimer = setTimeout(() => {
-      setRenderContent(true);
-    }, 2800);
-
-    const removeTimer = setTimeout(() => {
-      setShowIntro(false);
-    }, 4000);
-
-    return () => {
-      clearTimeout(openTimer);
-      clearTimeout(contentTimer);
-      clearTimeout(removeTimer);
-    };
+    if (bgMusic.current) {
+      bgMusic.current.loop = true;
+      bgMusic.current.volume = 0.4;
+    }
+    if (pageTurnSound.current) {
+      pageTurnSound.current.volume = 0.8;
+    }
   }, []);
 
+  const handleOpenGrimoire = () => {
+    if (hasEntered) return; 
+
+    setHasEntered(true);
+    setIsOpening(true); 
+
+    if (pageTurnSound.current) {
+      pageTurnSound.current.play().catch((err) => console.log("Audio error:", err));
+    }
+
+    setTimeout(() => {
+      if (bgMusic.current) {
+        bgMusic.current.play().catch((err) => console.log("Audio error:", err));
+      }
+    }, 1000);
+
+    // --- แก้ไขจุดนี้: ปรับให้แสดงเนื้อหาเร็วขึ้น (0.8 วินาที) ---
+    setTimeout(() => {
+      setRenderContent(true);
+    }, 800);
+
+    setTimeout(() => {
+      setShowIntro(false);
+    }, 3000);
+  };
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -543,8 +570,6 @@ export default function ArcaneApparatusClub() {
           },
         }}
       />
-
-      {/* --- Intro Screen (Book Opening Effect) --- */}
       {showIntro && (
         <Box
           sx={{
@@ -555,8 +580,11 @@ export default function ArcaneApparatusClub() {
             height: "100vh",
             zIndex: 9999,
             display: "flex",
-            pointerEvents: "none",
+            pointerEvents: hasEntered ? "none" : "auto",
             perspective: "2500px",
+            // --- แก้ไขจุดนี้: ให้พื้นหลังค่อยๆ โปร่งใสเมื่อกดแล้ว ---
+            backgroundColor: isOpening ? "transparent" : "#07090F",
+            transition: "background-color 1.5s ease",
           }}
         >
           {/* แสงสว่างวาบตรงกลางตอนสมุดเปิด */}
@@ -586,6 +614,7 @@ export default function ArcaneApparatusClub() {
 
           {/* หน้าปกสมุดเวทมนตร์ */}
           <Box
+            onClick={handleOpenGrimoire} // <--- ใส่ Event การคลิกตรงนี้!
             sx={{
               position: "absolute",
               top: 0,
@@ -598,6 +627,7 @@ export default function ArcaneApparatusClub() {
                 "transform 1.5s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.8s ease-in 0.7s",
               opacity: isOpening ? 0 : 1,
               bgcolor: "#120C08",
+              cursor: hasEntered ? "default" : "pointer", // เปลี่ยนเมาส์เป็นรูปนิ้วชี้
               backgroundImage: `
                 linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 98%, #D4AF37 100%),
                 radial-gradient(circle at center, #1F150D 0%, #0A0604 100%)
@@ -611,9 +641,14 @@ export default function ArcaneApparatusClub() {
                 : "15px 0 40px rgba(0,0,0,0.9), inset -5px 0 15px rgba(0,0,0,0.5)",
               zIndex: 20,
               transformStyle: "preserve-3d",
+              // สร้าง Hover effect ตอนเมาส์ชี้หน้าปก
+              "&:hover .magical-seal": {
+                transform: "translateX(-50%) scale(1.05)",
+                textShadow: "0 0 20px #D4AF37",
+                filter: "drop-shadow(0 0 15px rgba(212,175,55,0.8))",
+              },
             }}
           >
-            {/* ลวดลายกรอบสมุดเวทมนตร์ */}
             <Box
               sx={{
                 position: "absolute",
@@ -711,8 +746,6 @@ export default function ArcaneApparatusClub() {
                 borderBottom: "1px solid rgba(255,255,255,0.05)",
               }}
             />
-
-            {/* คอนเทนต์ข้อความและเวทมนตร์ */}
             <Box
               sx={{
                 position: "absolute",
@@ -811,7 +844,6 @@ export default function ArcaneApparatusClub() {
                   }}
                 />
               </Box>
-
               <Box
                 sx={{
                   animation:
@@ -833,15 +865,13 @@ export default function ArcaneApparatusClub() {
                       backgroundSize: "200% auto",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
-                      animation: "shimmeringGold 3s linear infinite",
                       fontSize: { xs: "4rem", md: "6rem" },
                     }}
                   >
                     Arcane Apparatus Club
                   </Typography>
                 </Box>
-              </Box>
-
+              </Box>{" "}
               <Typography
                 variant="overline"
                 sx={{
@@ -1615,8 +1645,6 @@ export default function ArcaneApparatusClub() {
               </Grid>
             </MagicalCard>
           </ScrollReveal>
-
-          
         </Box>
       </Fade>
     </ThemeProvider>
