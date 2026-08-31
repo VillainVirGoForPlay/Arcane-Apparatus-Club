@@ -644,7 +644,7 @@ export default function ArcaneApparatusClub() {
                 left: { xs: "4%", md: "4%" },
                 right: { xs: "3%", md: "4%" },
                 bottom: { xs: "3%", md: "4%" },
-                border: "2px solid rgba(212, 175, 55, 0.3)",
+                border: "4px solid rgba(212, 175, 55, 0.3)",
                 borderRadius: "4px",
                 boxShadow: "inset 0 0 20px rgba(212, 175, 55, 0.05)",
                 pointerEvents: "none",
@@ -672,7 +672,38 @@ export default function ArcaneApparatusClub() {
               ))}
             </Box>
 
-            {/* ปรับตำแหน่งแถบสันหนังสือ */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: { xs: "25px", sm: "40px", md: "50px" },
+                height: "100%",
+                background:
+                  "linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(20,12,8,0.5) 30%, transparent 100%)",
+                boxShadow: "inset 6px 0 10px rgba(0,0,0,0.8)",
+                zIndex: 20,
+                pointerEvents: "none",
+              }}
+            />
+
+            {/* --- เส้นทองตกแต่งร่องสันหนังสือ (Gutter Detail) --- */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: { xs: "8px", sm: "15px", md: "20px" },
+                width: "2px",
+                height: "100%",
+                background:
+                  "linear-gradient(180deg, transparent 5%, rgba(212,175,55,0.4) 20%, rgba(212,175,55,0.4) 80%, transparent 95%)",
+                boxShadow: "1px 0 2px rgba(0,0,0,0.8)",
+                zIndex: 20,
+                pointerEvents: "none",
+              }}
+            />
+
+            {/* --- สันนูนของหนังสือเวทมนตร์ (Raised Bands) --- */}
             {["15%", "50%", "85%"].map((topPos, i) => (
               <Box
                 key={i}
@@ -681,13 +712,21 @@ export default function ArcaneApparatusClub() {
                   top: topPos,
                   left: { xs: "-15px", sm: "-30px", md: "-50px" },
                   width: { xs: "15px", sm: "30px", md: "50px" },
-                  height: "10px",
-                  bgcolor: "rgba(0,0,0,0.7)",
-                  borderBottom: "1px solid rgba(255,255,255,0.05)",
+                  height: { xs: "12px", sm: "16px", md: "18px" },
+                  // ไล่สีแบบ Cylinder เพื่อให้สันนูนดูโค้งมนเป็นทรงกระบอก
+                  background:
+                    "linear-gradient(90deg, #050302 0%, #3a2618 50%, #050302 100%)",
+                  boxShadow:
+                    "0 6px 8px rgba(0,0,0,0.9), inset 0 2px 3px rgba(255,255,255,0.1)",
+                  borderTop: "1px solid rgba(212,175,55,0.2)",
+                  borderBottom: "2px solid #000",
+                  // ลบมุมด้านขวาให้ดูเหมือนแผ่นหนังที่หุ้มโค้งเข้าไป
+                  borderTopRightRadius: "3px",
+                  borderBottomRightRadius: "3px",
+                  zIndex: 20,
                 }}
               />
             ))}
-
             <Box
               sx={{
                 position: "absolute",
