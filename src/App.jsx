@@ -856,8 +856,8 @@ export default function ArcaneApparatusClub() {
                       backgroundSize: "200% auto",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
-                      fontSize: { xs: "2.5rem", sm: "3rem", md: "6rem" },
-                      whiteSpace: "nowrap", 
+                      fontSize: { xs: "2rem", sm: "3rem", md: "6rem" },
+                      whiteSpace: "nowrap",
                     }}
                   >
                     Arcane Apparatus Club
