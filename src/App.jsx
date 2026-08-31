@@ -33,6 +33,7 @@ import garethImg from "./assets/member/gareth.png";
 import neroImg from "./assets/member/nero.png";
 import millerImg from "./assets/member/miller.png";
 import valdezImg from "./assets/member/valdez.png";
+import julienImg from "./assets/member/julien.png"; 
 // --- CSS ---
 import "./index.css";
 
@@ -688,6 +689,18 @@ const members = [
       "https://docs.google.com/document/d/1u_YC29bmvvGVH_p41ocgmPYAvYAV8cSGZ0x4K8_d6gs/edit?tab=t.0#heading=h.f7sc8xtd9lo",
     img: valdezImg,
   },
+  {
+    role: "สมาชิก",
+    name: "จูเลียน เอเดลไวส์",
+    year: "6",
+    house: "Ravenclaw",
+    account: "hwww2-julien",
+    accountUrl: "https://bsky.app/profile/hwww2-julien.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1eBIdgWR5X6m6U5jCD8YxUrk9QE2k-oX-bMfljMm2Juo/edit?tab=t.0",
+    img: julienImg,
+  },
 ];
 
 // --- Main Application ---
@@ -697,20 +710,17 @@ export default function ArcaneApparatusClub() {
   const [isOpening, setIsOpening] = useState(false);
   const [renderContent, setRenderContent] = useState(false);
 
-  const pageTurnSound = useRef(
-    typeof Audio !== "undefined" ? new Audio(bookOpeningSound) : null,
-  );
-  const bgMusic = useRef(
-    typeof Audio !== "undefined" ? new Audio(bgMusicFile) : null,
-  );
+  const pageTurnSound = useRef(null);
+  const bgMusic = useRef(null);
 
   useEffect(() => {
-    if (bgMusic.current) {
+    if (typeof Audio !== "undefined") {
+      pageTurnSound.current = new Audio(bookOpeningSound);
+      pageTurnSound.current.volume = 0.8;
+
+      bgMusic.current = new Audio(bgMusicFile);
       bgMusic.current.loop = true;
       bgMusic.current.volume = 0.4;
-    }
-    if (pageTurnSound.current) {
-      pageTurnSound.current.volume = 0.8;
     }
   }, []);
 
@@ -1950,7 +1960,10 @@ export default function ArcaneApparatusClub() {
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)", // บังคับ 3 คนต่อแถวเสมอ
+                  gridTemplateColumns: {
+                    sm: "repeat(2, 1fr)", // แท็บเล็ต 2 คนต่อแถว
+                    md: "repeat(3, 1fr)", // จอคอม 3 คนต่อแถว
+                  },
                   columnGap: { xs: 2, sm: 4, md: 6 }, // ช่องว่างซ้าย-ขวา
                   rowGap: { xs: 5, sm: 6, md: 8 }, // ✨ ช่องว่างบน-ล่าง (ตัวแก้ปัญหาการ์ดติดกัน)
                   maxWidth: "950px", // คุมขนาดไม่ให้กว้างเกินไป
