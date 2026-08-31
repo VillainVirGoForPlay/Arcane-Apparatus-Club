@@ -1,25 +1,28 @@
-/* ต้องเอา @import ไว้บนสุดเสมอ */
-@import url('https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Sarabun:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Sarabun:wght@300;400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* นำเข้าฟอนต์ MagicSchoolOne */
 @font-face {
-  font-family: 'MagicSchoolOne';
-  src: url('./fonts/MagicSchoolOne.ttf') format('truetype');
+  font-family: "MagicSchoolOne";
+  src: url("./fonts/MagicSchoolOne.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 /* นำเข้าฟอนต์ MagicSchoolTwo */
 @font-face {
-  font-family: 'MagicSchoolTwo';
-  src: url('./fonts/MagicSchoolTwo.ttf') format('truetype');
+  font-family: "MagicSchoolTwo";
+  src: url("./fonts/MagicSchoolTwo.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'LUMOS';
-  src: url('./fonts/LUMOS.ttf') format('truetype');
+  font-family: "LUMOS";
+  src: url("./fonts/LUMOS.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }

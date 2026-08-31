@@ -7,33 +7,32 @@ import {
   createTheme,
   CssBaseline,
   GlobalStyles,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
   Paper,
   Fade,
-  TableRow,
-  Avatar,
   Link,
 } from "@mui/material";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 // --- Icons ---
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import BuildIcon from "@mui/icons-material/Build";
 import ChatIcon from "@mui/icons-material/Chat";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import CastleIcon from "@mui/icons-material/Castle";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import ArticleIcon from "@mui/icons-material/Article";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import CastleIcon from "@mui/icons-material/Castle"; // เพิ่มไอคอนสำหรับส่วนสมาชิก
+
 import bgMusicFile from "./assets/bg-music.mp3";
 import bookOpeningSound from "./assets/book-opening.mp3";
 
+import willowImg from "./assets/member/willow.png";
+import garethImg from "./assets/member/gareth.png";
+import neroImg from "./assets/member/nero.png";
+import millerImg from "./assets/member/miller.png";
+import valdezImg from "./assets/member/valdez.png";
 // --- CSS ---
 import "./index.css";
 
@@ -332,56 +331,362 @@ const SectionTitle = ({ icon: Icon, title }) => (
   </Box>
 );
 
+const getHouseTheme = (house) => {
+  switch (house) {
+    case "Gryffindor":
+      return {
+        bg: "rgba(68, 14, 14, 0.85)", // สีแดงเข้ม
+        glowInside: "rgba(155, 17, 30, 0.15)",
+        glowHover: "rgba(155, 17, 30, 0.4)",
+      };
+    case "Ravenclaw":
+      return {
+        bg: "rgba(14, 26, 64, 0.85)", // สีน้ำเงินเข้ม
+        glowInside: "rgba(34, 47, 91, 0.2)",
+        glowHover: "rgba(40, 80, 180, 0.4)",
+      };
+    case "Hufflepuff":
+      return {
+        bg: "rgba(55, 46, 15, 0.85)", // สีเหลืองทอง/น้ำตาลเข้ม
+        glowInside: "rgba(238, 185, 57, 0.1)",
+        glowHover: "rgba(238, 185, 57, 0.3)",
+      };
+    case "Slytherin":
+      return {
+        bg: "rgba(20, 50, 30, 0.85)", // สีเขียวเข้ม (เผื่อมีสมาชิกใหม่)
+        glowInside: "rgba(42, 98, 61, 0.15)",
+        glowHover: "rgba(42, 98, 61, 0.4)",
+      };
+    default:
+      return {
+        bg: "rgba(22, 18, 35, 0.85)",
+        glowInside: "rgba(138, 43, 226, 0.1)",
+        glowHover: "rgba(138, 43, 226, 0.4)",
+      };
+  }
+};
+
+const MemberCard = ({ member }) => {
+  const houseTheme = getHouseTheme(member.house);
+
+  return (
+    <Paper
+      elevation={12}
+      sx={{
+        // ❌ ลบ maxWidth และ margin ออก
+        bgcolor: houseTheme.bg,
+        backdropFilter: "blur(10px)",
+        border: "1px solid rgba(212, 175, 55, 0.6)",
+        borderRadius: "12px",
+        p: { xs: 1, sm: 1.5, md: 2 }, // ให้ Padding ลดลงอัตโนมัติบนมือถือ
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%", // ✨ ให้กว้างเต็ม Grid Cell
+        height: "100%", // ✨ ให้สูงเท่ากันทุกการ์ด
+        boxShadow: `0 10px 30px rgba(0,0,0,0.6), inset 0 0 20px ${houseTheme.glowInside}`,
+        transition: "all 0.4s ease",
+        "&:hover": {
+          transform: "translateY(-10px) scale(1.02)",
+          boxShadow: `0 15px 40px rgba(0,0,0,0.8), 0 0 25px ${houseTheme.glowHover}, inset 0 0 15px rgba(212, 175, 55, 0.3)`,
+        },
+      }}
+    >
+      {/* ลวดลายตกแต่งมุมการ์ด (ซ่อนบนจอมือถือที่เล็กมากๆ เพื่อไม่ให้รก) */}
+      <Box
+        sx={{
+          display: { xs: "none", sm: "block" },
+          position: "absolute",
+          top: -6,
+          left: -6,
+          color: "#D4AF37",
+          fontSize: 20,
+          textShadow: "0 0 10px #D4AF37",
+        }}
+      >
+        ✦
+      </Box>
+      <Box
+        sx={{
+          display: { xs: "none", sm: "block" },
+          position: "absolute",
+          top: -6,
+          right: -6,
+          color: "#D4AF37",
+          fontSize: 20,
+          textShadow: "0 0 10px #D4AF37",
+        }}
+      >
+        ✦
+      </Box>
+      <Box
+        sx={{
+          display: { xs: "none", sm: "block" },
+          position: "absolute",
+          bottom: -6,
+          left: -6,
+          color: "#D4AF37",
+          fontSize: 20,
+          textShadow: "0 0 10px #D4AF37",
+        }}
+      >
+        ✦
+      </Box>
+      <Box
+        sx={{
+          display: { xs: "none", sm: "block" },
+          position: "absolute",
+          bottom: -6,
+          right: -6,
+          color: "#D4AF37",
+          fontSize: 20,
+          textShadow: "0 0 10px #D4AF37",
+        }}
+      >
+        ✦
+      </Box>
+
+      {/* กรอบด้านใน */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: 10,
+          border: "1px solid rgba(212, 175, 55, 0.2)",
+          borderRadius: "8px",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+
+      {/* พื้นที่รูปภาพ */}
+      <Box
+        sx={{
+          width: "100%",
+          aspectRatio: "4/5",
+          border: "2px solid rgba(212, 175, 55, 0.5)",
+          borderRadius: "6px",
+          overflow: "hidden",
+          mb: 1.5,
+          position: "relative",
+          zIndex: 1,
+          bgcolor: "#000",
+          flexShrink: 0,
+        }}
+      >
+        <Box
+          component="img"
+          src={member.img}
+          alt={member.name}
+          sx={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center top",
+            transition: "transform 0.5s ease",
+            "&:hover": { transform: "scale(1.08)" },
+          }}
+        />
+      </Box>
+
+      {/* ข้อมูลสมาชิก */}
+      <Box
+        sx={{
+          zIndex: 1,
+          textAlign: "center",
+          width: "100%",
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Typography
+          variant="overline"
+          sx={{
+            color: "#D4AF37",
+            fontFamily: "'Sarabun', sans-serif",
+            fontWeight: 600,
+            letterSpacing: { xs: 0, sm: 1 },
+            lineHeight: 1.2,
+            display: "block",
+            mb: 0.5,
+            fontSize: { xs: "0.5rem", sm: "0.6rem", md: "0.7rem" }, // ✨ เล็กลงบนมือถือ
+            minHeight: { xs: "20px", sm: "28px" },
+          }}
+        >
+          {member.role}
+        </Typography>
+
+        <Typography
+          variant="h5"
+          sx={{
+            color: "#FFFDE4",
+            fontFamily: "'Sarabun', serif",
+            fontWeight: 700,
+            mb: 0.5,
+            fontSize: { xs: "0.75rem", sm: "0.9rem", md: "1.1rem" }, // ✨ เล็กลงบนมือถือ
+            lineHeight: 1.2,
+          }}
+        >
+          {member.name}
+        </Typography>
+
+        <Typography
+          variant="body2"
+          sx={{
+            color: "text.secondary",
+            mb: 1.5,
+            fontFamily: "'Sarabun', sans-serif",
+            fontWeight: 300,
+            fontSize: { xs: "0.55rem", sm: "0.7rem", md: "0.8rem" }, // ✨ เล็กลงบนมือถือ
+          }}
+        >
+          ปี {member.year} • {member.house}
+        </Typography>
+
+        {/* ปุ่มกด Link */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: { xs: 0.5, sm: 1 },
+            mt: "auto",
+            width: "100%",
+          }}
+        >
+          <Link
+            href={member.accountUrl}
+            target="_blank"
+            underline="none"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 0.5,
+              bgcolor: "rgba(212,175,55,0.1)",
+              py: { xs: 0.3, sm: 0.6 },
+              borderRadius: "25px",
+              border: "1px solid rgba(212,175,55,0.3)",
+              color: "#D4AF37",
+              transition: "all 0.2s",
+              "&:hover": {
+                bgcolor: "rgba(212,175,55,0.2)",
+                boxShadow: "0 0 10px rgba(212,175,55,0.3)",
+              },
+            }}
+          >
+            <AlternateEmailIcon sx={{ fontSize: { xs: 10, sm: 15 } }} />
+            <Typography
+              sx={{
+                fontWeight: 500,
+                fontSize: { xs: "0.5rem", sm: "0.75rem" },
+              }}
+            >
+              {member.account}
+            </Typography>
+          </Link>
+
+          <Link
+            href={member.docUrl}
+            target="_blank"
+            underline="none"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 0.5,
+              bgcolor: "rgba(212,175,55,0.1)",
+              py: { xs: 0.3, sm: 0.6 },
+              borderRadius: "25px",
+              border: "1px solid rgba(212,175,55,0.3)",
+              color: "#D4AF37",
+              transition: "all 0.2s",
+              "&:hover": {
+                bgcolor: "rgba(212,175,55,0.2)",
+                boxShadow: "0 0 10px rgba(212,175,55,0.3)",
+              },
+            }}
+          >
+            <ArticleIcon sx={{ fontSize: { xs: 10, sm: 15 } }} />
+            <Typography
+              sx={{
+                fontWeight: 500,
+                fontSize: { xs: "0.5rem", sm: "0.75rem" },
+              }}
+            >
+              {member.doc}
+            </Typography>
+          </Link>
+        </Box>
+      </Box>
+    </Paper>
+  );
+};
+
+// --- ข้อมูลสมาชิกอัปเดตตามบรีฟ ---
 const members = [
   {
-    role: "ประธาน (การตลาด)",
+    role: "ประธาน\n(การตลาด)",
     name: "วิลโลว์ เบลรีฟ",
     year: "6",
     house: "Hufflepuff",
-    account: "@hwww2-willow",
-    accountUrl: "https://twitter.com/hwww2-willow",
-    doc: "[HWWW_SS2] Willow",
-    docUrl: "https://docs.google.com/document/d/...",
+    account: "hwww2-willow",
+    accountUrl: "https://bsky.app/profile/hwww2-willow.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1JyetMI4kkphRXkDBlHQob2OjzILaphzlUWR2ipd9ntg/edit?tab=t.0#heading=h.f7sc8xtd9lo",
+    img: willowImg,
   },
   {
-    role: "รองประธาน (นักกรุยทาง)",
+    role: "รองประธาน\n(นักกรุยทาง)",
     name: "กาเรธ อีแวนส์",
     year: "6",
     house: "Hufflepuff",
-    account: "@hwww2-gareth",
-    accountUrl: "#",
-    doc: "ผู้ชายที่ดื่มเนเจอกิ้ฟ [HWWW_SS2] แบบฟอร์มตัวละครนักเรียน",
-    docUrl: "#",
+    account: "hwww2-gareth",
+    accountUrl: "https://bsky.app/profile/hwww2-gareth.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1YDU9nRhhYElncdqjdbYdChnGP6XuQZ7PNmO6Y5FbhEk/edit?tab=t.0",
+    img: garethImg,
   },
   {
-    role: "สมาชิก 1",
+    role: "สมาชิก",
     name: "เนียโร แลงคาสเตอร์",
     year: "6",
     house: "Ravenclaw",
-    account: "@hwww2-nero",
-    accountUrl: "#",
-    doc: "เนียโร [HWWW_SS2] แบบฟอร์มตัวละครนักเรียน",
-    docUrl: "#",
+    account: "hwww2-nero",
+    accountUrl: "https://bsky.app/profile/hwww2-nero.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/16exHrAEEltFndH-4eIUB1SzlAQGWZnHmDmjF3KruN-A/edit?tab=t.0#heading=h.f7sc8xtd9lo",
+    img: neroImg,
   },
   {
-    role: "สมาชิก 2",
+    role: "สมาชิก",
     name: "มิลเลอร์ ลอว์สัน",
     year: "6",
     house: "Gryffindor",
-    account: "@hwww2-miller",
-    accountUrl: "#",
-    doc: "[HWWW_SS2] มิลเลอร์",
-    docUrl: "#",
+    account: "hwww2-miller",
+    accountUrl: "https://bsky.app/profile/hwww2-miller.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/11kM2yaSseZviwI9MD8ieEwtZfr5HBfvpv8s8pSzAuKg/edit?usp=sharing",
+    img: millerImg,
   },
   {
-    role: "สมาชิก 3",
+    role: "สมาชิก",
     name: "วาลเดซ บีญาร์เรอัล",
     year: "6",
     house: "Ravenclaw",
-    account: "@hwww2-valdez",
-    accountUrl: "#",
-    doc: "[HWWW_SS2] ฉันไม่ใช่ผู้วิเศษ",
-    docUrl: "#",
+    account: "hwww2-valdez",
+    accountUrl: "https://bsky.app/profile/hwww2-valdez.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1u_YC29bmvvGVH_p41ocgmPYAvYAV8cSGZ0x4K8_d6gs/edit?tab=t.0#heading=h.f7sc8xtd9lo",
+    img: valdezImg,
   },
 ];
 
@@ -1635,6 +1940,44 @@ export default function ArcaneApparatusClub() {
                 </Grid>
               </Grid>
             </MagicalCard>
+          </ScrollReveal>
+          {/* --- 3. ทำเนียบสมาชิก (Members) --- */}
+          <ScrollReveal direction="up" delay={0.2}>
+            <Box sx={{ mt: 8, mb: 4 }}>
+              <SectionTitle icon={CastleIcon} title="ทำเนียบสมาชิก" />
+
+              {/* ✨ ใช้ MUI Box แบบ Grid ไม่ง้อ Tailwind การันตีช่องว่าง 100% ✨ */}
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)", // บังคับ 3 คนต่อแถวเสมอ
+                  columnGap: { xs: 2, sm: 4, md: 6 }, // ช่องว่างซ้าย-ขวา
+                  rowGap: { xs: 5, sm: 6, md: 8 }, // ✨ ช่องว่างบน-ล่าง (ตัวแก้ปัญหาการ์ดติดกัน)
+                  maxWidth: "950px", // คุมขนาดไม่ให้กว้างเกินไป
+                  mx: "auto", // จัดให้อยู่กลางจอ
+                  mt: 5,
+                  px: 2,
+                  justifyItems: "center", // ดันการ์ดแต่ละใบให้อยู่ตรงกลางช่องของตัวเอง
+                }}
+              >
+                {members.map((member, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      animation: `fadeInUpDelay 0.8s ease forwards ${0.2 * index}s`,
+                      opacity: 0,
+                    }}
+                  >
+                    <Box sx={{ width: "100%", maxWidth: "250px" }}>
+                      <MemberCard member={member} />
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
           </ScrollReveal>
         </Box>
       </Fade>
