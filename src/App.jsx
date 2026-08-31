@@ -484,7 +484,7 @@ export default function ArcaneApparatusClub() {
               opacity: 0,
               filter: "blur(15px)",
               transform: "scale(0.8)",
-              letterSpacing: "15px",
+              letterSpacing: "6px",
             },
             "50%": {
               opacity: 1,
@@ -619,7 +619,6 @@ export default function ArcaneApparatusClub() {
                 linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 98%, #D4AF37 100%),
                 radial-gradient(circle at center, #1F150D 0%, #0A0604 100%)
               `,
-              // ปรับขนาดความหนาของสันปกให้พอดีกับจอมือถือ
               borderLeft: {
                 xs: "15px solid #050302",
                 sm: "30px solid #050302",
@@ -637,11 +636,17 @@ export default function ArcaneApparatusClub() {
               },
             }}
           >
+            {/* --- กรอบสี่เหลี่ยมหน้าปก --- */}
             <Box
               sx={{
                 position: "absolute",
                 top: { xs: "3%", md: "4%" },
-                left: { xs: "4%", md: "4%" },
+                // <--- แก้ไขจุดนี้: ใช้ calc() ดันขอบซ้ายหลบรอยพับสันหนังสือ เพื่อให้กรอบอยู่ตรงกลางปกพอดี
+                left: {
+                  xs: "calc(3% + 25px)",
+                  sm: "calc(4% + 40px)",
+                  md: "calc(4% + 50px)",
+                },
                 right: { xs: "3%", md: "4%" },
                 bottom: { xs: "3%", md: "4%" },
                 border: "4px solid rgba(212, 175, 55, 0.3)",
@@ -672,6 +677,7 @@ export default function ArcaneApparatusClub() {
               ))}
             </Box>
 
+            {/* --- รอยพับสันหนังสือ (Hinge Crease) --- */}
             <Box
               sx={{
                 position: "absolute",
@@ -693,10 +699,10 @@ export default function ArcaneApparatusClub() {
                 position: "absolute",
                 top: 0,
                 left: { xs: "8px", sm: "15px", md: "20px" },
-                width: "2px",
+                width: "4px",
                 height: "100%",
                 background:
-                  "linear-gradient(180deg, transparent 5%, rgba(212,175,55,0.4) 20%, rgba(212,175,55,0.4) 80%, transparent 95%)",
+                  "linear-gradient(180deg, transparent 5%, rgba(212,175,55,0.6) 20%, rgba(212,175,55,0.6) 80%, transparent 95%)",
                 boxShadow: "1px 0 2px rgba(0,0,0,0.8)",
                 zIndex: 20,
                 pointerEvents: "none",
@@ -713,20 +719,20 @@ export default function ArcaneApparatusClub() {
                   left: { xs: "-15px", sm: "-30px", md: "-50px" },
                   width: { xs: "15px", sm: "30px", md: "50px" },
                   height: { xs: "12px", sm: "16px", md: "18px" },
-                  // ไล่สีแบบ Cylinder เพื่อให้สันนูนดูโค้งมนเป็นทรงกระบอก
                   background:
                     "linear-gradient(90deg, #050302 0%, #3a2618 50%, #050302 100%)",
                   boxShadow:
                     "0 6px 8px rgba(0,0,0,0.9), inset 0 2px 3px rgba(255,255,255,0.1)",
                   borderTop: "1px solid rgba(212,175,55,0.2)",
                   borderBottom: "2px solid #000",
-                  // ลบมุมด้านขวาให้ดูเหมือนแผ่นหนังที่หุ้มโค้งเข้าไป
                   borderTopRightRadius: "3px",
                   borderBottomRightRadius: "3px",
                   zIndex: 20,
                 }}
               />
             ))}
+
+            {/* --- พื้นที่เนื้อหาและตัวหนังสือ --- */}
             <Box
               sx={{
                 position: "absolute",
@@ -738,7 +744,8 @@ export default function ArcaneApparatusClub() {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                paddingRight: { xs: "15px", sm: "30px", md: "50px" },
+                // <--- แก้ไขจุดนี้: เปลี่ยนจาก paddingRight เป็น paddingLeft เพื่อดันเนื้อหาให้ตรงกลางของพื้นที่หน้าปกที่เหลือ
+                paddingLeft: { xs: "25px", sm: "40px", md: "50px" },
                 zIndex: 25,
               }}
             >
@@ -753,6 +760,8 @@ export default function ArcaneApparatusClub() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  // <--- แก้ไขจุดนี้: ขยับแกนกลางแอนิเมชันไม้กายสิทธิ์นิดหน่อยให้ตรงกับตัวหนังสือ
+                  marginLeft: { xs: "25px", sm: "40px", md: "50px" },
                 }}
               >
                 <Box
@@ -847,8 +856,8 @@ export default function ArcaneApparatusClub() {
                       backgroundSize: "200% auto",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
-                      // ปรับฟอนต์ให้เข้ากับมือถือมากขึ้น
-                      fontSize: { xs: "2.5rem", sm: "4rem", md: "6rem" },
+                      fontSize: { xs: "2.5rem", sm: "3rem", md: "6rem" },
+                      whiteSpace: "nowrap", 
                     }}
                   >
                     Arcane Apparatus Club
