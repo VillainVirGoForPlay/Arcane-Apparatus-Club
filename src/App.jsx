@@ -18,7 +18,7 @@ import {
   Avatar,
   Link,
 } from "@mui/material";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail"; // ไอคอนสำหรับแอคเคาท์ (หรือใช้ TwitterIcon ก็ได้)
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 // --- Icons ---
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
@@ -35,20 +35,16 @@ import bgMusicFile from "./assets/bg-music.mp3";
 import bookOpeningSound from "./assets/book-opening.mp3";
 
 // --- CSS ---
-import "./index.css"; // import ไฟล์ css ที่เราประกาศฟอนต์ไว้
+import "./index.css";
 
 // --- Theme Settings ---
 const theme = createTheme({
   typography: {
-    // ฟอนต์พื้นฐานสำหรับเนื้อหาทั่วไป (ใช้ Sarabun)
     fontFamily: "'Sarabun', 'Maitree', sans-serif",
-
-    // หัวข้อภาษาอังกฤษยังใช้ MagicSchool ควบคู่กับ Charm สำหรับภาษาไทย
     h1: { fontFamily: "'MagicSchoolOne', cursive" },
     h2: { fontFamily: "'MagicSchoolOne', cursive" },
     h3: { fontFamily: "'MagicSchoolTwo', cursive" },
     h4: { fontFamily: "'MagicSchoolTwo', cursive" },
-
     h5: {
       fontFamily: "'Sarabun', 'Maitree', serif",
       fontWeight: 700,
@@ -59,8 +55,6 @@ const theme = createTheme({
       fontWeight: 500,
       letterSpacing: 1,
     },
-
-    // เนื้อหาอ่านง่ายๆ
     body1: {
       fontFamily: "'Sarabun', sans-serif",
       fontSize: "1.05rem",
@@ -88,8 +82,6 @@ const theme = createTheme({
 });
 
 // --- Custom Hooks & Components ---
-
-// 1. Scroll Reveal Component (สร้างอนิเมชั่นตอนเลื่อนจอ)
 const ScrollReveal = ({ children, delay = 0, direction = "up", ...props }) => {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef();
@@ -100,11 +92,11 @@ const ScrollReveal = ({ children, delay = 0, direction = "up", ...props }) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            observer.unobserve(entry.target); // เล่นแค่รอบเดียว
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.15 }, // เริ่มเล่นเมื่อเห็นองค์ประกอบ 15%
+      { threshold: 0.15 },
     );
 
     const currentRef = domRef.current;
@@ -146,7 +138,6 @@ const ScrollReveal = ({ children, delay = 0, direction = "up", ...props }) => {
   );
 };
 
-// 2. Magical Background Component (พื้นหลังเวทมนตร์)
 const MagicalBackground = () => (
   <Box
     sx={{
@@ -160,7 +151,6 @@ const MagicalBackground = () => (
       overflow: "hidden",
     }}
   >
-    {/* วงเวทย์หมุนช้าๆ พื้นหลัง */}
     <Box
       sx={{
         position: "absolute",
@@ -211,8 +201,6 @@ const MagicalBackground = () => (
         animation: "spinGlowReverse 40s linear infinite",
       }}
     />
-
-    {/* ละอองเวทมนตร์ลอยไปมา */}
     {[...Array(15)].map((_, i) => (
       <Box
         key={i}
@@ -336,6 +324,7 @@ const SectionTitle = ({ icon: Icon, title }) => (
       sx={{
         color: "primary.main",
         fontFamily: "'Henny Penny', cursive",
+        fontSize: { xs: "1.5rem", sm: "2.125rem" },
       }}
     >
       {title}
@@ -398,13 +387,11 @@ const members = [
 
 // --- Main Application ---
 export default function ArcaneApparatusClub() {
-  // 1. เพิ่ม State เพื่อเช็คว่าผู้ใช้กดปุ่มเข้าเว็บหรือยัง
   const [hasEntered, setHasEntered] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [isOpening, setIsOpening] = useState(false);
   const [renderContent, setRenderContent] = useState(false);
 
-  // ตั้งค่า Audio
   const pageTurnSound = useRef(
     typeof Audio !== "undefined" ? new Audio(bookOpeningSound) : null,
   );
@@ -440,7 +427,6 @@ export default function ArcaneApparatusClub() {
       }
     }, 1000);
 
-    // --- แก้ไขจุดนี้: ปรับให้แสดงเนื้อหาเร็วขึ้น (0.8 วินาที) ---
     setTimeout(() => {
       setRenderContent(true);
     }, 800);
@@ -449,6 +435,7 @@ export default function ArcaneApparatusClub() {
       setShowIntro(false);
     }, 3000);
   };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -528,25 +515,26 @@ export default function ArcaneApparatusClub() {
               filter: "blur(0px)",
             },
           },
+          // ปรับแอนิเมชันให้แปรผันตามขนาดหน้าจอ (vw) จะได้ไม่ตกขอบบนมือถือ
           "@keyframes wandSwish": {
             "0%": {
               opacity: 0,
-              transform: "translate(-200px, 80px) rotate(-60deg) scale(0.5)",
+              transform: "translate(-30vw, 80px) rotate(-60deg) scale(0.5)",
             },
             "20%": {
               opacity: 1,
-              transform: "translate(-100px, -20px) rotate(10deg) scale(1.5)",
+              transform: "translate(-15vw, -20px) rotate(10deg) scale(1.5)",
             },
             "50%": {
-              transform: "translate(0px, -40px) rotate(45deg) scale(1.8)",
+              transform: "translate(0vw, -40px) rotate(45deg) scale(1.8)",
             },
             "80%": {
               opacity: 1,
-              transform: "translate(100px, -10px) rotate(80deg) scale(1.5)",
+              transform: "translate(15vw, -10px) rotate(80deg) scale(1.5)",
             },
             "100%": {
               opacity: 0,
-              transform: "translate(200px, 80px) rotate(120deg) scale(0.5)",
+              transform: "translate(30vw, 80px) rotate(120deg) scale(0.5)",
             },
           },
           "@keyframes magicalWiggle": {
@@ -584,12 +572,10 @@ export default function ArcaneApparatusClub() {
             display: "flex",
             pointerEvents: hasEntered ? "none" : "auto",
             perspective: "2500px",
-            // --- แก้ไขจุดนี้: ให้พื้นหลังค่อยๆ โปร่งใสเมื่อกดแล้ว ---
             backgroundColor: isOpening ? "transparent" : "#07090F",
             transition: "background-color 1.5s ease",
           }}
         >
-          {/* แสงสว่างวาบตรงกลางตอนสมุดเปิด */}
           <Box
             sx={{
               position: "absolute",
@@ -614,9 +600,8 @@ export default function ArcaneApparatusClub() {
             />
           </Box>
 
-          {/* หน้าปกสมุดเวทมนตร์ */}
           <Box
-            onClick={handleOpenGrimoire} // <--- ใส่ Event การคลิกตรงนี้!
+            onClick={handleOpenGrimoire}
             sx={{
               position: "absolute",
               top: 0,
@@ -629,13 +614,15 @@ export default function ArcaneApparatusClub() {
                 "transform 1.5s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.8s ease-in 0.7s",
               opacity: isOpening ? 0 : 1,
               bgcolor: "#120C08",
-              cursor: hasEntered ? "default" : "pointer", // เปลี่ยนเมาส์เป็นรูปนิ้วชี้
+              cursor: hasEntered ? "default" : "pointer",
               backgroundImage: `
                 linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 98%, #D4AF37 100%),
                 radial-gradient(circle at center, #1F150D 0%, #0A0604 100%)
               `,
+              // ปรับขนาดความหนาของสันปกให้พอดีกับจอมือถือ
               borderLeft: {
-                xs: "30px solid #050302",
+                xs: "15px solid #050302",
+                sm: "30px solid #050302",
                 md: "50px solid #050302",
               },
               boxShadow: isOpening
@@ -643,7 +630,6 @@ export default function ArcaneApparatusClub() {
                 : "15px 0 40px rgba(0,0,0,0.9), inset -5px 0 15px rgba(0,0,0,0.5)",
               zIndex: 20,
               transformStyle: "preserve-3d",
-              // สร้าง Hover effect ตอนเมาส์ชี้หน้าปก
               "&:hover .magical-seal": {
                 transform: "translateX(-50%) scale(1.05)",
                 textShadow: "0 0 20px #D4AF37",
@@ -664,90 +650,44 @@ export default function ArcaneApparatusClub() {
                 pointerEvents: "none",
               }}
             >
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: -6,
-                  left: -6,
-                  width: 12,
-                  height: 12,
-                  border: "2px solid #D4AF37",
-                  borderRadius: "50%",
-                  bgcolor: "#120C08",
-                }}
-              />
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: -6,
-                  right: -6,
-                  width: 12,
-                  height: 12,
-                  border: "2px solid #D4AF37",
-                  borderRadius: "50%",
-                  bgcolor: "#120C08",
-                }}
-              />
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: -6,
-                  left: -6,
-                  width: 12,
-                  height: 12,
-                  border: "2px solid #D4AF37",
-                  borderRadius: "50%",
-                  bgcolor: "#120C08",
-                }}
-              />
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: -6,
-                  right: -6,
-                  width: 12,
-                  height: 12,
-                  border: "2px solid #D4AF37",
-                  borderRadius: "50%",
-                  bgcolor: "#120C08",
-                }}
-              />
+              {[
+                [-6, -6, "top", "left"],
+                [-6, -6, "top", "right"],
+                [-6, -6, "bottom", "left"],
+                [-6, -6, "bottom", "right"],
+              ].map(([y, x, yPos, xPos], i) => (
+                <Box
+                  key={i}
+                  sx={{
+                    position: "absolute",
+                    [yPos]: y,
+                    [xPos]: x,
+                    width: 12,
+                    height: 12,
+                    border: "2px solid #D4AF37",
+                    borderRadius: "50%",
+                    bgcolor: "#120C08",
+                  }}
+                />
+              ))}
             </Box>
 
-            {/* รอยพับสันสมุด */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: "15%",
-                left: { xs: "-30px", md: "-50px" },
-                width: { xs: "30px", md: "50px" },
-                height: "10px",
-                bgcolor: "rgba(0,0,0,0.7)",
-                borderBottom: "1px solid rgba(255,255,255,0.05)",
-              }}
-            />
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: { xs: "-30px", md: "-50px" },
-                width: { xs: "30px", md: "50px" },
-                height: "10px",
-                bgcolor: "rgba(0,0,0,0.7)",
-                borderBottom: "1px solid rgba(255,255,255,0.05)",
-              }}
-            />
-            <Box
-              sx={{
-                position: "absolute",
-                top: "85%",
-                left: { xs: "-30px", md: "-50px" },
-                width: { xs: "30px", md: "50px" },
-                height: "10px",
-                bgcolor: "rgba(0,0,0,0.7)",
-                borderBottom: "1px solid rgba(255,255,255,0.05)",
-              }}
-            />
+            {/* ปรับตำแหน่งแถบสันหนังสือ */}
+            {["15%", "50%", "85%"].map((topPos, i) => (
+              <Box
+                key={i}
+                sx={{
+                  position: "absolute",
+                  top: topPos,
+                  left: { xs: "-15px", sm: "-30px", md: "-50px" },
+                  width: { xs: "15px", sm: "30px", md: "50px" },
+                  height: "10px",
+                  bgcolor: "rgba(0,0,0,0.7)",
+                  borderBottom: "1px solid rgba(255,255,255,0.05)",
+                }}
+              />
+            ))}
+
             <Box
               sx={{
                 position: "absolute",
@@ -759,7 +699,7 @@ export default function ArcaneApparatusClub() {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                paddingRight: { xs: "30px", md: "50px" },
+                paddingRight: { xs: "15px", sm: "30px", md: "50px" },
                 zIndex: 25,
               }}
             >
@@ -779,8 +719,8 @@ export default function ArcaneApparatusClub() {
                 <Box
                   sx={{
                     position: "absolute",
-                    width: "120px",
-                    height: "120px",
+                    width: { xs: "80px", sm: "120px" },
+                    height: { xs: "80px", sm: "120px" },
                     borderRadius: "50%",
                     background:
                       "radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, rgba(170, 124, 17, 0) 70%)",
@@ -790,8 +730,8 @@ export default function ArcaneApparatusClub() {
                 <Box
                   sx={{
                     position: "absolute",
-                    width: "160px",
-                    height: "160px",
+                    width: { xs: "100px", sm: "160px" },
+                    height: { xs: "100px", sm: "160px" },
                     animation: "spinGlow 6s linear infinite",
                     "&::before, &::after": {
                       content: '""',
@@ -812,8 +752,8 @@ export default function ArcaneApparatusClub() {
                 <Box
                   sx={{
                     position: "absolute",
-                    width: "100px",
-                    height: "100px",
+                    width: { xs: "60px", sm: "100px" },
+                    height: { xs: "60px", sm: "100px" },
                     opacity: 0.6,
                     animation: "spinGlowReverse 4s linear infinite",
                     "&::before, &::after": {
@@ -846,6 +786,7 @@ export default function ArcaneApparatusClub() {
                   }}
                 />
               </Box>
+
               <Box
                 sx={{
                   animation:
@@ -867,19 +808,20 @@ export default function ArcaneApparatusClub() {
                       backgroundSize: "200% auto",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
-                      fontSize: { xs: "4rem", md: "6rem" },
+                      // ปรับฟอนต์ให้เข้ากับมือถือมากขึ้น
+                      fontSize: { xs: "2.5rem", sm: "4rem", md: "6rem" },
                     }}
                   >
                     Arcane Apparatus Club
                   </Typography>
                 </Box>
-              </Box>{" "}
+              </Box>
               <Typography
                 variant="overline"
                 sx={{
                   fontFamily: "'Henny Penny', 'Charm', cursive",
                   color: "rgba(243, 229, 171, 0.8)",
-                  letterSpacing: "6px",
+                  letterSpacing: { xs: "3px", sm: "6px" },
                   mt: 2,
                   opacity: 0,
                   animation: "fadeInUpDelay 1.5s ease forwards 1s",
@@ -893,13 +835,12 @@ export default function ArcaneApparatusClub() {
                   variant="caption"
                   sx={{
                     fontFamily: "'Sarabun', sans-serif",
-                    color: "rgba(212, 175, 55, 0.6)", // สีทองแบบจางๆ
+                    color: "rgba(212, 175, 55, 0.6)",
                     letterSpacing: "2px",
-                    mt: 4, // ดันให้ห่างจากแฮชแท็กด้านบนนิดหน่อย
+                    mt: 4,
                     opacity: 0,
-                    // หน่วงเวลาให้เฟดขึ้นมาทีหลังสุด (1.5 วิ)
                     animation: "fadeInUpDelay 1.5s ease forwards 1.5s",
-                    fontSize: "0.75rem", // ขนาดตัวอักษรเล็ก
+                    fontSize: "0.75rem",
                   }}
                 >
                   ( คลิกเพื่อเปิด )
@@ -922,7 +863,6 @@ export default function ArcaneApparatusClub() {
             zIndex: 1,
           }}
         >
-          {/* พื้นหลังเวทมนตร์ (ดวงดาวและวงเวทย์เบาๆ) */}
           <MagicalBackground />
 
           {/* --- Hero Section --- */}
@@ -948,7 +888,7 @@ export default function ArcaneApparatusClub() {
                 src="logo.gif"
                 alt="Arcane Apparatus Club Logo"
                 sx={{
-                  width: 110,
+                  width: { xs: 80, sm: 110 },
                   height: "auto",
                   mb: 3,
                   filter: "drop-shadow(0 0 15px rgba(212,175,55,0.5))",
@@ -963,9 +903,9 @@ export default function ArcaneApparatusClub() {
                   display: "block",
                   mb: 1,
                   opacity: 0.9,
-                  letterSpacing: { xs: 2, md: 5 },
+                  letterSpacing: { xs: 1, sm: 2, md: 5 },
                   textShadow: "0 0 15px rgba(212, 175, 55, 0.4)",
-                  fontSize: { xs: "0.8rem", md: "1rem" },
+                  fontSize: { xs: "0.75rem", md: "1rem" },
                 }}
               >
                 Hogwarts School of Witchcraft and Wizardry
@@ -992,13 +932,13 @@ export default function ArcaneApparatusClub() {
                   alignItems: "center",
                   justifyContent: "center",
                   mb: 5,
-                  gap: 2,
+                  gap: { xs: 1, sm: 2 },
                 }}
               >
                 <Box
                   sx={{
                     height: "1px",
-                    width: "40px",
+                    width: { xs: "20px", sm: "40px" },
                     background: "linear-gradient(90deg, transparent, #D4AF37)",
                   }}
                 />
@@ -1006,9 +946,10 @@ export default function ArcaneApparatusClub() {
                   variant="h6"
                   sx={{
                     color: "text.secondary",
-                    letterSpacing: 2,
+                    letterSpacing: { xs: 1, sm: 2 },
                     fontWeight: 300,
                     fontFamily: "'Sarabun', 'Maitree', sans-serif",
+                    fontSize: { xs: "0.9rem", sm: "1.25rem" },
                   }}
                 >
                   ชมรมวิจัยอุปกรณ์เวทย์มนต์
@@ -1016,7 +957,7 @@ export default function ArcaneApparatusClub() {
                 <Box
                   sx={{
                     height: "1px",
-                    width: "40px",
+                    width: { xs: "20px", sm: "40px" },
                     background: "linear-gradient(270deg, transparent, #D4AF37)",
                   }}
                 />
@@ -1031,7 +972,7 @@ export default function ArcaneApparatusClub() {
                   bgcolor: "rgba(212, 175, 55, 0.08)",
                   backdropFilter: "blur(12px)",
                   border: "1px solid rgba(212, 175, 55, 0.4)",
-                  px: 4,
+                  px: { xs: 3, md: 4 },
                   py: 1.2,
                   borderRadius: "50px",
                   boxShadow:
@@ -1046,7 +987,9 @@ export default function ArcaneApparatusClub() {
                   },
                 }}
               >
-                <AutoFixHighIcon sx={{ fontSize: 20, color: "primary.main" }} />
+                <AutoFixHighIcon
+                  sx={{ fontSize: { xs: 18, sm: 20 }, color: "primary.main" }}
+                />
                 <Typography
                   variant="body2"
                   sx={{
@@ -1055,6 +998,7 @@ export default function ArcaneApparatusClub() {
                     letterSpacing: 1.5,
                     pt: 0.5,
                     fontWeight: 600,
+                    fontSize: { xs: "0.85rem", sm: "0.95rem" },
                   }}
                 >
                   #HWWW_ArcaneAClub
@@ -1075,7 +1019,7 @@ export default function ArcaneApparatusClub() {
                   borderLeft: "3px solid #D4AF37",
                   borderRight: "3px solid #D4AF37",
                   borderRadius: "8px",
-                  px: { xs: 3, md: 5 },
+                  px: { xs: 2, md: 5 },
                   py: 1.5,
                   display: "flex",
                   alignItems: "center",
@@ -1091,6 +1035,7 @@ export default function ArcaneApparatusClub() {
                     letterSpacing: 0.5,
                     fontFamily: "'Sarabun', sans-serif",
                     textAlign: "center",
+                    fontSize: { xs: "0.8rem", sm: "0.95rem" },
                   }}
                 >
                   <strong
@@ -1114,7 +1059,7 @@ export default function ArcaneApparatusClub() {
             <MagicalCard
               sx={{
                 mb: 4,
-                p: { xs: 4, md: 5 },
+                p: { xs: 3, sm: 4, md: 5 },
                 bgcolor: "rgba(10, 8, 12, 0.85)",
               }}
             >
@@ -1123,11 +1068,10 @@ export default function ArcaneApparatusClub() {
                 title="รายละเอียดและกิจกรรมชมรม"
               />
 
-              {/* --- กล่องข้อความสไตล์หน้ากระดาษเวทมนตร์ (เลียนแบบกรอบในภาพเรฟ) --- */}
               <Box
                 sx={{
                   position: "relative",
-                  p: { xs: 4, md: 5 },
+                  p: { xs: 3, md: 5 },
                   mb: 6,
                   mt: 2,
                   bgcolor: "rgba(22, 17, 13, 0.6)",
@@ -1139,56 +1083,27 @@ export default function ArcaneApparatusClub() {
                 }}
               >
                 {/* ดาวตกแต่งที่มุมทั้ง 4 */}
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: -14,
-                    left: -12,
-                    color: "#D4AF37",
-                    fontSize: 24,
-                    bgcolor: "transparent",
-                  }}
-                >
-                  ✦
-                </Box>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: -14,
-                    right: -12,
-                    color: "#D4AF37",
-                    fontSize: 24,
-                    bgcolor: "transparent",
-                  }}
-                >
-                  ✦
-                </Box>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    bottom: -14,
-                    left: -12,
-                    color: "#D4AF37",
-                    fontSize: 24,
-                    bgcolor: "transparent",
-                  }}
-                >
-                  ✦
-                </Box>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    bottom: -14,
-                    right: -12,
-                    color: "#D4AF37",
-                    fontSize: 24,
-                    bgcolor: "transparent",
-                  }}
-                >
-                  ✦
-                </Box>
+                {[
+                  [-14, -12, "top", "left"],
+                  [-14, -12, "top", "right"],
+                  [-14, -12, "bottom", "left"],
+                  [-14, -12, "bottom", "right"],
+                ].map(([y, x, yPos, xPos], i) => (
+                  <Box
+                    key={i}
+                    sx={{
+                      position: "absolute",
+                      [yPos]: y,
+                      [xPos]: x,
+                      color: "#D4AF37",
+                      fontSize: 24,
+                      bgcolor: "transparent",
+                    }}
+                  >
+                    ✦
+                  </Box>
+                ))}
 
-                {/* เส้นกรอบด้านใน (Inner Border) */}
                 <Box
                   sx={{
                     position: "absolute",
@@ -1206,27 +1121,28 @@ export default function ArcaneApparatusClub() {
                   sx={{
                     color: "text.primary",
                     mb: 2,
-                    textAlign: "justify",
+                    textAlign: { xs: "left", md: "justify" },
                     textJustify: "inter-word",
                     fontFamily: "'Sarabun', sans-serif",
                     position: "relative",
                     zIndex: 2,
                   }}
                 >
-                  <span
-                    style={{
+                  <Box
+                    component="span"
+                    sx={{
                       float: "left",
-                      fontSize: "3.5rem",
+                      fontSize: { xs: "2.5rem", md: "3.5rem" },
                       lineHeight: "0.8",
-                      paddingTop: "8px",
-                      paddingRight: "12px",
+                      pt: "8px",
+                      pr: "12px",
                       color: "#D4AF37",
                       fontFamily: "'Charm', cursive",
                       textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
                     }}
                   >
                     ช
-                  </span>
+                  </Box>
                   มรมวิจัยอุปกรณ์เวทย์มนต์ถูกก่อตั้งขึ้นเพื่อเป็นพื้นที่ชุมนุมของเหล่าพ่อมดแม่มดผู้หลงใหลในการหลอมรวมศาสตร์เวทมนตร์เข้ากับระบบกลไกไปจนถึงงานประดิษฐ์สร้างสรรค์
                   โดยมีที่ตั้งเป็นห้องว่างห้องหนึ่งลึกเข้าไปในปราสาทฮอกวอตส์
                 </Typography>
@@ -1236,7 +1152,7 @@ export default function ArcaneApparatusClub() {
                   sx={{
                     color: "text.primary",
                     mb: 3,
-                    textAlign: "justify",
+                    textAlign: { xs: "left", md: "justify" },
                     fontFamily: "'Sarabun', sans-serif",
                     position: "relative",
                     zIndex: 2,
@@ -1249,7 +1165,7 @@ export default function ArcaneApparatusClub() {
 
                 <Box
                   sx={{
-                    p: 2.5,
+                    p: { xs: 2, sm: 2.5 },
                     bgcolor: "rgba(0, 0, 0, 0.4)",
                     borderLeft: "4px solid #D4AF37",
                     position: "relative",
@@ -1283,17 +1199,17 @@ export default function ArcaneApparatusClub() {
                     ถ้าไม่อยากเสี่ยงสูญเสียอวัยวะเพราะอุปกรณ์เกิดทำงานผิดพลาด
                     หรือต้องเจอกับเสียงแผดลั่นของสมาชิกสักคนที่ตะโกนขับไล่
                     โทษฐานดันไปแตะต้อง{" "}
-                    <strong
-                      style={{
+                    <Box
+                      component="strong"
+                      sx={{
                         color: "#D4AF37",
                         fontSize: "1.05rem",
                         fontWeight: 600,
                         letterSpacing: 1,
-                        fontFamily: "'Sarabun', sans-serif",
                       }}
                     >
                       ลูกรัก
-                    </strong>{" "}
+                    </Box>{" "}
                     ของพวกเขาเข้า)
                   </Typography>
                 </Box>
@@ -1303,7 +1219,7 @@ export default function ArcaneApparatusClub() {
                 variant="body2"
                 sx={{
                   color: "text.primary",
-                  mb: 2, // ลดระยะห่างลงจาก 3 เป็น 2
+                  mb: 2,
                   fontStyle: "italic",
                   fontWeight: 500,
                   fontFamily: "'Sarabun', sans-serif",
@@ -1313,14 +1229,14 @@ export default function ArcaneApparatusClub() {
                 ขึ้นอยู่กับความถนัดของสมาชิกแต่ละคนว่าต้องการทำงานแบบใด
                 รวบรวมไว้ได้คร่าว ๆ ดังนี้ :
               </Typography>
-              {/* --- ชุดกิจกรรมชมรม (ปรับให้กล่องเตี้ยลง กระชับขึ้น) --- */}
+
               <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
                 {/* --- กิจกรรมที่ 1 --- */}
                 <Box
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    p: { xs: 1.5, md: 2 }, // ลดความหนาของกล่องลงจาก 2.5/3
+                    p: { xs: 1.5, md: 2 },
                     bgcolor: "rgba(20, 15, 10, 0.4)",
                     borderRadius: "8px",
                     border: "1px solid rgba(212, 175, 55, 0.1)",
@@ -1334,11 +1250,11 @@ export default function ArcaneApparatusClub() {
                 >
                   <Box
                     sx={{
-                      p: 1, // ลดขนาดกรอบไอคอนลง
+                      p: 1,
                       borderRadius: "6px",
                       bgcolor: "rgba(212, 175, 55, 0.1)",
                       display: "flex",
-                      mr: 2, // ปรับระยะห่างให้พอดีกับกล่องที่เล็กลง
+                      mr: 2,
                       flexShrink: 0,
                     }}
                   >
@@ -1350,8 +1266,8 @@ export default function ArcaneApparatusClub() {
                       sx={{
                         color: "primary.main",
                         fontWeight: 600,
-                        fontSize: "1rem", // ปรับฟอนต์ให้สมดุล
-                        mb: 0.2, // ลดระยะห่างบรรทัด
+                        fontSize: "1rem",
+                        mb: 0.2,
                         fontFamily: "'Sarabun', sans-serif",
                       }}
                     >
@@ -1495,7 +1411,7 @@ export default function ArcaneApparatusClub() {
                   p: { xs: 3, md: 3 },
                   display: "flex",
                   flexDirection: { xs: "column", sm: "row" },
-                  alignItems: "center",
+                  alignItems: { xs: "center", sm: "flex-start" },
                   gap: 3,
                   bgcolor: "rgba(30, 25, 15, 0.7)",
                   border: "1px solid rgba(212, 175, 55, 0.4)",
@@ -1515,7 +1431,9 @@ export default function ArcaneApparatusClub() {
                   }}
                 />
 
-                <Box sx={{ position: "relative", flexShrink: 0 }}>
+                <Box
+                  sx={{ position: "relative", flexShrink: 0, mt: { sm: 1 } }}
+                >
                   <LightbulbIcon
                     sx={{
                       color: "primary.main",
@@ -1538,7 +1456,12 @@ export default function ArcaneApparatusClub() {
                     Tip เพิ่มเติม
                   </Typography>
                   <Box
-                    sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 1.5,
+                      textAlign: "left",
+                    }}
                   >
                     <Box
                       sx={{
@@ -1593,74 +1516,75 @@ export default function ArcaneApparatusClub() {
 
           {/* --- 2. คุณสมบัติสมาชิก --- */}
           <ScrollReveal direction="left" delay={0.1}>
-            <MagicalCard sx={{ mb: 6, p: { xs: 4, md: 5 } }}>
+            <MagicalCard sx={{ mb: 6, p: { xs: 3, sm: 4, md: 5 } }}>
               <SectionTitle icon={AutoFixHighIcon} title="คุณสมบัติของสมาชิก" />
 
-              <Grid item xs={12} sm={6}>
-                <Box sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
+              {/* เพิ่ม Grid container ตรงนี้เพื่อให้ Grid item ทำงานได้อย่างถูกต้องและ responsive */}
+              <Grid container spacing={{ xs: 2, md: 4 }}>
+                <Grid item xs={12} sm={6}>
                   <Box
-                    sx={{
-                      mt: 0.5,
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      bgcolor: "primary.main",
-                      flexShrink: 0,
-                      boxShadow: "0 0 5px #D4AF37",
-                    }}
-                  />
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "text.primary",
-                      lineHeight: 1.6,
-                      fontFamily: "'Sarabun', sans-serif",
-                    }}
+                    sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}
                   >
-                    ชื่นชอบการสร้างสรรค์ / ค้นคว้า / ประดิษฐ์ สิ่งของ <br />
-                    <span
-                      style={{
-                        color: "#B0B8C1",
-                        fontSize: "0.85rem",
+                    <Box
+                      sx={{
+                        mt: 0.8,
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        bgcolor: "primary.main",
+                        flexShrink: 0,
+                        boxShadow: "0 0 5px #D4AF37",
+                      }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "text.primary",
+                        lineHeight: 1.6,
                         fontFamily: "'Sarabun', sans-serif",
                       }}
                     >
-                      (ไม่จำเป็นว่าต้องเป็นอุปกรณ์เวทย์มนต์)
-                    </span>
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: 2,
-                    alignItems: "flex-start",
-                    mt: 2,
-                  }}
-                >
+                      ชื่นชอบการสร้างสรรค์ / ค้นคว้า / ประดิษฐ์ สิ่งของ <br />
+                      <Box
+                        component="span"
+                        sx={{
+                          color: "#B0B8C1",
+                          fontSize: "0.85rem",
+                          fontFamily: "'Sarabun', sans-serif",
+                        }}
+                      >
+                        (ไม่จำเป็นว่าต้องเป็นอุปกรณ์เวทย์มนต์)
+                      </Box>
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
                   <Box
-                    sx={{
-                      mt: 0.5,
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      bgcolor: "primary.main",
-                      flexShrink: 0,
-                      boxShadow: "0 0 5px #D4AF37",
-                    }}
-                  />
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "text.primary",
-                      lineHeight: 1.6,
-                      fontFamily: "'Sarabun', sans-serif",
-                    }}
+                    sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}
                   >
-                    มีสัญชาตญาณเอาตัวรอดสูง(?)
-                  </Typography>
-                </Box>
+                    <Box
+                      sx={{
+                        mt: 0.8,
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        bgcolor: "primary.main",
+                        flexShrink: 0,
+                        boxShadow: "0 0 5px #D4AF37",
+                      }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "text.primary",
+                        lineHeight: 1.6,
+                        fontFamily: "'Sarabun', sans-serif",
+                      }}
+                    >
+                      มีสัญชาตญาณเอาตัวรอดสูง(?)
+                    </Typography>
+                  </Box>
+                </Grid>
               </Grid>
             </MagicalCard>
           </ScrollReveal>
