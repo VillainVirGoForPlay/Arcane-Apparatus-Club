@@ -423,13 +423,15 @@ export default function ArcaneApparatusClub() {
   }, []);
 
   const handleOpenGrimoire = () => {
-    if (hasEntered) return; 
+    if (hasEntered) return;
 
     setHasEntered(true);
-    setIsOpening(true); 
+    setIsOpening(true);
 
     if (pageTurnSound.current) {
-      pageTurnSound.current.play().catch((err) => console.log("Audio error:", err));
+      pageTurnSound.current
+        .play()
+        .catch((err) => console.log("Audio error:", err));
     }
 
     setTimeout(() => {
@@ -886,6 +888,23 @@ export default function ArcaneApparatusClub() {
               >
                 #HWWW_SS2
               </Typography>
+              {!hasEntered && (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontFamily: "'Sarabun', sans-serif",
+                    color: "rgba(212, 175, 55, 0.6)", // สีทองแบบจางๆ
+                    letterSpacing: "2px",
+                    mt: 4, // ดันให้ห่างจากแฮชแท็กด้านบนนิดหน่อย
+                    opacity: 0,
+                    // หน่วงเวลาให้เฟดขึ้นมาทีหลังสุด (1.5 วิ)
+                    animation: "fadeInUpDelay 1.5s ease forwards 1.5s",
+                    fontSize: "0.75rem", // ขนาดตัวอักษรเล็ก
+                  }}
+                >
+                  ( คลิกเพื่อเปิด )
+                </Typography>
+              )}
             </Box>
           </Box>
         </Box>
