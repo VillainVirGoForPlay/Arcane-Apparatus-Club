@@ -33,7 +33,7 @@ import garethImg from "./assets/member/gareth.png";
 import neroImg from "./assets/member/nero.png";
 import millerImg from "./assets/member/miller.png";
 import valdezImg from "./assets/member/valdez.png";
-import julienImg from "./assets/member/julien.png"; 
+import julienImg from "./assets/member/julien.png";
 // --- CSS ---
 import "./index.css";
 
@@ -1315,7 +1315,7 @@ export default function ArcaneApparatusClub() {
                     fontSize: { xs: "0.9rem", sm: "1.25rem" },
                   }}
                 >
-                  ชมรมวิจัยอุปกรณ์เวทย์มนต์
+                  ชมรมวิจัยอุปกรณ์เวทมนตร์
                 </Typography>
                 <Box
                   sx={{
@@ -1506,7 +1506,7 @@ export default function ArcaneApparatusClub() {
                   >
                     ช
                   </Box>
-                  มรมวิจัยอุปกรณ์เวทย์มนต์ถูกก่อตั้งขึ้นเพื่อเป็นพื้นที่ชุมนุมของเหล่าพ่อมดแม่มดผู้หลงใหลในการหลอมรวมศาสตร์เวทมนตร์เข้ากับระบบกลไกไปจนถึงงานประดิษฐ์สร้างสรรค์
+                  มรมวิจัยอุปกรณ์เวทมนตร์ถูกก่อตั้งขึ้นเพื่อเป็นพื้นที่ชุมนุมของเหล่าพ่อมดแม่มดผู้หลงใหลในการหลอมรวมศาสตร์เวทมนตร์เข้ากับระบบกลไกไปจนถึงงานประดิษฐ์สร้างสรรค์
                   โดยมีที่ตั้งเป็นห้องว่างห้องหนึ่งลึกเข้าไปในปราสาทฮอกวอตส์
                 </Typography>
 
@@ -1634,7 +1634,7 @@ export default function ArcaneApparatusClub() {
                         fontFamily: "'Sarabun', sans-serif",
                       }}
                     >
-                      รับซ่อมอุปกรณ์เวทย์มนต์
+                      รับซ่อมอุปกรณ์เวทมนตร์
                     </Typography>
                     <Typography
                       variant="body2"
@@ -1845,7 +1845,7 @@ export default function ArcaneApparatusClub() {
                         }}
                       >
                         ห้องชมรมรกมาก
-                        เต็มไปด้วยอุปกรณ์เวทย์มนต์เกลื่อนกลาดและลอยอยู่กลางอากาศ
+                        เต็มไปด้วยอุปกรณ์เวทมนตร์เกลื่อนกลาดและลอยอยู่กลางอากาศ
                         ระวังเท้าและหัวของคุณเอาไว้ให้ดี
                       </Typography>
                     </Box>
@@ -1916,7 +1916,7 @@ export default function ArcaneApparatusClub() {
                           fontFamily: "'Sarabun', sans-serif",
                         }}
                       >
-                        (ไม่จำเป็นว่าต้องเป็นอุปกรณ์เวทย์มนต์)
+                        (ไม่จำเป็นว่าต้องเป็นอุปกรณ์เวทมนตร์)
                       </Box>
                     </Typography>
                   </Box>
@@ -1960,10 +1960,7 @@ export default function ArcaneApparatusClub() {
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: {
-                    sm: "repeat(2, 1fr)", // แท็บเล็ต 2 คนต่อแถว
-                    md: "repeat(3, 1fr)", // จอคอม 3 คนต่อแถว
-                  },
+                  gridTemplateColumns: "repeat(3, 1fr)",
                   columnGap: { xs: 2, sm: 4, md: 6 }, // ช่องว่างซ้าย-ขวา
                   rowGap: { xs: 5, sm: 6, md: 8 }, // ✨ ช่องว่างบน-ล่าง (ตัวแก้ปัญหาการ์ดติดกัน)
                   maxWidth: "950px", // คุมขนาดไม่ให้กว้างเกินไป
