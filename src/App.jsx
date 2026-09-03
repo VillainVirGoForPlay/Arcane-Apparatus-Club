@@ -34,6 +34,8 @@ import neroImg from "./assets/member/nero.png";
 import millerImg from "./assets/member/miller.png";
 import valdezImg from "./assets/member/valdez.png";
 import julienImg from "./assets/member/julien.png";
+import FoxxImg from "./assets/member/Fēngshen.png";
+
 // --- CSS ---
 import "./index.css";
 
@@ -630,30 +632,6 @@ const MemberCard = ({ member }) => {
 // --- ข้อมูลสมาชิกอัปเดตตามบรีฟ ---
 const members = [
   {
-    role: "ประธาน\n(การตลาด)",
-    name: "วิลโลว์ เบลรีฟ",
-    year: "6",
-    house: "Hufflepuff",
-    account: "hwww2-willow",
-    accountUrl: "https://bsky.app/profile/hwww2-willow.bsky.social",
-    doc: "ข้อมูลตัวละคร",
-    docUrl:
-      "https://docs.google.com/document/d/1JyetMI4kkphRXkDBlHQob2OjzILaphzlUWR2ipd9ntg/edit?tab=t.0#heading=h.f7sc8xtd9lo",
-    img: willowImg,
-  },
-  {
-    role: "รองประธาน\n(นักกรุยทาง)",
-    name: "กาเรธ อีแวนส์",
-    year: "6",
-    house: "Hufflepuff",
-    account: "hwww2-gareth",
-    accountUrl: "https://bsky.app/profile/hwww2-gareth.bsky.social",
-    doc: "ข้อมูลตัวละคร",
-    docUrl:
-      "https://docs.google.com/document/d/1YDU9nRhhYElncdqjdbYdChnGP6XuQZ7PNmO6Y5FbhEk/edit?tab=t.0",
-    img: garethImg,
-  },
-  {
     role: "สมาชิก",
     name: "เนียโร แลงคาสเตอร์",
     year: "6",
@@ -700,6 +678,44 @@ const members = [
     docUrl:
       "https://docs.google.com/document/d/1eBIdgWR5X6m6U5jCD8YxUrk9QE2k-oX-bMfljMm2Juo/edit?tab=t.0",
     img: julienImg,
+  },
+  {
+    role: "สมาชิก",
+    name: "เฟิ่งเฉิน ฟ็อกซ์",
+    year: "6",
+    house: "Hufflepuff",
+    account: "hwww2-foxx",
+    accountUrl: "https://bsky.app/profile/hwww2-foxx.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1vumO96V-YGJ1CZ1cTQ2cMvRLZ0TNfiYdWoddpK80ias/edit?usp=sharing",
+    img: FoxxImg,
+  },
+];
+const membersHead = [
+  {
+    role: "ประธาน\n(การตลาด)",
+    name: "วิลโลว์ เบลรีฟ",
+    year: "6",
+    house: "Hufflepuff",
+    account: "hwww2-willow",
+    accountUrl: "https://bsky.app/profile/hwww2-willow.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1JyetMI4kkphRXkDBlHQob2OjzILaphzlUWR2ipd9ntg/edit?tab=t.0#heading=h.f7sc8xtd9lo",
+    img: willowImg,
+  },
+  {
+    role: "รองประธาน\n(นักกรุยทาง)",
+    name: "กาเรธ อีแวนส์",
+    year: "6",
+    house: "Hufflepuff",
+    account: "hwww2-gareth",
+    accountUrl: "https://bsky.app/profile/hwww2-gareth.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1YDU9nRhhYElncdqjdbYdChnGP6XuQZ7PNmO6Y5FbhEk/edit?tab=t.0",
+    img: garethImg,
   },
 ];
 
@@ -1954,20 +1970,56 @@ export default function ArcaneApparatusClub() {
           {/* --- 3. ทำเนียบสมาชิก (Members) --- */}
           <ScrollReveal direction="up" delay={0.2}>
             <Box sx={{ mt: 8, mb: 4 }}>
-              <SectionTitle icon={CastleIcon} title="ทำเนียบสมาชิก" />
+              <SectionTitle icon={CastleIcon} title="สมาชิก" />
 
-              {/* ✨ ใช้ MUI Box แบบ Grid ไม่ง้อ Tailwind การันตีช่องว่าง 100% ✨ */}
+              {/* ---------------------------------------------------- */}
+              {/* ส่วนที่ 1: ประธาน & รองประธาน (membersHead) */}
+              {/* ---------------------------------------------------- */}
+              <Box
+                sx={{
+                  display: "grid", // ✨ เปลี่ยนมาใช้ Grid เพื่อล็อคจำนวนคอลัมน์
+                  gridTemplateColumns: "repeat(2, 1fr)", // ✨ บังคับ 2 คอลัมน์เสมอ (ไม่ว่าจอเล็กแค่ไหน)
+                  columnGap: { xs: 2, sm: 3, md: 4 }, // ระยะห่างซ้ายขวา
+                  rowGap: 4,
+                  justifyContent: "center", // จัดกลุ่ม Grid ให้อยู่กึ่งกลางจอ
+                  justifyItems: "center", // จัดการ์ดให้อยู่กึ่งกลางของแต่ละช่อง
+                  maxWidth: "600px", // จำกัดความกว้างรวม เพื่อไม่ให้การ์ด 2 ใบฉีกห่างกันเกินไปบนจอคอม
+                  mx: "auto", // จัดกึ่งกลางหน้าจอ
+                  mt: 5,
+                  px: { xs: 1, sm: 2 },
+                }}
+              >
+                {membersHead.map((member, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: "100%", // ให้ยืดเต็มช่อง Grid
+                      maxWidth: "250px", // แต่ไม่เกิน 250px (ล็อกให้เท่ากับสมาชิกทั่วไป)
+                      display: "flex",
+                      justifyContent: "center",
+                      animation: `fadeInUpDelay 0.8s ease forwards ${0.2 * index}s`,
+                      opacity: 0,
+                    }}
+                  >
+                    <MemberCard member={member} />
+                  </Box>
+                ))}
+              </Box>
+
+              {/* ---------------------------------------------------- */}
+              {/* ส่วนที่ 2: สมาชิกทั่วไป (members) 3 คน/แถว */}
+              {/* ---------------------------------------------------- */}
               <Box
                 sx={{
                   display: "grid",
                   gridTemplateColumns: "repeat(3, 1fr)",
-                  columnGap: { xs: 2, sm: 4, md: 6 }, // ช่องว่างซ้าย-ขวา
-                  rowGap: { xs: 5, sm: 6, md: 8 }, // ✨ ช่องว่างบน-ล่าง (ตัวแก้ปัญหาการ์ดติดกัน)
-                  maxWidth: "950px", // คุมขนาดไม่ให้กว้างเกินไป
-                  mx: "auto", // จัดให้อยู่กลางจอ
-                  mt: 5,
+                  columnGap: { xs: 2, sm: 4, md: 6 },
+                  rowGap: { xs: 5, sm: 6, md: 8 },
+                  maxWidth: "950px",
+                  mx: "auto",
+                  mt: 8, // ดันให้ห่างจากแถวบนนิดหน่อย
                   px: 2,
-                  justifyItems: "center", // ดันการ์ดแต่ละใบให้อยู่ตรงกลางช่องของตัวเอง
+                  justifyItems: "center",
                 }}
               >
                 {members.map((member, index) => (
