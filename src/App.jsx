@@ -36,6 +36,11 @@ import valdezImg from "./assets/member/valdez.png";
 import julienImg from "./assets/member/julien.png";
 import FoxxImg from "./assets/member/Fēngshen.png";
 
+import eleanorImg from "./assets/member/eleanor.png";
+import eulaliaImg from "./assets/member/eulalia.png";
+import feirongImg from "./assets/member/feirong.png";
+import thikerImg from "./assets/member/thiker.png";
+
 // --- CSS ---
 import "./index.css";
 
@@ -690,6 +695,54 @@ const members = [
     docUrl:
       "https://docs.google.com/document/d/1vumO96V-YGJ1CZ1cTQ2cMvRLZ0TNfiYdWoddpK80ias/edit?usp=sharing",
     img: FoxxImg,
+  },
+  {
+    role: "สมาชิก",
+    name: "เฟยหรง ออร์เวลล์",
+    year: "7",
+    house: "Ravenclaw",
+    account: "hwww2-feirong",
+    accountUrl: "https://bsky.app/profile/hwww2-feirong.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1z8dIi48cAHCkNeCQq8CG6Q-F9LgzvYR05MT4pAhNyh4/edit?usp=sharing",
+    img: feirongImg,
+  },
+  {
+    role: "สมาชิก",
+    name: "ทริงเกอร์ ทริสเติ้ลวิสก์",
+    year: "5",
+    house: "Ravenclaw",
+    account: "hwww2-thiker",
+    accountUrl: "https://bsky.app/profile/hwww2-tinker.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1MSW3p1PaK6eU53wZ-eKkMHfn2ABGAKvVpj6_HrMPoD0/edit?tab=t.0#heading=h.f7sc8xtd9lo",
+    img: thikerImg,
+  },
+  {
+    role: "สมาชิก",
+    name: "ยูลาเลีย มินซอ ปาร์ค",
+    year: "5",
+    house: "Hufflepuff",
+    account: "hwww2-eulalia",
+    accountUrl: "https://bsky.app/profile/hwww2-eulalia.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1nhKh2iuy9IeWWqR9q-kTvK0bf3nlbjkymvqX4SY2cR0/edit?tab=t.0#heading=h.f7sc8xtd9lo",
+    img: eulaliaImg,
+  },
+  {
+    role: "สมาชิก",
+    name: "เอเลนอร์ มอร์แรน",
+    year: "7",
+    house: "Ravenclaw",
+    account: "hwww2-eleanor",
+    accountUrl: "https://bsky.app/profile/hwww2-eleanor.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/15NkRonM-KGNBAKUWS28MSSbOKoedMdzatpPkAZyFHRQ/edit?tab=t.0#heading=h.f7sc8xtd9lo",
+    img: eleanorImg,
   },
 ];
 const membersHead = [
