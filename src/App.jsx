@@ -40,6 +40,9 @@ import eleanorImg from "./assets/member/eleanor.png";
 import eulaliaImg from "./assets/member/eulalia.png";
 import feirongImg from "./assets/member/feirong.png";
 import thikerImg from "./assets/member/thiker.png";
+import benjaminImg from "./assets/member/Benjamin.png";
+import charlesImg from "./assets/member/Charles.png";
+import owenImg from "./assets/member/Owen.png";
 
 // --- CSS ---
 import "./index.css";
@@ -743,6 +746,42 @@ const members = [
     docUrl:
       "https://docs.google.com/document/d/15NkRonM-KGNBAKUWS28MSSbOKoedMdzatpPkAZyFHRQ/edit?tab=t.0#heading=h.f7sc8xtd9lo",
     img: eleanorImg,
+  },
+  {
+    role: "สมาชิก",
+    name: "ชาร์ล ธีโอโดริค",
+    year: "6",
+    house: "Hufflepuff",
+    account: "hwww2-charlest",
+    accountUrl: "https://bsky.app/profile/hwww2-charlest.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/115cwk_W83UVf1j9HTbOPVdxVLlo8wDu6Y4R_wpAcbGQ/edit?usp=sharing",
+    img: charlesImg,
+  },
+  {
+    role: "สมาชิก",
+    name: "โอเวน เกรย์",
+    year: "6",
+    house: "Ravenclaw",
+    account: "hwww2-owen",
+    accountUrl: "https://bsky.app/profile/hwww2-owen.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1ueeaaeMhUQZJ_hf2KcUfPuKgj-ZqaZWKIpQBiqPprU8/edit?usp=sharing",
+    img: owenImg,
+  },
+  {
+    role: "สมาชิก",
+    name: "เบนจามิน รอสส์",
+    year: "6",
+    house: "Hufflepuff",
+    account: "hwww2-benjaminr",
+    accountUrl: "https://bsky.app/profile/hwww2-benjaminr.bsky.social",
+    doc: "ข้อมูลตัวละคร",
+    docUrl:
+      "https://docs.google.com/document/d/1AwSPBrOm3x3jFcgsizmZs1D2NReuJODtk7NpWlI4aLA/edit?usp=sharing",
+    img: benjaminImg,
   },
 ];
 const membersHead = [
