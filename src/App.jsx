@@ -10,6 +10,7 @@ import {
   Paper,
   Fade,
   Link,
+  Button,
 } from "@mui/material";
 
 // --- Icons ---
@@ -23,11 +24,14 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import ArticleIcon from "@mui/icons-material/Article";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import CastleIcon from "@mui/icons-material/Castle"; // เพิ่มไอคอนสำหรับส่วนสมาชิก
+import CastleIcon from "@mui/icons-material/Castle";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn"; // ไอคอนสำหรับปุ่มกลับ
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom"; // ไอคอนสำหรับปุ่มไปห้องกิจกรรม
 
 import bgMusicFile from "./assets/bg-music.mp3";
 import bookOpeningSound from "./assets/book-opening.mp3";
 
+// ... (Import ภาพสมาชิกของคุณคงไว้เหมือนเดิม) ...
 import willowImg from "./assets/member/willow.png";
 import garethImg from "./assets/member/gareth.png";
 import neroImg from "./assets/member/nero.png";
@@ -44,6 +48,7 @@ import benjaminImg from "./assets/member/Benjamin.png";
 import charlesImg from "./assets/member/Charles.png";
 import owenImg from "./assets/member/Owen.png";
 
+import { RandomArtifactPicker, ArtifactSlotMachine } from "./ClubActivities";
 // --- CSS ---
 import "./index.css";
 
@@ -346,25 +351,25 @@ const getHouseTheme = (house) => {
   switch (house) {
     case "Gryffindor":
       return {
-        bg: "rgba(68, 14, 14, 0.85)", // สีแดงเข้ม
+        bg: "rgba(68, 14, 14, 0.85)",
         glowInside: "rgba(155, 17, 30, 0.15)",
         glowHover: "rgba(155, 17, 30, 0.4)",
       };
     case "Ravenclaw":
       return {
-        bg: "rgba(14, 26, 64, 0.85)", // สีน้ำเงินเข้ม
+        bg: "rgba(14, 26, 64, 0.85)",
         glowInside: "rgba(34, 47, 91, 0.2)",
         glowHover: "rgba(40, 80, 180, 0.4)",
       };
     case "Hufflepuff":
       return {
-        bg: "rgba(55, 46, 15, 0.85)", // สีเหลืองทอง/น้ำตาลเข้ม
+        bg: "rgba(55, 46, 15, 0.85)",
         glowInside: "rgba(238, 185, 57, 0.1)",
         glowHover: "rgba(238, 185, 57, 0.3)",
       };
     case "Slytherin":
       return {
-        bg: "rgba(20, 50, 30, 0.85)", // สีเขียวเข้ม (เผื่อมีสมาชิกใหม่)
+        bg: "rgba(20, 50, 30, 0.85)",
         glowInside: "rgba(42, 98, 61, 0.15)",
         glowHover: "rgba(42, 98, 61, 0.4)",
       };
@@ -379,23 +384,21 @@ const getHouseTheme = (house) => {
 
 const MemberCard = ({ member }) => {
   const houseTheme = getHouseTheme(member.house);
-
   return (
     <Paper
       elevation={12}
       sx={{
-        // ❌ ลบ maxWidth และ margin ออก
         bgcolor: houseTheme.bg,
         backdropFilter: "blur(10px)",
         border: "1px solid rgba(212, 175, 55, 0.6)",
         borderRadius: "12px",
-        p: { xs: 1, sm: 1.5, md: 2 }, // ให้ Padding ลดลงอัตโนมัติบนมือถือ
+        p: { xs: 1, sm: 1.5, md: 2 },
         position: "relative",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        width: "100%", // ✨ ให้กว้างเต็ม Grid Cell
-        height: "100%", // ✨ ให้สูงเท่ากันทุกการ์ด
+        width: "100%",
+        height: "100%",
         boxShadow: `0 10px 30px rgba(0,0,0,0.6), inset 0 0 20px ${houseTheme.glowInside}`,
         transition: "all 0.4s ease",
         "&:hover": {
@@ -404,7 +407,6 @@ const MemberCard = ({ member }) => {
         },
       }}
     >
-      {/* ลวดลายตกแต่งมุมการ์ด (ซ่อนบนจอมือถือที่เล็กมากๆ เพื่อไม่ให้รก) */}
       <Box
         sx={{
           display: { xs: "none", sm: "block" },
@@ -457,8 +459,6 @@ const MemberCard = ({ member }) => {
       >
         ✦
       </Box>
-
-      {/* กรอบด้านใน */}
       <Box
         sx={{
           position: "absolute",
@@ -472,8 +472,6 @@ const MemberCard = ({ member }) => {
           zIndex: 0,
         }}
       />
-
-      {/* พื้นที่รูปภาพ */}
       <Box
         sx={{
           width: "100%",
@@ -502,8 +500,6 @@ const MemberCard = ({ member }) => {
           }}
         />
       </Box>
-
-      {/* ข้อมูลสมาชิก */}
       <Box
         sx={{
           zIndex: 1,
@@ -524,13 +520,12 @@ const MemberCard = ({ member }) => {
             lineHeight: 1.2,
             display: "block",
             mb: 0.5,
-            fontSize: { xs: "0.5rem", sm: "0.6rem", md: "0.7rem" }, // ✨ เล็กลงบนมือถือ
+            fontSize: { xs: "0.5rem", sm: "0.6rem", md: "0.7rem" },
             minHeight: { xs: "20px", sm: "28px" },
           }}
         >
           {member.role}
         </Typography>
-
         <Typography
           variant="h5"
           sx={{
@@ -538,13 +533,12 @@ const MemberCard = ({ member }) => {
             fontFamily: "'Sarabun', serif",
             fontWeight: 700,
             mb: 0.5,
-            fontSize: { xs: "0.75rem", sm: "0.9rem", md: "1.1rem" }, // ✨ เล็กลงบนมือถือ
+            fontSize: { xs: "0.75rem", sm: "0.9rem", md: "1.1rem" },
             lineHeight: 1.2,
           }}
         >
           {member.name}
         </Typography>
-
         <Typography
           variant="body2"
           sx={{
@@ -552,13 +546,11 @@ const MemberCard = ({ member }) => {
             mb: 1.5,
             fontFamily: "'Sarabun', sans-serif",
             fontWeight: 300,
-            fontSize: { xs: "0.55rem", sm: "0.7rem", md: "0.8rem" }, // ✨ เล็กลงบนมือถือ
+            fontSize: { xs: "0.55rem", sm: "0.7rem", md: "0.8rem" },
           }}
         >
           ปี {member.year} • {member.house}
         </Typography>
-
-        {/* ปุ่มกด Link */}
         <Box
           sx={{
             display: "flex",
@@ -599,7 +591,6 @@ const MemberCard = ({ member }) => {
               {member.account}
             </Typography>
           </Link>
-
           <Link
             href={member.docUrl}
             target="_blank"
@@ -784,6 +775,7 @@ const members = [
     img: benjaminImg,
   },
 ];
+
 const membersHead = [
   {
     role: "ประธาน\n(การตลาด)",
@@ -818,6 +810,9 @@ export default function ArcaneApparatusClub() {
   const [isOpening, setIsOpening] = useState(false);
   const [renderContent, setRenderContent] = useState(false);
 
+  // ✨ สร้าง State สำหรับสลับหน้าภายในเว็บ ✨
+  const [activePage, setActivePage] = useState("home");
+
   const pageTurnSound = useRef(null);
   const bgMusic = useRef(null);
 
@@ -834,7 +829,6 @@ export default function ArcaneApparatusClub() {
 
   const handleOpenGrimoire = () => {
     if (hasEntered) return;
-
     setHasEntered(true);
     setIsOpening(true);
 
@@ -857,6 +851,12 @@ export default function ArcaneApparatusClub() {
     setTimeout(() => {
       setShowIntro(false);
     }, 3000);
+  };
+
+  // ฟังก์ชันเปลี่ยนหน้าและเลื่อนขึ้นบนสุด
+  const changePage = (pageName) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setActivePage(pageName);
   };
 
   return (
@@ -938,7 +938,6 @@ export default function ArcaneApparatusClub() {
               filter: "blur(0px)",
             },
           },
-          // ปรับแอนิเมชันให้แปรผันตามขนาดหน้าจอ (vw) จะได้ไม่ตกขอบบนมือถือ
           "@keyframes wandSwish": {
             "0%": {
               opacity: 0,
@@ -983,6 +982,7 @@ export default function ArcaneApparatusClub() {
           },
         }}
       />
+
       {showIntro && (
         <Box
           sx={{
@@ -1022,7 +1022,6 @@ export default function ArcaneApparatusClub() {
               }}
             />
           </Box>
-
           <Box
             onClick={handleOpenGrimoire}
             sx={{
@@ -1038,10 +1037,7 @@ export default function ArcaneApparatusClub() {
               opacity: isOpening ? 0 : 1,
               bgcolor: "#120C08",
               cursor: hasEntered ? "default" : "pointer",
-              backgroundImage: `
-                linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 98%, #D4AF37 100%),
-                radial-gradient(circle at center, #1F150D 0%, #0A0604 100%)
-              `,
+              backgroundImage: `linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 98%, #D4AF37 100%), radial-gradient(circle at center, #1F150D 0%, #0A0604 100%)`,
               borderLeft: {
                 xs: "15px solid #050302",
                 sm: "30px solid #050302",
@@ -1059,12 +1055,10 @@ export default function ArcaneApparatusClub() {
               },
             }}
           >
-            {/* --- กรอบสี่เหลี่ยมหน้าปก --- */}
             <Box
               sx={{
                 position: "absolute",
                 top: { xs: "3%", md: "4%" },
-                // <--- แก้ไขจุดนี้: ใช้ calc() ดันขอบซ้ายหลบรอยพับสันหนังสือ เพื่อให้กรอบอยู่ตรงกลางปกพอดี
                 left: {
                   xs: "calc(3% + 25px)",
                   sm: "calc(4% + 40px)",
@@ -1099,8 +1093,6 @@ export default function ArcaneApparatusClub() {
                 />
               ))}
             </Box>
-
-            {/* --- รอยพับสันหนังสือ (Hinge Crease) --- */}
             <Box
               sx={{
                 position: "absolute",
@@ -1115,8 +1107,6 @@ export default function ArcaneApparatusClub() {
                 pointerEvents: "none",
               }}
             />
-
-            {/* --- เส้นทองตกแต่งร่องสันหนังสือ (Gutter Detail) --- */}
             <Box
               sx={{
                 position: "absolute",
@@ -1131,8 +1121,6 @@ export default function ArcaneApparatusClub() {
                 pointerEvents: "none",
               }}
             />
-
-            {/* --- สันนูนของหนังสือเวทมนตร์ (Raised Bands) --- */}
             {["15%", "50%", "85%"].map((topPos, i) => (
               <Box
                 key={i}
@@ -1154,8 +1142,6 @@ export default function ArcaneApparatusClub() {
                 }}
               />
             ))}
-
-            {/* --- พื้นที่เนื้อหาและตัวหนังสือ --- */}
             <Box
               sx={{
                 position: "absolute",
@@ -1167,7 +1153,6 @@ export default function ArcaneApparatusClub() {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                // <--- แก้ไขจุดนี้: เปลี่ยนจาก paddingRight เป็น paddingLeft เพื่อดันเนื้อหาให้ตรงกลางของพื้นที่หน้าปกที่เหลือ
                 paddingLeft: { xs: "25px", sm: "40px", md: "50px" },
                 zIndex: 25,
               }}
@@ -1183,7 +1168,6 @@ export default function ArcaneApparatusClub() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  // <--- แก้ไขจุดนี้: ขยับแกนกลางแอนิเมชันไม้กายสิทธิ์นิดหน่อยให้ตรงกับตัวหนังสือ
                   marginLeft: { xs: "25px", sm: "40px", md: "50px" },
                 }}
               >
@@ -1257,7 +1241,6 @@ export default function ArcaneApparatusClub() {
                   }}
                 />
               </Box>
-
               <Box
                 sx={{
                   animation:
@@ -1336,803 +1319,908 @@ export default function ArcaneApparatusClub() {
         >
           <MagicalBackground />
 
-          {/* --- Hero Section --- */}
-          <ScrollReveal direction="up">
-            <Box sx={{ textAlign: "center", mb: 8, position: "relative" }}>
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: "20%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: 200,
-                  height: 200,
-                  background:
-                    "radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 60%)",
-                  filter: "blur(25px)",
-                  zIndex: -1,
-                  pointerEvents: "none",
-                }}
-              />
-              <Box
-                component="img"
-                src="logo.gif"
-                alt="Arcane Apparatus Club Logo"
-                sx={{
-                  width: { xs: 80, sm: 110 },
-                  height: "auto",
-                  mb: 3,
-                  filter: "drop-shadow(0 0 15px rgba(212,175,55,0.5))",
-                  animation: "float 5s ease-in-out infinite",
-                }}
-              />
-              <Typography
-                variant="overline"
-                sx={{
-                  fontFamily: "'Henny Penny', cursive",
-                  color: "primary.main",
-                  display: "block",
-                  mb: 1,
-                  opacity: 0.9,
-                  letterSpacing: { xs: 1, sm: 2, md: 5 },
-                  textShadow: "0 0 15px rgba(212, 175, 55, 0.4)",
-                  fontSize: { xs: "0.75rem", md: "1rem" },
-                }}
-              >
-                Hogwarts School of Witchcraft and Wizardry
-              </Typography>
-              <Typography
-                variant="h1"
-                sx={{
-                  fontFamily: "'MagicSchoolOne', sans-serif",
-                  fontSize: { xs: "2.2rem", sm: "3rem", md: "4.5rem" },
-                  mb: 2,
-                  background:
-                    "linear-gradient(45deg, #FFFDE4, #D4AF37, #AA7C11)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  textShadow: "0px 4px 20px rgba(212, 175, 55, 0.3)",
-                  letterSpacing: 2,
-                }}
-              >
-                Arcane Apparatus Club
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  mb: 5,
-                  gap: { xs: 1, sm: 2 },
-                }}
-              >
-                <Box
-                  sx={{
-                    height: "1px",
-                    width: { xs: "20px", sm: "40px" },
-                    background: "linear-gradient(90deg, transparent, #D4AF37)",
-                  }}
-                />
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: "text.secondary",
-                    letterSpacing: { xs: 1, sm: 2 },
-                    fontWeight: 300,
-                    fontFamily: "'Sarabun', 'Maitree', sans-serif",
-                    fontSize: { xs: "0.9rem", sm: "1.25rem" },
-                  }}
-                >
-                  ชมรมวิจัยอุปกรณ์เวทมนตร์
-                </Typography>
-                <Box
-                  sx={{
-                    height: "1px",
-                    width: { xs: "20px", sm: "40px" },
-                    background: "linear-gradient(270deg, transparent, #D4AF37)",
-                  }}
-                />
-              </Box>
-
-              {/* Glowing Tag */}
-              <Box
-                sx={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 1.5,
-                  bgcolor: "rgba(212, 175, 55, 0.08)",
-                  backdropFilter: "blur(12px)",
-                  border: "1px solid rgba(212, 175, 55, 0.4)",
-                  px: { xs: 3, md: 4 },
-                  py: 1.2,
-                  borderRadius: "50px",
-                  boxShadow:
-                    "0 8px 25px rgba(212, 175, 55, 0.15), inset 0 0 10px rgba(212, 175, 55, 0.1)",
-                  transition:
-                    "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                  "&:hover": {
-                    bgcolor: "rgba(212, 175, 55, 0.15)",
-                    transform: "translateY(-3px)",
-                    boxShadow:
-                      "0 12px 30px rgba(212, 175, 55, 0.25), inset 0 0 15px rgba(212, 175, 55, 0.2)",
-                  },
-                }}
-              >
-                <AutoFixHighIcon
-                  sx={{ fontSize: { xs: 18, sm: 20 }, color: "primary.main" }}
-                />
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "primary.main",
-                    fontFamily: "'Charm', sans-serif",
-                    letterSpacing: 1.5,
-                    pt: 0.5,
-                    fontWeight: 600,
-                    fontSize: { xs: "0.85rem", sm: "0.95rem" },
-                  }}
-                >
-                  #HWWW_ArcaneAClub
-                </Typography>
-              </Box>
-            </Box>
-          </ScrollReveal>
-
-          {/* --- Roleplay Notice Banner --- */}
-          <ScrollReveal direction="up" delay={0.2}>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 8 }}>
-              <Paper
-                elevation={0}
-                sx={{
-                  bgcolor: "rgba(25, 20, 15, 0.4)",
-                  backdropFilter: "blur(12px)",
-                  border: "1px solid rgba(212, 175, 55, 0.2)",
-                  borderLeft: "3px solid #D4AF37",
-                  borderRight: "3px solid #D4AF37",
-                  borderRadius: "8px",
-                  px: { xs: 2, md: 5 },
-                  py: 1.5,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
-                }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "text.secondary",
-                    fontStyle: "italic",
-                    letterSpacing: 0.5,
-                    fontFamily: "'Sarabun', sans-serif",
-                    textAlign: "center",
-                    fontSize: { xs: "0.8rem", sm: "0.95rem" },
-                  }}
-                >
-                  <strong
-                    style={{
-                      color: "#D4AF37",
-                      fontWeight: 500,
-                      marginRight: "8px",
-                    }}
-                  >
-                    หมายเหตุ :
-                  </strong>
-                  เป็นเพียงข้อมูลสำหรับประกอบการโรลเพลย์
-                  ตัวละครไม่จำเป็นต้องมีเงื่อนไขตามที่กำหนด
-                </Typography>
-              </Paper>
-            </Box>
-          </ScrollReveal>
-
-          {/* --- 1. รายละเอียด & กิจกรรมชมรม & Tip เพิ่มเติม --- */}
-          <ScrollReveal direction="up" delay={0.1}>
-            <MagicalCard
-              sx={{
-                mb: 4,
-                p: { xs: 3, sm: 4, md: 5 },
-                bgcolor: "rgba(10, 8, 12, 0.85)",
-              }}
-            >
-              <SectionTitle
-                icon={AutoStoriesIcon}
-                title="รายละเอียดและกิจกรรมชมรม"
-              />
-
-              <Box
-                sx={{
-                  position: "relative",
-                  p: { xs: 3, md: 5 },
-                  mb: 6,
-                  mt: 2,
-                  bgcolor: "rgba(22, 17, 13, 0.6)",
-                  border: "1px solid rgba(212, 175, 55, 0.4)",
-                  boxShadow: "inset 0 0 30px rgba(0,0,0,0.8)",
-                  display: "flex",
-                  flexDirection: "column",
-                  zIndex: 1,
-                }}
-              >
-                {/* ดาวตกแต่งที่มุมทั้ง 4 */}
-                {[
-                  [-14, -12, "top", "left"],
-                  [-14, -12, "top", "right"],
-                  [-14, -12, "bottom", "left"],
-                  [-14, -12, "bottom", "right"],
-                ].map(([y, x, yPos, xPos], i) => (
+          {/* ============================================================== */}
+          {/* หน้า HOME (หน้าหลักที่มีข้อมูลชมรม) */}
+          {/* ============================================================== */}
+          {activePage === "home" && (
+            <Fade in={activePage === "home"} timeout={800}>
+              <Box>
+                {/* --- Hero Section --- */}
+                <ScrollReveal direction="up">
                   <Box
-                    key={i}
-                    sx={{
-                      position: "absolute",
-                      [yPos]: y,
-                      [xPos]: x,
-                      color: "#D4AF37",
-                      fontSize: 24,
-                      bgcolor: "transparent",
-                    }}
+                    sx={{ textAlign: "center", mb: 8, position: "relative" }}
                   >
-                    ✦
-                  </Box>
-                ))}
-
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 10,
-                    left: 10,
-                    right: 10,
-                    bottom: 10,
-                    border: "1px solid rgba(212, 175, 55, 0.15)",
-                    pointerEvents: "none",
-                  }}
-                />
-
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "text.primary",
-                    mb: 2,
-                    textAlign: { xs: "left", md: "justify" },
-                    textJustify: "inter-word",
-                    fontFamily: "'Sarabun', sans-serif",
-                    position: "relative",
-                    zIndex: 2,
-                  }}
-                >
-                  <Box
-                    component="span"
-                    sx={{
-                      float: "left",
-                      fontSize: { xs: "2.5rem", md: "3.5rem" },
-                      lineHeight: "0.8",
-                      pt: "8px",
-                      pr: "12px",
-                      color: "#D4AF37",
-                      fontFamily: "'Charm', cursive",
-                      textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
-                    }}
-                  >
-                    ช
-                  </Box>
-                  มรมวิจัยอุปกรณ์เวทมนตร์ถูกก่อตั้งขึ้นเพื่อเป็นพื้นที่ชุมนุมของเหล่าพ่อมดแม่มดผู้หลงใหลในการหลอมรวมศาสตร์เวทมนตร์เข้ากับระบบกลไกไปจนถึงงานประดิษฐ์สร้างสรรค์
-                  โดยมีที่ตั้งเป็นห้องว่างห้องหนึ่งลึกเข้าไปในปราสาทฮอกวอตส์
-                </Typography>
-
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "text.primary",
-                    mb: 3,
-                    textAlign: { xs: "left", md: "justify" },
-                    fontFamily: "'Sarabun', sans-serif",
-                    position: "relative",
-                    zIndex: 2,
-                  }}
-                >
-                  ประตูชมรมแห่งนี้เปิดกว้างต้อนรับทุกคนเสมอ
-                  ไม่เว้นแม้แต่ผู้ที่ไม่ได้เป็นสมาชิก
-                  ทุกคนสามารถก้าวเท้าเข้ามาเยี่ยมชมบรรยากาศได้โดยไม่จำเป็นต้องเอ่ยปากขออนุญาต
-                </Typography>
-
-                <Box
-                  sx={{
-                    p: { xs: 2, sm: 2.5 },
-                    bgcolor: "rgba(0, 0, 0, 0.4)",
-                    borderLeft: "4px solid #D4AF37",
-                    position: "relative",
-                    overflow: "hidden",
-                    zIndex: 2,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: -25,
-                      right: -10,
-                      opacity: 0.05,
-                      transform: "rotate(-15deg)",
-                    }}
-                  >
-                    <WarningAmberIcon
-                      sx={{ fontSize: 100, color: "#D4AF37" }}
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: "20%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: 200,
+                        height: 200,
+                        background:
+                          "radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 60%)",
+                        filter: "blur(25px)",
+                        zIndex: -1,
+                        pointerEvents: "none",
+                      }}
                     />
+                    <Box
+                      component="img"
+                      src="logo.gif"
+                      alt="Arcane Apparatus Club Logo"
+                      sx={{
+                        width: { xs: 80, sm: 110 },
+                        height: "auto",
+                        mb: 3,
+                        filter: "drop-shadow(0 0 15px rgba(212,175,55,0.5))",
+                        animation: "float 5s ease-in-out infinite",
+                      }}
+                    />
+                    <Typography
+                      variant="overline"
+                      sx={{
+                        fontFamily: "'Henny Penny', cursive",
+                        color: "primary.main",
+                        display: "block",
+                        mb: 1,
+                        opacity: 0.9,
+                        letterSpacing: { xs: 1, sm: 2, md: 5 },
+                        textShadow: "0 0 15px rgba(212, 175, 55, 0.4)",
+                        fontSize: { xs: "0.75rem", md: "1rem" },
+                      }}
+                    >
+                      Hogwarts School of Witchcraft and Wizardry
+                    </Typography>
+                    <Typography
+                      variant="h1"
+                      sx={{
+                        fontFamily: "'MagicSchoolOne', sans-serif",
+                        fontSize: { xs: "2.2rem", sm: "3rem", md: "4.5rem" },
+                        mb: 2,
+                        background:
+                          "linear-gradient(45deg, #FFFDE4, #D4AF37, #AA7C11)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        textShadow: "0px 4px 20px rgba(212, 175, 55, 0.3)",
+                        letterSpacing: 2,
+                      }}
+                    >
+                      Arcane Apparatus Club
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mb: 5,
+                        gap: { xs: 1, sm: 2 },
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          height: "1px",
+                          width: { xs: "20px", sm: "40px" },
+                          background:
+                            "linear-gradient(90deg, transparent, #D4AF37)",
+                        }}
+                      />
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          color: "text.secondary",
+                          letterSpacing: { xs: 1, sm: 2 },
+                          fontWeight: 300,
+                          fontFamily: "'Sarabun', 'Maitree', sans-serif",
+                          fontSize: { xs: "0.9rem", sm: "1.25rem" },
+                        }}
+                      >
+                        ชมรมวิจัยอุปกรณ์เวทมนตร์
+                      </Typography>
+                      <Box
+                        sx={{
+                          height: "1px",
+                          width: { xs: "20px", sm: "40px" },
+                          background:
+                            "linear-gradient(270deg, transparent, #D4AF37)",
+                        }}
+                      />
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 1.5,
+                        bgcolor: "rgba(212, 175, 55, 0.08)",
+                        backdropFilter: "blur(12px)",
+                        border: "1px solid rgba(212, 175, 55, 0.4)",
+                        px: { xs: 3, md: 4 },
+                        py: 1.2,
+                        borderRadius: "50px",
+                        boxShadow:
+                          "0 8px 25px rgba(212, 175, 55, 0.15), inset 0 0 10px rgba(212, 175, 55, 0.1)",
+                        transition:
+                          "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                        "&:hover": {
+                          bgcolor: "rgba(212, 175, 55, 0.15)",
+                          transform: "translateY(-3px)",
+                          boxShadow:
+                            "0 12px 30px rgba(212, 175, 55, 0.25), inset 0 0 15px rgba(212, 175, 55, 0.2)",
+                        },
+                      }}
+                    >
+                      <AutoFixHighIcon
+                        sx={{
+                          fontSize: { xs: 18, sm: 20 },
+                          color: "primary.main",
+                        }}
+                      />
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "primary.main",
+                          fontFamily: "'Charm', sans-serif",
+                          letterSpacing: 1.5,
+                          pt: 0.5,
+                          fontWeight: 600,
+                          fontSize: { xs: "0.85rem", sm: "0.95rem" },
+                        }}
+                      >
+                        #HWWW_ArcaneAClub
+                      </Typography>
+                    </Box>
                   </Box>
-                  <Typography
-                    variant="body2"
+                </ScrollReveal>
+
+                {/* --- Roleplay Notice Banner --- */}
+                <ScrollReveal direction="up" delay={0.2}>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "center", mb: 8 }}
+                  >
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        bgcolor: "rgba(25, 20, 15, 0.4)",
+                        backdropFilter: "blur(12px)",
+                        border: "1px solid rgba(212, 175, 55, 0.2)",
+                        borderLeft: "3px solid #D4AF37",
+                        borderRight: "3px solid #D4AF37",
+                        borderRadius: "8px",
+                        px: { xs: 2, md: 5 },
+                        py: 1.5,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 2,
+                        boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+                      }}
+                    >
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "text.secondary",
+                          fontStyle: "italic",
+                          letterSpacing: 0.5,
+                          fontFamily: "'Sarabun', sans-serif",
+                          textAlign: "center",
+                          fontSize: { xs: "0.8rem", sm: "0.95rem" },
+                        }}
+                      >
+                        <strong
+                          style={{
+                            color: "#D4AF37",
+                            fontWeight: 500,
+                            marginRight: "8px",
+                          }}
+                        >
+                          หมายเหตุ :
+                        </strong>{" "}
+                        เป็นเพียงข้อมูลสำหรับประกอบการโรลเพลย์
+                        ตัวละครไม่จำเป็นต้องมีเงื่อนไขตามที่กำหนด
+                      </Typography>
+                    </Paper>
+                  </Box>
+                </ScrollReveal>
+
+                {/* ✨ ปุ่มเชื่อมไปหน้ากิจกรรม ✨ */}
+                <ScrollReveal direction="up" delay={0.2}>
+                  <Box
+                    sx={{ mb: 6, display: "flex", justifyContent: "center" }}
+                  >
+                    <Button
+                      onClick={() => changePage("activities")}
+                      startIcon={<MeetingRoomIcon />}
+                      sx={{
+                        background:
+                          "linear-gradient(45deg, #110A1F 0%, #2A1744 100%)",
+                        color: "#D4AF37",
+                        border: "1px solid rgba(212, 175, 55, 0.5)",
+                        borderRadius: "50px",
+                        px: { xs: 4, md: 6 },
+                        py: { xs: 1.5, md: 2 },
+                        fontSize: { xs: "1rem", md: "1.2rem" },
+                        fontFamily: "'Sarabun', sans-serif",
+                        fontWeight: 600,
+                        boxShadow:
+                          "0 4px 15px rgba(212, 175, 55, 0.15), inset 0 0 20px rgba(212,175,55,0.1)",
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          background:
+                            "linear-gradient(45deg, #1A0F2E 0%, #3B215E 100%)",
+                          boxShadow:
+                            "0 6px 20px rgba(212, 175, 55, 0.3), inset 0 0 25px rgba(212,175,55,0.2)",
+                          transform: "translateY(-3px) scale(1.02)",
+                          borderColor: "#D4AF37",
+                        },
+                      }}
+                    >
+                      เปิดประตูสู่ห้องกิจกรรม
+                    </Button>
+                  </Box>
+                </ScrollReveal>
+
+                {/* --- 1. รายละเอียด & กิจกรรมชมรม & Tip เพิ่มเติม --- */}
+                <ScrollReveal direction="up" delay={0.1}>
+                  <MagicalCard
+                    sx={{
+                      mb: 4,
+                      p: { xs: 3, sm: 4, md: 5 },
+                      bgcolor: "rgba(10, 8, 12, 0.85)",
+                    }}
+                  >
+                    <SectionTitle
+                      icon={AutoStoriesIcon}
+                      title="รายละเอียดและกิจกรรมชมรม"
+                    />
+                    <Box
+                      sx={{
+                        position: "relative",
+                        p: { xs: 3, md: 5 },
+                        mb: 6,
+                        mt: 2,
+                        bgcolor: "rgba(22, 17, 13, 0.6)",
+                        border: "1px solid rgba(212, 175, 55, 0.4)",
+                        boxShadow: "inset 0 0 30px rgba(0,0,0,0.8)",
+                        display: "flex",
+                        flexDirection: "column",
+                        zIndex: 1,
+                      }}
+                    >
+                      {[
+                        [-14, -12, "top", "left"],
+                        [-14, -12, "top", "right"],
+                        [-14, -12, "bottom", "left"],
+                        [-14, -12, "bottom", "right"],
+                      ].map(([y, x, yPos, xPos], i) => (
+                        <Box
+                          key={i}
+                          sx={{
+                            position: "absolute",
+                            [yPos]: y,
+                            [xPos]: x,
+                            color: "#D4AF37",
+                            fontSize: 24,
+                            bgcolor: "transparent",
+                          }}
+                        >
+                          ✦
+                        </Box>
+                      ))}
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: 10,
+                          left: 10,
+                          right: 10,
+                          bottom: 10,
+                          border: "1px solid rgba(212, 175, 55, 0.15)",
+                          pointerEvents: "none",
+                        }}
+                      />
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          color: "text.primary",
+                          mb: 2,
+                          textAlign: { xs: "left", md: "justify" },
+                          textJustify: "inter-word",
+                          fontFamily: "'Sarabun', sans-serif",
+                          position: "relative",
+                          zIndex: 2,
+                        }}
+                      >
+                        <Box
+                          component="span"
+                          sx={{
+                            float: "left",
+                            fontSize: { xs: "2.5rem", md: "3.5rem" },
+                            lineHeight: "0.8",
+                            pt: "8px",
+                            pr: "12px",
+                            color: "#D4AF37",
+                            fontFamily: "'Charm', cursive",
+                            textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+                          }}
+                        >
+                          ช
+                        </Box>
+                        มรมวิจัยอุปกรณ์เวทมนตร์ถูกก่อตั้งขึ้นเพื่อเป็นพื้นที่ชุมนุมของเหล่าพ่อมดแม่มดผู้หลงใหลในการหลอมรวมศาสตร์เวทมนตร์เข้ากับระบบกลไกไปจนถึงงานประดิษฐ์สร้างสรรค์
+                        โดยมีที่ตั้งเป็นห้องว่างห้องหนึ่งลึกเข้าไปในปราสาทฮอกวอตส์
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          color: "text.primary",
+                          mb: 3,
+                          textAlign: { xs: "left", md: "justify" },
+                          fontFamily: "'Sarabun', sans-serif",
+                          position: "relative",
+                          zIndex: 2,
+                        }}
+                      >
+                        ประตูชมรมแห่งนี้เปิดกว้างต้อนรับทุกคนเสมอ
+                        ไม่เว้นแม้แต่ผู้ที่ไม่ได้เป็นสมาชิก
+                        ทุกคนสามารถก้าวเท้าเข้ามาเยี่ยมชมบรรยากาศได้โดยไม่จำเป็นต้องเอ่ยปากขออนุญาต
+                      </Typography>
+                      <Box
+                        sx={{
+                          p: { xs: 2, sm: 2.5 },
+                          bgcolor: "rgba(0, 0, 0, 0.4)",
+                          borderLeft: "4px solid #D4AF37",
+                          position: "relative",
+                          overflow: "hidden",
+                          zIndex: 2,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: -25,
+                            right: -10,
+                            opacity: 0.05,
+                            transform: "rotate(-15deg)",
+                          }}
+                        >
+                          <WarningAmberIcon
+                            sx={{ fontSize: 100, color: "#D4AF37" }}
+                          />
+                        </Box>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: "text.secondary",
+                            lineHeight: 1.8,
+                            position: "relative",
+                            fontFamily: "'Sarabun', sans-serif",
+                          }}
+                        >
+                          (ทว่าโปรดระมัดระวังอย่าเผลอไปหยิบจับสิ่งใดก่อนขอเชียวล่ะ
+                          ถ้าไม่อยากเสี่ยงสูญเสียอวัยวะเพราะอุปกรณ์เกิดทำงานผิดพลาด
+                          หรือต้องเจอกับเสียงแผดลั่นของสมาชิกสักคนที่ตะโกนขับไล่
+                          โทษฐานดันไปแตะต้อง{" "}
+                          <Box
+                            component="strong"
+                            sx={{
+                              color: "#D4AF37",
+                              fontSize: "1.05rem",
+                              fontWeight: 600,
+                              letterSpacing: 1,
+                            }}
+                          >
+                            ลูกรัก
+                          </Box>{" "}
+                          ของพวกเขาเข้า)
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "text.primary",
+                        mb: 2,
+                        fontStyle: "italic",
+                        fontWeight: 500,
+                        fontFamily: "'Sarabun', sans-serif",
+                      }}
+                    >
+                      กิจกรรมภายในชมรมมีความหลากหลาย
+                      ขึ้นอยู่กับความถนัดของสมาชิกแต่ละคนว่าต้องการทำงานแบบใด
+                      รวบรวมไว้ได้คร่าว ๆ ดังนี้ :
+                    </Typography>
+
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1.5,
+                      }}
+                    >
+                      {/* กิจกรรม 1 */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          p: { xs: 1.5, md: 2 },
+                          bgcolor: "rgba(20, 15, 10, 0.4)",
+                          borderRadius: "8px",
+                          border: "1px solid rgba(212, 175, 55, 0.1)",
+                          transition: "all 0.2s ease",
+                          "&:hover": {
+                            bgcolor: "rgba(212, 175, 55, 0.08)",
+                            borderColor: "rgba(212, 175, 55, 0.3)",
+                            transform: "translateY(-2px)",
+                          },
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            p: 1,
+                            borderRadius: "6px",
+                            bgcolor: "rgba(212, 175, 55, 0.1)",
+                            display: "flex",
+                            mr: 2,
+                            flexShrink: 0,
+                          }}
+                        >
+                          <BuildIcon
+                            sx={{ color: "primary.main", fontSize: 22 }}
+                          />
+                        </Box>
+                        <Box>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: "primary.main",
+                              fontWeight: 600,
+                              fontSize: "1rem",
+                              mb: 0.2,
+                              fontFamily: "'Sarabun', sans-serif",
+                            }}
+                          >
+                            รับซ่อมอุปกรณ์เวทมนตร์
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: "text.secondary",
+                              fontSize: "0.85rem",
+                              lineHeight: 1.5,
+                              fontFamily: "'Sarabun', sans-serif",
+                            }}
+                          >
+                            อาทิ ไม้กวาด (รวมไปถึงของจิปาถะอย่าง กระเป๋า เสื้อ
+                            รองเท้า ด้วย)
+                          </Typography>
+                        </Box>
+                      </Box>
+                      {/* กิจกรรม 2 */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          p: { xs: 1.5, md: 2 },
+                          bgcolor: "rgba(20, 15, 10, 0.4)",
+                          borderRadius: "8px",
+                          border: "1px solid rgba(212, 175, 55, 0.1)",
+                          transition: "all 0.2s ease",
+                          "&:hover": {
+                            bgcolor: "rgba(212, 175, 55, 0.08)",
+                            borderColor: "rgba(212, 175, 55, 0.3)",
+                            transform: "translateY(-2px)",
+                          },
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            p: 1,
+                            borderRadius: "6px",
+                            bgcolor: "rgba(212, 175, 55, 0.1)",
+                            display: "flex",
+                            mr: 2,
+                            flexShrink: 0,
+                          }}
+                        >
+                          <ChatIcon
+                            sx={{ color: "primary.main", fontSize: 22 }}
+                          />
+                        </Box>
+                        <Box>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: "primary.main",
+                              fontWeight: 600,
+                              fontSize: "1rem",
+                              mb: 0.2,
+                              fontFamily: "'Sarabun', sans-serif",
+                            }}
+                          >
+                            ให้คำปรึกษาเกี่ยวกับอุปกรณ์ฯ
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: "text.secondary",
+                              fontSize: "0.85rem",
+                              lineHeight: 1.5,
+                              fontFamily: "'Sarabun', sans-serif",
+                            }}
+                          >
+                            (เป็นคำปรึกษาทั่วไป
+                            หากอยากได้ของมีประโยชน์เชิญร้านที่ตรอกไดอากอน)
+                          </Typography>
+                        </Box>
+                      </Box>
+                      {/* กิจกรรม 3 */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          p: { xs: 1.5, md: 2 },
+                          bgcolor: "rgba(20, 15, 10, 0.4)",
+                          borderRadius: "8px",
+                          border: "1px solid rgba(212, 175, 55, 0.1)",
+                          transition: "all 0.2s ease",
+                          "&:hover": {
+                            bgcolor: "rgba(212, 175, 55, 0.08)",
+                            borderColor: "rgba(212, 175, 55, 0.3)",
+                            transform: "translateY(-2px)",
+                          },
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            p: 1,
+                            borderRadius: "6px",
+                            bgcolor: "rgba(155, 17, 30, 0.15)",
+                            display: "flex",
+                            mr: 2,
+                            flexShrink: 0,
+                          }}
+                        >
+                          <CleaningServicesIcon
+                            sx={{ color: "secondary.main", fontSize: 22 }}
+                          />
+                        </Box>
+                        <Box>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: "secondary.main",
+                              fontWeight: 600,
+                              fontSize: "1rem",
+                              mb: 0.2,
+                              fontFamily: "'Sarabun', sans-serif",
+                            }}
+                          >
+                            สำคัญ
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: "text.secondary",
+                              fontSize: "0.85rem",
+                              lineHeight: 1.5,
+                              fontFamily: "'Sarabun', sans-serif",
+                            }}
+                          >
+                            ทำความสะอาดห้องชมรมทุกสุดสัปดาห์ (ขาดไม่ได้!)
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+
+                    {/* Tip เพิ่มเติม */}
+                    <WarningCard
+                      sx={{
+                        mt: 3,
+                        p: { xs: 3, md: 3 },
+                        display: "flex",
+                        flexDirection: { xs: "column", sm: "row" },
+                        alignItems: { xs: "center", sm: "flex-start" },
+                        gap: 3,
+                        bgcolor: "rgba(30, 25, 15, 0.7)",
+                        border: "1px solid rgba(212, 175, 55, 0.4)",
+                        animation: "none",
+                        boxShadow: "0 4px 20px rgba(212, 175, 55, 0.15)",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          position: "relative",
+                          flexShrink: 0,
+                          mt: { sm: 1 },
+                        }}
+                      >
+                        <LightbulbIcon
+                          sx={{
+                            color: "primary.main",
+                            fontSize: 40,
+                            filter:
+                              "drop-shadow(0 0 10px rgba(212,175,55,0.6))",
+                          }}
+                        />
+                      </Box>
+                      <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            color: "primary.main",
+                            fontFamily: "'Sarabun', sans-serif",
+                            fontWeight: 700,
+                            mb: 1.5,
+                            letterSpacing: 1,
+                          }}
+                        >
+                          Tip เพิ่มเติม
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 1.5,
+                            textAlign: "left",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              display: "flex",
+                              gap: 1.5,
+                              alignItems: "flex-start",
+                            }}
+                          >
+                            <ChevronRightIcon
+                              sx={{
+                                color: "primary.main",
+                                fontSize: 20,
+                                mt: 0.2,
+                              }}
+                            />
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: "rgba(234, 224, 213, 0.9)",
+                                lineHeight: 1.7,
+                                fontFamily: "'Sarabun', sans-serif",
+                              }}
+                            >
+                              ห้องชมรมรกมาก
+                              เต็มไปด้วยอุปกรณ์เวทมนตร์เกลื่อนกลาดและลอยอยู่กลางอากาศ
+                              ระวังเท้าและหัวของคุณเอาไว้ให้ดี
+                            </Typography>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              gap: 1.5,
+                              alignItems: "flex-start",
+                            }}
+                          >
+                            <ChevronRightIcon
+                              sx={{
+                                color: "primary.main",
+                                fontSize: 20,
+                                mt: 0.2,
+                              }}
+                            />
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: "rgba(234, 224, 213, 0.9)",
+                                lineHeight: 1.7,
+                                fontFamily: "'Sarabun', sans-serif",
+                              }}
+                            >
+                              มีชื่อเสียงโจษจันว่าเป็นชมรมที่มีทุกอย่างยกเว้นทางเดิน
+                              (แต่ดูเหมือนว่าปัญหานี้กำลังจะหายไปเพราะรองประธานชมรม)
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </WarningCard>
+                  </MagicalCard>
+                </ScrollReveal>
+
+                {/* --- 2. คุณสมบัติสมาชิก --- */}
+                <ScrollReveal direction="left" delay={0.1}>
+                  <MagicalCard sx={{ mb: 6, p: { xs: 3, sm: 4, md: 5 } }}>
+                    <SectionTitle
+                      icon={AutoFixHighIcon}
+                      title="คุณสมบัติของสมาชิก"
+                    />
+                    <Grid container spacing={{ xs: 2, md: 4 }}>
+                      <Grid item xs={12} sm={6}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            gap: 2,
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              mt: 0.8,
+                              width: 6,
+                              height: 6,
+                              borderRadius: "50%",
+                              bgcolor: "primary.main",
+                              flexShrink: 0,
+                              boxShadow: "0 0 5px #D4AF37",
+                            }}
+                          />
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: "text.primary",
+                              lineHeight: 1.6,
+                              fontFamily: "'Sarabun', sans-serif",
+                            }}
+                          >
+                            ชื่นชอบการสร้างสรรค์ / ค้นคว้า / ประดิษฐ์ สิ่งของ{" "}
+                            <br />
+                            <Box
+                              component="span"
+                              sx={{
+                                color: "#B0B8C1",
+                                fontSize: "0.85rem",
+                                fontFamily: "'Sarabun', sans-serif",
+                              }}
+                            >
+                              (ไม่จำเป็นว่าต้องเป็นอุปกรณ์เวทมนตร์)
+                            </Box>
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            gap: 2,
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              mt: 0.8,
+                              width: 6,
+                              height: 6,
+                              borderRadius: "50%",
+                              bgcolor: "primary.main",
+                              flexShrink: 0,
+                              boxShadow: "0 0 5px #D4AF37",
+                            }}
+                          />
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: "text.primary",
+                              lineHeight: 1.6,
+                              fontFamily: "'Sarabun', sans-serif",
+                            }}
+                          >
+                            มีสัญชาตญาณเอาตัวรอดสูง(?)
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </MagicalCard>
+                </ScrollReveal>
+
+                {/* --- 3. ทำเนียบสมาชิก (Members) --- */}
+                <ScrollReveal direction="up" delay={0.2}>
+                  <Box sx={{ mt: 8, mb: 4 }}>
+                    <SectionTitle icon={CastleIcon} title="สมาชิก" />
+                    {/* ประธาน & รองประธาน */}
+                    <Box
+                      sx={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(2, 1fr)",
+                        columnGap: { xs: 2, sm: 3, md: 4 },
+                        rowGap: 4,
+                        justifyContent: "center",
+                        justifyItems: "center",
+                        maxWidth: "600px",
+                        mx: "auto",
+                        mt: 5,
+                        px: { xs: 1, sm: 2 },
+                      }}
+                    >
+                      {membersHead.map((member, index) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            width: "100%",
+                            maxWidth: "250px",
+                            display: "flex",
+                            justifyContent: "center",
+                            animation: `fadeInUpDelay 0.8s ease forwards ${0.2 * index}s`,
+                            opacity: 0,
+                          }}
+                        >
+                          <MemberCard member={member} />
+                        </Box>
+                      ))}
+                    </Box>
+                    {/* สมาชิกทั่วไป */}
+                    <Box
+                      sx={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(3, 1fr)",
+                        columnGap: { xs: 2, sm: 4, md: 6 },
+                        rowGap: { xs: 5, sm: 6, md: 8 },
+                        maxWidth: "950px",
+                        mx: "auto",
+                        mt: 8,
+                        px: 2,
+                        justifyItems: "center",
+                      }}
+                    >
+                      {members.map((member, index) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            animation: `fadeInUpDelay 0.8s ease forwards ${0.2 * index}s`,
+                            opacity: 0,
+                          }}
+                        >
+                          <Box sx={{ width: "100%", maxWidth: "250px" }}>
+                            <MemberCard member={member} />
+                          </Box>
+                        </Box>
+                      ))}
+                    </Box>
+                  </Box>
+                </ScrollReveal>
+              </Box>
+            </Fade>
+          )}
+
+          {/* ============================================================== */}
+          {/* หน้า ACTIVITIES (หน้ากิจกรรมทดสอบดวง) */}
+          {/* ============================================================== */}
+          {activePage === "activities" && (
+            <Fade in={activePage === "activities"} timeout={800}>
+              <Box sx={{ pt: 2, pb: 6 }}>
+                {/* ปุ่มกลับหน้าหลัก */}
+                <Box
+                  sx={{ mb: 4, display: "flex", justifyContent: "flex-start" }}
+                >
+                  <Button
+                    onClick={() => changePage("home")}
+                    startIcon={<KeyboardReturnIcon />}
                     sx={{
                       color: "text.secondary",
-                      lineHeight: 1.8,
-                      position: "relative",
                       fontFamily: "'Sarabun', sans-serif",
-                    }}
-                  >
-                    (ทว่าโปรดระมัดระวังอย่าเผลอไปหยิบจับสิ่งใดก่อนขอเชียวล่ะ
-                    ถ้าไม่อยากเสี่ยงสูญเสียอวัยวะเพราะอุปกรณ์เกิดทำงานผิดพลาด
-                    หรือต้องเจอกับเสียงแผดลั่นของสมาชิกสักคนที่ตะโกนขับไล่
-                    โทษฐานดันไปแตะต้อง{" "}
-                    <Box
-                      component="strong"
-                      sx={{
+                      fontWeight: 500,
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: "20px",
+                      px: 3,
+                      py: 1,
+                      bgcolor: "rgba(0,0,0,0.4)",
+                      backdropFilter: "blur(5px)",
+                      "&:hover": {
                         color: "#D4AF37",
-                        fontSize: "1.05rem",
-                        fontWeight: 600,
-                        letterSpacing: 1,
-                      }}
-                    >
-                      ลูกรัก
-                    </Box>{" "}
-                    ของพวกเขาเข้า)
-                  </Typography>
+                        bgcolor: "rgba(212, 175, 55, 0.1)",
+                        borderColor: "rgba(212, 175, 55, 0.3)",
+                      },
+                    }}
+                  >
+                    กลับสู่โถงทางเดินหลัก
+                  </Button>
+                </Box>
+
+                {/* คอมโพเนนต์กิจกรรม */}
+                <Box sx={{ mb: 6 }}>
+                  
+                  <RandomArtifactPicker />
+                  <ArtifactSlotMachine />
                 </Box>
               </Box>
-
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "text.primary",
-                  mb: 2,
-                  fontStyle: "italic",
-                  fontWeight: 500,
-                  fontFamily: "'Sarabun', sans-serif",
-                }}
-              >
-                กิจกรรมภายในชมรมมีความหลากหลาย
-                ขึ้นอยู่กับความถนัดของสมาชิกแต่ละคนว่าต้องการทำงานแบบใด
-                รวบรวมไว้ได้คร่าว ๆ ดังนี้ :
-              </Typography>
-
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-                {/* --- กิจกรรมที่ 1 --- */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    p: { xs: 1.5, md: 2 },
-                    bgcolor: "rgba(20, 15, 10, 0.4)",
-                    borderRadius: "8px",
-                    border: "1px solid rgba(212, 175, 55, 0.1)",
-                    transition: "all 0.2s ease",
-                    "&:hover": {
-                      bgcolor: "rgba(212, 175, 55, 0.08)",
-                      borderColor: "rgba(212, 175, 55, 0.3)",
-                      transform: "translateY(-2px)",
-                    },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      p: 1,
-                      borderRadius: "6px",
-                      bgcolor: "rgba(212, 175, 55, 0.1)",
-                      display: "flex",
-                      mr: 2,
-                      flexShrink: 0,
-                    }}
-                  >
-                    <BuildIcon sx={{ color: "primary.main", fontSize: 22 }} />
-                  </Box>
-                  <Box>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "primary.main",
-                        fontWeight: 600,
-                        fontSize: "1rem",
-                        mb: 0.2,
-                        fontFamily: "'Sarabun', sans-serif",
-                      }}
-                    >
-                      รับซ่อมอุปกรณ์เวทมนตร์
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "text.secondary",
-                        fontSize: "0.85rem",
-                        lineHeight: 1.5,
-                        fontFamily: "'Sarabun', sans-serif",
-                      }}
-                    >
-                      อาทิ ไม้กวาด (รวมไปถึงของจิปาถะอย่าง กระเป๋า เสื้อ รองเท้า
-                      ด้วย)
-                    </Typography>
-                  </Box>
-                </Box>
-
-                {/* --- กิจกรรมที่ 2 --- */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    p: { xs: 1.5, md: 2 },
-                    bgcolor: "rgba(20, 15, 10, 0.4)",
-                    borderRadius: "8px",
-                    border: "1px solid rgba(212, 175, 55, 0.1)",
-                    transition: "all 0.2s ease",
-                    "&:hover": {
-                      bgcolor: "rgba(212, 175, 55, 0.08)",
-                      borderColor: "rgba(212, 175, 55, 0.3)",
-                      transform: "translateY(-2px)",
-                    },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      p: 1,
-                      borderRadius: "6px",
-                      bgcolor: "rgba(212, 175, 55, 0.1)",
-                      display: "flex",
-                      mr: 2,
-                      flexShrink: 0,
-                    }}
-                  >
-                    <ChatIcon sx={{ color: "primary.main", fontSize: 22 }} />
-                  </Box>
-                  <Box>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "primary.main",
-                        fontWeight: 600,
-                        fontSize: "1rem",
-                        mb: 0.2,
-                        fontFamily: "'Sarabun', sans-serif",
-                      }}
-                    >
-                      ให้คำปรึกษาเกี่ยวกับอุปกรณ์ฯ
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "text.secondary",
-                        fontSize: "0.85rem",
-                        lineHeight: 1.5,
-                        fontFamily: "'Sarabun', sans-serif",
-                      }}
-                    >
-                      (เป็นคำปรึกษาทั่วไป
-                      หากอยากได้ของมีประโยชน์เชิญร้านที่ตรอกไดอากอน)
-                    </Typography>
-                  </Box>
-                </Box>
-
-                {/* --- กิจกรรมที่ 3 --- */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    p: { xs: 1.5, md: 2 },
-                    bgcolor: "rgba(20, 15, 10, 0.4)",
-                    borderRadius: "8px",
-                    border: "1px solid rgba(212, 175, 55, 0.1)",
-                    transition: "all 0.2s ease",
-                    "&:hover": {
-                      bgcolor: "rgba(212, 175, 55, 0.08)",
-                      borderColor: "rgba(212, 175, 55, 0.3)",
-                      transform: "translateY(-2px)",
-                    },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      p: 1,
-                      borderRadius: "6px",
-                      bgcolor: "rgba(155, 17, 30, 0.15)",
-                      display: "flex",
-                      mr: 2,
-                      flexShrink: 0,
-                    }}
-                  >
-                    <CleaningServicesIcon
-                      sx={{ color: "secondary.main", fontSize: 22 }}
-                    />
-                  </Box>
-                  <Box>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "secondary.main",
-                        fontWeight: 600,
-                        fontSize: "1rem",
-                        mb: 0.2,
-                        fontFamily: "'Sarabun', sans-serif",
-                      }}
-                    >
-                      สำคัญ
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "text.secondary",
-                        fontSize: "0.85rem",
-                        lineHeight: 1.5,
-                        fontFamily: "'Sarabun', sans-serif",
-                      }}
-                    >
-                      ทำความสะอาดห้องชมรมทุกสุดสัปดาห์ (ขาดไม่ได้!)
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
-
-              {/* --- WarningCard (Tip เพิ่มเติม) --- */}
-              <WarningCard
-                sx={{
-                  mt: 3,
-                  p: { xs: 3, md: 3 },
-                  display: "flex",
-                  flexDirection: { xs: "column", sm: "row" },
-                  alignItems: { xs: "center", sm: "flex-start" },
-                  gap: 3,
-                  bgcolor: "rgba(30, 25, 15, 0.7)",
-                  border: "1px solid rgba(212, 175, 55, 0.4)",
-                  animation: "none",
-                  boxShadow: "0 4px 20px rgba(212, 175, 55, 0.15)",
-                }}
-              >
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: "3px",
-                    background:
-                      "linear-gradient(90deg, transparent, #D4AF37, transparent)",
-                  }}
-                />
-
-                <Box
-                  sx={{ position: "relative", flexShrink: 0, mt: { sm: 1 } }}
-                >
-                  <LightbulbIcon
-                    sx={{
-                      color: "primary.main",
-                      fontSize: 40,
-                      filter: "drop-shadow(0 0 10px rgba(212,175,55,0.6))",
-                    }}
-                  />
-                </Box>
-                <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      color: "primary.main",
-                      fontFamily: "'Sarabun', sans-serif",
-                      fontWeight: 700,
-                      mb: 1.5,
-                      letterSpacing: 1,
-                    }}
-                  >
-                    Tip เพิ่มเติม
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 1.5,
-                      textAlign: "left",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        gap: 1.5,
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <ChevronRightIcon
-                        sx={{ color: "primary.main", fontSize: 20, mt: 0.2 }}
-                      />
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: "rgba(234, 224, 213, 0.9)",
-                          lineHeight: 1.7,
-                          fontFamily: "'Sarabun', sans-serif",
-                        }}
-                      >
-                        ห้องชมรมรกมาก
-                        เต็มไปด้วยอุปกรณ์เวทมนตร์เกลื่อนกลาดและลอยอยู่กลางอากาศ
-                        ระวังเท้าและหัวของคุณเอาไว้ให้ดี
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        gap: 1.5,
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <ChevronRightIcon
-                        sx={{ color: "primary.main", fontSize: 20, mt: 0.2 }}
-                      />
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: "rgba(234, 224, 213, 0.9)",
-                          lineHeight: 1.7,
-                          fontFamily: "'Sarabun', sans-serif",
-                        }}
-                      >
-                        มีชื่อเสียงโจษจันว่าเป็นชมรมที่มีทุกอย่างยกเว้นทางเดิน
-                        (แต่ดูเหมือนว่าปัญหานี้กำลังจะหายไปเพราะรองประธานชมรม)
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-              </WarningCard>
-            </MagicalCard>
-          </ScrollReveal>
-
-          {/* --- 2. คุณสมบัติสมาชิก --- */}
-          <ScrollReveal direction="left" delay={0.1}>
-            <MagicalCard sx={{ mb: 6, p: { xs: 3, sm: 4, md: 5 } }}>
-              <SectionTitle icon={AutoFixHighIcon} title="คุณสมบัติของสมาชิก" />
-
-              {/* เพิ่ม Grid container ตรงนี้เพื่อให้ Grid item ทำงานได้อย่างถูกต้องและ responsive */}
-              <Grid container spacing={{ xs: 2, md: 4 }}>
-                <Grid item xs={12} sm={6}>
-                  <Box
-                    sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}
-                  >
-                    <Box
-                      sx={{
-                        mt: 0.8,
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        bgcolor: "primary.main",
-                        flexShrink: 0,
-                        boxShadow: "0 0 5px #D4AF37",
-                      }}
-                    />
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "text.primary",
-                        lineHeight: 1.6,
-                        fontFamily: "'Sarabun', sans-serif",
-                      }}
-                    >
-                      ชื่นชอบการสร้างสรรค์ / ค้นคว้า / ประดิษฐ์ สิ่งของ <br />
-                      <Box
-                        component="span"
-                        sx={{
-                          color: "#B0B8C1",
-                          fontSize: "0.85rem",
-                          fontFamily: "'Sarabun', sans-serif",
-                        }}
-                      >
-                        (ไม่จำเป็นว่าต้องเป็นอุปกรณ์เวทมนตร์)
-                      </Box>
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box
-                    sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}
-                  >
-                    <Box
-                      sx={{
-                        mt: 0.8,
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        bgcolor: "primary.main",
-                        flexShrink: 0,
-                        boxShadow: "0 0 5px #D4AF37",
-                      }}
-                    />
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "text.primary",
-                        lineHeight: 1.6,
-                        fontFamily: "'Sarabun', sans-serif",
-                      }}
-                    >
-                      มีสัญชาตญาณเอาตัวรอดสูง(?)
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-            </MagicalCard>
-          </ScrollReveal>
-          {/* --- 3. ทำเนียบสมาชิก (Members) --- */}
-          <ScrollReveal direction="up" delay={0.2}>
-            <Box sx={{ mt: 8, mb: 4 }}>
-              <SectionTitle icon={CastleIcon} title="สมาชิก" />
-
-              {/* ---------------------------------------------------- */}
-              {/* ส่วนที่ 1: ประธาน & รองประธาน (membersHead) */}
-              {/* ---------------------------------------------------- */}
-              <Box
-                sx={{
-                  display: "grid", // ✨ เปลี่ยนมาใช้ Grid เพื่อล็อคจำนวนคอลัมน์
-                  gridTemplateColumns: "repeat(2, 1fr)", // ✨ บังคับ 2 คอลัมน์เสมอ (ไม่ว่าจอเล็กแค่ไหน)
-                  columnGap: { xs: 2, sm: 3, md: 4 }, // ระยะห่างซ้ายขวา
-                  rowGap: 4,
-                  justifyContent: "center", // จัดกลุ่ม Grid ให้อยู่กึ่งกลางจอ
-                  justifyItems: "center", // จัดการ์ดให้อยู่กึ่งกลางของแต่ละช่อง
-                  maxWidth: "600px", // จำกัดความกว้างรวม เพื่อไม่ให้การ์ด 2 ใบฉีกห่างกันเกินไปบนจอคอม
-                  mx: "auto", // จัดกึ่งกลางหน้าจอ
-                  mt: 5,
-                  px: { xs: 1, sm: 2 },
-                }}
-              >
-                {membersHead.map((member, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      width: "100%", // ให้ยืดเต็มช่อง Grid
-                      maxWidth: "250px", // แต่ไม่เกิน 250px (ล็อกให้เท่ากับสมาชิกทั่วไป)
-                      display: "flex",
-                      justifyContent: "center",
-                      animation: `fadeInUpDelay 0.8s ease forwards ${0.2 * index}s`,
-                      opacity: 0,
-                    }}
-                  >
-                    <MemberCard member={member} />
-                  </Box>
-                ))}
-              </Box>
-
-              {/* ---------------------------------------------------- */}
-              {/* ส่วนที่ 2: สมาชิกทั่วไป (members) 3 คน/แถว */}
-              {/* ---------------------------------------------------- */}
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  columnGap: { xs: 2, sm: 4, md: 6 },
-                  rowGap: { xs: 5, sm: 6, md: 8 },
-                  maxWidth: "950px",
-                  mx: "auto",
-                  mt: 8, // ดันให้ห่างจากแถวบนนิดหน่อย
-                  px: 2,
-                  justifyItems: "center",
-                }}
-              >
-                {members.map((member, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      animation: `fadeInUpDelay 0.8s ease forwards ${0.2 * index}s`,
-                      opacity: 0,
-                    }}
-                  >
-                    <Box sx={{ width: "100%", maxWidth: "250px" }}>
-                      <MemberCard member={member} />
-                    </Box>
-                  </Box>
-                ))}
-              </Box>
-            </Box>
-          </ScrollReveal>
+            </Fade>
+          )}
         </Box>
       </Fade>
     </ThemeProvider>
