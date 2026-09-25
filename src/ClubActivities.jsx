@@ -36,25 +36,25 @@ const MYSTERY_ARTIFACTS = [
     name: "กระจกหน้าเปื้อน",
     desc: "กระจกที่เมื่อส่องดูจะเห็นรอยเปื้อนคราบเขม่าดำๆติดที่แก้มอยู่ตลอด คุณสามารถถูๆคราบนั้นให้หายไปได้ แต่มันจะกลับมาในตำแหน่งใหม่เมื่อใช้งานกระจกอีกครั้ง",
     creator: "เฟิ่งเฉิน ฟ็อกซ์",
-    img: createTransparentMock("🪞", "#C0C0C0"),
+    img: "7.png",
   },
   {
     name: "ปากกาขนนกจดอัตโนมัติ",
     desc: "ปากกาขนนกนี้จดทุกสิ่งที่มันได้ยิน ตั้งแต่คำพูด เสียงจาม หรือแม้แต่เสียงของตก และไม่รู้จักการเว้นระหว่างคำ ข้อความที่คุณได้จะติดกันเป็นพรืดจนกว่าเสียงรอบข้างมันจะเงียบลง มันถึงจะเริ่มประโยคใหม่",
     creator: "เบนจามิน รอสส์",
-    img: createTransparentMock("🪶", "#D4AF37"),
+    img: "6.png",
   },
   {
     name: "เปือกก้วย",
     desc: "คุณเจอมันซะแล้ว…ขยะย่อยสลายง่ายโดยสมาชิกลึกลับ งั้นฝากเอาไปทิ้งทีนะ !",
-    creator: "กาเรธ อีแวนส์",
+    creator: "สมาชิกลึกลับ",
     img: createTransparentMock("🍌", "#D4AF37"),
   },
   {
     name: "หวีย้อมผม",
     desc: "ผมในบริเวณที่ถูกหวีจะเปลี่ยนสีไปเรื่อยๆ และจะจางหายไปเองภายในเวลา 1 นาที",
     creator: "เฟิ่งเฉิน ฟ็อกซ์",
-    img: createTransparentMock("🪮", "#9B111E"),
+    img: "8.png",
   },
   {
     name: "โคมไฟปรับอุณหภูมิ (พัฟสไกน์)",
@@ -72,7 +72,7 @@ const MYSTERY_ARTIFACTS = [
     name: "ก้อนกระดาษ",
     desc: "มันคือก้อนกระดาษที่ถูกโยนทิ้งอย่างน่าสงสาร คุณจะลองเอาสิ่งประดิษฐ์บนกระดาษยับยู่ยี่นี่ไปต่อยอดก็ได้ แต่เจ้าของเดิมของมันได้ยอมแพ้แล้วล่ะ",
     creator: "เบนจามิน รอสส์",
-    img: createTransparentMock("📄", "#B0B8C1"),
+    img: "5.png",
   },
   {
     name: "รองเท้ายกลอย (ข้างเดียว)",
@@ -84,64 +84,41 @@ const MYSTERY_ARTIFACTS = [
     name: "ถุงเท้าเล่าความจริง",
     desc: "มันเป็นถุงเท้าที่มักจะอยู่เป็นคู่กันเสมอ เมื่อสวมใส่แล้วเดินทุกก้าวที่เหยียบลงพื้นมันจะตะโกนร้องเรื่องหน้าอายของผู้ใส่ออกมา",
     creator: "วิลโลว์ เบลรีฟ",
-    img: createTransparentMock("🧦", "#9B111E"),
+    img: "4.png",
   },
   {
     name: "ยางมัดผมหรรษา",
     desc: "ยางมัดผมสุดน่ารักที่ใส่รสนิยมฉบับที่มักเกิ้ลชอบลงไปด้วย มันไม่ได้เป็นอุปกรณ์วิเศษอะไร เหมือนคนทำจะทำแก้ว่างเฉย ๆ เท่านั้น (ชื่ออย่างไม่เป็นทางการ)",
     creator: "วิลโลว์ เบลรีฟ",
-    img: createTransparentMock("🎀", "#9B111E"),
+    img: "3.png",
   },
   {
     name: "ของสมนาคุณจำกัด 20 เซ็ต",
     desc: "รูปปั้นเสมือนจริงของรองประธานชมรม(คนปัจจุบัน)ไม่มีประโยชน์อะไร ได้ไปทำไมไม่ทราบ จะเพื่อบูชาประคองจิตใจสุดแล้วแต่สะดวกต้องการ",
     creator: "วิลโลว์ เบลรีฟ",
-    img: createTransparentMock("🗿", "#D4AF37"),
+    img: "2.png",
   },
   {
     name: "สมุดเก่าที่ดูมีพิรุธ",
     desc: "เป็นสมุดที่สภาพค่อนข้างไปทางเน่า เมื่อเปิดออกมาก็พบว่าเนื้อความด้านในคือความลับของสมาชิกในชมรม และถ้ากำลังจะกวาดตาอ่านบรรทัดต่อไป สมาชิกสักคนในชมรมจะรีบวิ่งมาชาร์จแย่งมันออกไปจากมือคุณทันที",
     creator: "วิลโลว์ เบลรีฟ",
-    img: createTransparentMock("📔", "#4A3B2C"),
+    img: "1.png",
   },
 ];
-
-// ==========================================
-// 2. ข้อมูลสำหรับตู้สล็อต (กิจกรรมที่ 2)
-// ==========================================
-const SLOT_DATA = {
-  base: [
-    { label: "นาฬิกาพก", img: createTransparentMock("⏱️", "#555") },
-    { label: "แหวน", img: createTransparentMock("💍", "#555") },
-    { label: "ปากกาขนนก", img: createTransparentMock("🪶", "#555") },
-    { label: "สมุดบันทึก", img: createTransparentMock("📓", "#555") },
-    { label: "ตะเกียง", img: createTransparentMock("🏮", "#555") },
-    { label: "แว่นตา", img: createTransparentMock("👓", "#555") },
-  ],
-  color: [
-    { label: "สีแดง", img: createTransparentMock("🟥", "#9B111E") },
-    { label: "สีส้ม", img: createTransparentMock("🟧", "#FF8C00") },
-    { label: "สีเหลือง", img: createTransparentMock("🟨", "#D4AF37") },
-    { label: "สีเขียว", img: createTransparentMock("🟩", "#2E8B57") },
-    { label: "สีน้ำเงิน", img: createTransparentMock("🟦", "#0F52BA") },
-    { label: "สีม่วง", img: createTransparentMock("🟪", "#8A2BE2") },
-    { label: "สีน้ำตาล", img: createTransparentMock("🟫", "#B87333") },
-    { label: "สีดำ", img: createTransparentMock("⬛", "#333333") },
-    { label: "สีขาว", img: createTransparentMock("⬜", "#C0C0C0") },
-  ],
-  addon: [
-    { label: "เสียงกระซิบ", img: createTransparentMock("🗣️", "#4682B4") },
-    { label: "สลักอักษรรูน", img: createTransparentMock("🔣", "#D4AF37") },
-    { label: "เรืองแสงจางๆ", img: createTransparentMock("🌟", "#FFFDE4") },
-    { label: "ไอเย็นแผ่ออกมา", img: createTransparentMock("❄️", "#87CEFA") },
-    { label: "ตาเล็กๆ กลิ้งไปมา", img: createTransparentMock("👁️", "#9B111E") },
-  ],
-};
 
 // ==========================================
 // 1. คอมโพเนนต์ สุ่มสิ่งประดิษฐ์จากกอง (ระบบอัญเชิญ)
 // ==========================================
 export const RandomArtifactPicker = () => {
+  useEffect(() => {
+    const artifactImages = MYSTERY_ARTIFACTS.map((item) => item.img);
+    artifactImages.forEach((src) => {
+      if (src && String(src).startsWith("/")) {
+        const img = new Image();
+        img.src = src;
+      }
+    });
+  }, []);
   const [result, setResult] = useState(null);
   const [isPicking, setIsPicking] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
@@ -242,7 +219,7 @@ export const RandomArtifactPicker = () => {
           textShadow: "0 2px 4px rgba(0,0,0,0.5)",
         }}
       >
-        Summoning Circle
+        สุ่มสิ่งประดิษฐ์จากชมรมวิจัยอุปกรณ์เวทมนตร์
       </Typography>
       <Typography
         variant="body1"
@@ -256,9 +233,8 @@ export const RandomArtifactPicker = () => {
           lineHeight: 1.8,
         }}
       >
-        เปิดใช้งานวงแหวนเวทมนตร์
-        เพื่อดึงเอาสิ่งประดิษฐ์แบบสุ่มที่ถูกเก็บซ่อนไว้ออกมา มาดูกันว่า...
-        สิ่งที่ปรากฏขึ้นกลางวงแหวนนั้นคืออะไรกันแน่?
+        สุ่มหยิบสิ่งของสักหนึ่งชิ้น จากกองสิ่งประดิษฐ์ที่อยู่ภายในห้อง
+        จากนั้นมาดูกันว่า... สิ่งที่หยิบขึ้นมาได้นั้นคืออะไรกันแน่?
       </Typography>
 
       <Box
@@ -441,10 +417,10 @@ export const RandomArtifactPicker = () => {
                   src={result.img}
                   alt={result.name}
                   sx={{
-                    width: { xs: 200, sm: 260 },
-                    height: { xs: 200, sm: 260 },
+                    width: { xs: 280, sm: 380, md: 420 },
+                    height: { xs: 280, sm: 380, md: 420 },
                     objectFit: "contain",
-                    mb: -3,
+                    mb: { xs: -4, sm: -5 }, // ปรับให้เกยกับกล่องที่เล็กลงพอดี
                     zIndex: 2,
                     animation: "floatItem 4s ease-in-out infinite",
                     filter: "drop-shadow(0px 20px 25px rgba(0,0,0,0.9))",
@@ -453,29 +429,32 @@ export const RandomArtifactPicker = () => {
 
                 <Paper
                   sx={{
-                    px: { xs: 3, sm: 5 },
-                    py: { xs: 3, sm: 4 },
-                    bgcolor: "rgba(17, 20, 25, 0.85)", // สีตรงกับหน้าโฮมเพจ
+                    // 👇 ลด Padding ซ้ายขวาและบนล่าง ให้กล่องดูเตี้ยลงและกระชับขึ้น
+                    px: { xs: 2, sm: 4 },
+                    py: { xs: 2.5, sm: 3 },
+                    bgcolor: "rgba(17, 20, 25, 0.85)",
                     backdropFilter: "blur(12px)",
                     border: "1px solid rgba(212, 175, 55, 0.3)",
                     borderTop: "2px solid rgba(212, 175, 55, 0.8)",
                     borderRadius: "16px",
                     boxShadow:
                       "0 20px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(212,175,55,0.1)",
-                    maxWidth: "700px",
-                    width: "90%",
+                    // 👇 เพิ่มความกว้างสูงสุด (จาก 700px เป็น 850px) และปรับ width ให้กว้างขึ้น
+                    maxWidth: "850px",
+                    width: "95%",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                   }}
                 >
                   <Typography
-                    variant="h5"
+                    // 👇 ปรับจาก h5 เป็น h6 ให้หัวข้อเล็กลง
+                    variant="h6"
                     sx={{
                       color: "primary.main",
                       fontFamily: "'Sarabun', serif",
                       fontWeight: 800,
-                      mb: 2,
+                      mb: 1.5, // ลดช่องไฟด้านล่าง
                       textShadow: "0 2px 4px rgba(0,0,0,0.8)",
                       textAlign: "center",
                     }}
@@ -489,19 +468,21 @@ export const RandomArtifactPicker = () => {
                       height: "1px",
                       background:
                         "radial-gradient(circle, rgba(212,175,55,0.8) 0%, transparent 100%)",
-                      mb: 2,
+                      mb: 1.5,
                     }}
                   />
 
                   <Typography
-                    variant="body1"
+                    // 👇 ปรับจาก body1 เป็น body2 และคุม fontSize ตรงๆ ให้เล็กลง
+                    variant="body2"
                     sx={{
                       color: "#EAE0D5",
                       fontFamily: "'Sarabun', sans-serif",
                       fontWeight: 300,
-                      mb: 4,
+                      fontSize: { xs: "0.85rem", sm: "0.95rem" },
+                      mb: 3, // ลดช่องไฟด้านล่างลง
                       textAlign: "center",
-                      lineHeight: 1.8,
+                      lineHeight: 1.6, // ลดระยะบรรทัดให้กระชับ
                     }}
                   >
                     "{result.desc}"
@@ -513,23 +494,25 @@ export const RandomArtifactPicker = () => {
                       alignItems: "center",
                       gap: 1,
                       bgcolor: "rgba(212, 175, 55, 0.1)",
-                      px: 2.5,
-                      py: 1,
+                      px: 2, // ลดความกว้างป้ายชื่อ
+                      py: 0.5, // ลดความสูงป้ายชื่อ
                       borderRadius: "50px",
                       border: "1px solid rgba(212, 175, 55, 0.3)",
                       mt: "auto",
                     }}
                   >
                     <AccountCircleIcon
-                      sx={{ color: "primary.main", fontSize: 20 }}
+                      sx={{ color: "primary.main", fontSize: 18 }} // ไอคอนเล็กลง
                     />
                     <Typography
-                      variant="body2"
+                      // 👇 ปรับจาก body2 เป็น caption ให้เครดิตผู้สร้างเล็กลง
+                      variant="caption"
                       sx={{
                         color: "primary.main",
                         fontFamily: "'Sarabun', sans-serif",
                         fontWeight: 600,
                         letterSpacing: 0.5,
+                        fontSize: "0.75rem",
                       }}
                     >
                       ผู้ประดิษฐ์: {result.creator}
@@ -577,10 +560,10 @@ export const RandomArtifactPicker = () => {
           }}
         >
           {isPicking
-            ? "กำลังรวบรวมพลังเวท..."
+            ? "สิ่งที่อยู่ในกองคือ..."
             : result
-              ? "อัญเชิญสิ่งประดิษฐ์อีกครั้ง"
-              : "เริ่มการอัญเชิญ"}
+              ? "กรุยต่อไป"
+              : "กดเพื่อกรุยมือ"}
         </Button>
       </Box>
     </Paper>
@@ -588,9 +571,54 @@ export const RandomArtifactPicker = () => {
 };
 
 // ==========================================
+// 2. ข้อมูลสำหรับตู้สล็อต (กิจกรรมที่ 2)
+// ==========================================
+const SLOT_DATA = {
+  base: [
+    { label: "นาฬิกาพก", img: createTransparentMock("⏱️", "#555") },
+    { label: "แหวน", img: createTransparentMock("💍", "#555") },
+    { label: "ปากกาขนนก", img: createTransparentMock("🪶", "#555") },
+    { label: "สมุดบันทึก", img: createTransparentMock("📓", "#555") },
+    { label: "ตะเกียง", img: createTransparentMock("🏮", "#555") },
+    { label: "แว่นตา", img: createTransparentMock("👓", "#555") },
+  ],
+  color: [
+    { label: "สีแดง", img: createTransparentMock("🟥", "#9B111E") },
+    { label: "สีส้ม", img: createTransparentMock("🟧", "#FF8C00") },
+    { label: "สีเหลือง", img: createTransparentMock("🟨", "#D4AF37") },
+    { label: "สีเขียว", img: createTransparentMock("🟩", "#2E8B57") },
+    { label: "สีน้ำเงิน", img: createTransparentMock("🟦", "#0F52BA") },
+    { label: "สีม่วง", img: createTransparentMock("🟪", "#8A2BE2") },
+    { label: "สีน้ำตาล", img: createTransparentMock("🟫", "#B87333") },
+    { label: "สีดำ", img: createTransparentMock("⬛", "#333333") },
+    { label: "สีขาว", img: createTransparentMock("⬜", "#C0C0C0") },
+  ],
+  addon: [
+    { label: "เสียงกระซิบ", img: createTransparentMock("🗣️", "#4682B4") },
+    { label: "สลักอักษรรูน", img: createTransparentMock("🔣", "#D4AF37") },
+    { label: "เรืองแสงจางๆ", img: createTransparentMock("🌟", "#FFFDE4") },
+    { label: "ไอเย็นแผ่ออกมา", img: createTransparentMock("❄️", "#87CEFA") },
+    { label: "ตาเล็กๆ กลิ้งไปมา", img: createTransparentMock("👁️", "#9B111E") },
+  ],
+};
+// ==========================================
 // 2. คอมโพเนนต์ คันโยกคาสิโนสร้างสิ่งประดิษฐ์ (ตู้สล็อต)
 // ==========================================
 export const ArtifactSlotMachine = () => {
+  useEffect(() => {
+    const slotImages = [
+      ...SLOT_DATA.base.map((item) => item.img),
+      ...SLOT_DATA.color.map((item) => item.img),
+      ...SLOT_DATA.addon.map((item) => item.img),
+    ];
+    slotImages.forEach((src) => {
+      if (src && String(src).startsWith("/")) {
+        const img = new Image();
+        img.src = src;
+      }
+    });
+  }, []);
+
   const defaultSlot = { label: "?", img: createTransparentMock("❓", "#555") };
   const [slots, setSlots] = useState({
     base: defaultSlot,
