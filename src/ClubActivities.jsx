@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, Paper, Grid, Zoom } from "@mui/material";
+import { Box, Typography, Button, Paper, Zoom } from "@mui/material";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import CasinoIcon from "@mui/icons-material/Casino";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -29,7 +29,7 @@ const createTransparentMock = (emoji, glowColor = "#D4AF37") => {
 };
 
 // ==========================================
-// 1. ข้อมูลสำหรับสุ่มกิจกรรมแรก (อัปเดตตามบรีฟ)
+// ข้อมูลสำหรับสุ่มกิจกรรมแรก
 // ==========================================
 const MYSTERY_ARTIFACTS = [
   {
@@ -107,6 +107,39 @@ const MYSTERY_ARTIFACTS = [
 ];
 
 // ==========================================
+// ข้อมูลสำหรับตู้สล็อต
+// ==========================================
+const SLOT_DATA = {
+  base: [
+    { label: "กระจก", img: "กระจก.png" },
+    { label: "กล่องมีฝาขนาดเล็ก", img: "กล่องมีฝาขนาดเล็ก.png" },
+    { label: "แก้วชา", img: "แก้วชา.png" },
+    { label: "ขวดหมึก", img: "ขวดหมึก.png" },
+    { label: "จาน", img: "จาน.png" },
+    { label: "ช้อน", img: "ช้อน.png" },
+    { label: "ส้อม", img: "ส้อม.png" },
+  ],
+  color: [
+    { label: "สีแดง", img: createTransparentMock("🟥", "#9B111E") },
+    { label: "สีส้ม", img: createTransparentMock("🟧", "#FF8C00") },
+    { label: "สีเหลือง", img: createTransparentMock("🟨", "#D4AF37") },
+    { label: "สีเขียว", img: createTransparentMock("🟩", "#2E8B57") },
+    { label: "สีน้ำเงิน", img: createTransparentMock("🟦", "#0F52BA") },
+    { label: "สีม่วง", img: createTransparentMock("🟪", "#8A2BE2") },
+    { label: "สีน้ำตาล", img: createTransparentMock("🟫", "#B87333") },
+    { label: "สีดำ", img: createTransparentMock("⬛", "#333333") },
+    { label: "สีขาว", img: createTransparentMock("⬜", "#C0C0C0") },
+  ],
+  addon: [
+    { label: "เสียงกระซิบ", img: createTransparentMock("🗣️", "#4682B4") },
+    { label: "สลักอักษรรูน", img: createTransparentMock("🔣", "#D4AF37") },
+    { label: "เรืองแสงจางๆ", img: createTransparentMock("🌟", "#FFFDE4") },
+    { label: "ไอเย็นแผ่ออกมา", img: createTransparentMock("❄️", "#87CEFA") },
+    { label: "ตาเล็กๆ กลิ้งไปมา", img: createTransparentMock("👁️", "#9B111E") },
+  ],
+};
+
+// ==========================================
 // 1. คอมโพเนนต์ สุ่มสิ่งประดิษฐ์จากกอง (ระบบอัญเชิญ)
 // ==========================================
 export const RandomArtifactPicker = () => {
@@ -119,6 +152,7 @@ export const RandomArtifactPicker = () => {
       }
     });
   }, []);
+
   const [result, setResult] = useState(null);
   const [isPicking, setIsPicking] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
@@ -150,7 +184,7 @@ export const RandomArtifactPicker = () => {
     <Paper
       elevation={8}
       sx={{
-        bgcolor: "rgba(17, 20, 25, 0.7)", // ธีม Glassmorphism ตามโค้ดหลัก
+        bgcolor: "rgba(17, 20, 25, 0.7)",
         backdropFilter: "blur(12px)",
         border: "1px solid rgba(212, 175, 55, 0.15)",
         borderRadius: "8px",
@@ -193,6 +227,12 @@ export const RandomArtifactPicker = () => {
         "@keyframes floatItem": {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-15px)" },
+        },
+        // ✨ แอนิเมชันสำหรับ Particle ✨
+        "@keyframes floatParticle": {
+          "0%": { transform: "translateY(0) scale(1)", opacity: 0 },
+          "50%": { opacity: 1 },
+          "100%": { transform: "translateY(-100px) scale(0)", opacity: 0 },
         },
       }}
     >
@@ -245,7 +285,6 @@ export const RandomArtifactPicker = () => {
           gap: 5,
         }}
       >
-        {/* คอนเทนเนอร์วงเวท */}
         <Box
           sx={{
             position: "relative",
@@ -256,7 +295,7 @@ export const RandomArtifactPicker = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            background: "radial-gradient(circle, #151A22 0%, #05060A 100%)", // ใช้พื้นหลังเดียวกันกับตัวแอปหลัก
+            background: "radial-gradient(circle, #151A22 0%, #05060A 100%)",
             borderRadius: "16px",
             border: "1px dashed rgba(212, 175, 55, 0.3)",
             boxShadow: "inset 0 0 80px rgba(0,0,0,0.9)",
@@ -280,7 +319,28 @@ export const RandomArtifactPicker = () => {
             }}
           />
 
-          {/* วงแหวนสีทอง (เปลี่ยนจากสีม่วงให้เข้ากับธีม) */}
+          {/* ✨ Particles Effect (แสดงตอนกำลังสุ่มหรือได้ผลลัพธ์) ✨ */}
+          {(isPicking || result) &&
+            [...Array(15)].map((_, i) => (
+              <Box
+                key={i}
+                sx={{
+                  position: "absolute",
+                  width: `${Math.random() * 6 + 2}px`,
+                  height: `${Math.random() * 6 + 2}px`,
+                  backgroundColor: i % 2 === 0 ? "#D4AF37" : "#FFFDE4",
+                  borderRadius: "50%",
+                  left: `${Math.random() * 80 + 10}%`,
+                  top: `${Math.random() * 80 + 10}%`,
+                  boxShadow: "0 0 10px #D4AF37",
+                  animation: `floatParticle ${Math.random() * 2 + 1}s ease-in infinite`,
+                  animationDelay: `${Math.random() * 2}s`,
+                  zIndex: 3,
+                  pointerEvents: "none",
+                }}
+              />
+            ))}
+
           <Box
             sx={{
               position: "absolute",
@@ -343,7 +403,6 @@ export const RandomArtifactPicker = () => {
               }}
             />
 
-            {/* แอนิเมชันช่วงกำลังอัญเชิญ */}
             {isPicking && (
               <>
                 {[0, 0.5, 1].map((delay, index) => (
@@ -381,7 +440,6 @@ export const RandomArtifactPicker = () => {
             )}
           </Box>
 
-          {/* สถานะรอสุ่ม */}
           {!isPicking && !result && (
             <Brightness7Icon
               sx={{
@@ -398,7 +456,6 @@ export const RandomArtifactPicker = () => {
             />
           )}
 
-          {/* ✨ การ์ดแสดงผลลัพธ์ (คุมโทนให้ตรงกับ MagicalCard) ✨ */}
           {!isPicking && result && (
             <Zoom in={!isPicking} timeout={800}>
               <Box
@@ -412,15 +469,17 @@ export const RandomArtifactPicker = () => {
                   width: "100%",
                 }}
               >
+                {/* ✨ ปรับ Responsive ให้รูปไม่ล้นมือถือ ✨ */}
                 <Box
                   component="img"
                   src={result.img}
                   alt={result.name}
                   sx={{
-                    width: { xs: 280, sm: 380, md: 420 },
-                    height: { xs: 280, sm: 380, md: 420 },
+                    width: { xs: "65%", sm: 380, md: 420 },
+                    height: "auto",
+                    maxHeight: { xs: 240, sm: 380, md: 420 },
                     objectFit: "contain",
-                    mb: { xs: -4, sm: -5 }, // ปรับให้เกยกับกล่องที่เล็กลงพอดี
+                    mb: { xs: -3, sm: -5 },
                     zIndex: 2,
                     animation: "floatItem 4s ease-in-out infinite",
                     filter: "drop-shadow(0px 20px 25px rgba(0,0,0,0.9))",
@@ -429,7 +488,6 @@ export const RandomArtifactPicker = () => {
 
                 <Paper
                   sx={{
-                    // 👇 ลด Padding ซ้ายขวาและบนล่าง ให้กล่องดูเตี้ยลงและกระชับขึ้น
                     px: { xs: 2, sm: 4 },
                     py: { xs: 2.5, sm: 3 },
                     bgcolor: "rgba(17, 20, 25, 0.85)",
@@ -438,8 +496,7 @@ export const RandomArtifactPicker = () => {
                     borderTop: "2px solid rgba(212, 175, 55, 0.8)",
                     borderRadius: "16px",
                     boxShadow:
-                      "0 20px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(212,175,55,0.1)",
-                    // 👇 เพิ่มความกว้างสูงสุด (จาก 700px เป็น 850px) และปรับ width ให้กว้างขึ้น
+                      "0 20px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(212,175,55,0.1), 0 -10px 20px rgba(0,0,0,0.5)", // ✨ เพิ่มเงาด้านบนให้มิติชัดขึ้น
                     maxWidth: "850px",
                     width: "95%",
                     display: "flex",
@@ -448,13 +505,12 @@ export const RandomArtifactPicker = () => {
                   }}
                 >
                   <Typography
-                    // 👇 ปรับจาก h5 เป็น h6 ให้หัวข้อเล็กลง
                     variant="h6"
                     sx={{
                       color: "primary.main",
                       fontFamily: "'Sarabun', serif",
                       fontWeight: 800,
-                      mb: 1.5, // ลดช่องไฟด้านล่าง
+                      mb: 1.5,
                       textShadow: "0 2px 4px rgba(0,0,0,0.8)",
                       textAlign: "center",
                     }}
@@ -473,16 +529,15 @@ export const RandomArtifactPicker = () => {
                   />
 
                   <Typography
-                    // 👇 ปรับจาก body1 เป็น body2 และคุม fontSize ตรงๆ ให้เล็กลง
                     variant="body2"
                     sx={{
                       color: "#EAE0D5",
                       fontFamily: "'Sarabun', sans-serif",
                       fontWeight: 300,
                       fontSize: { xs: "0.85rem", sm: "0.95rem" },
-                      mb: 3, // ลดช่องไฟด้านล่างลง
+                      mb: 3,
                       textAlign: "center",
-                      lineHeight: 1.6, // ลดระยะบรรทัดให้กระชับ
+                      lineHeight: 1.6,
                     }}
                   >
                     "{result.desc}"
@@ -494,18 +549,17 @@ export const RandomArtifactPicker = () => {
                       alignItems: "center",
                       gap: 1,
                       bgcolor: "rgba(212, 175, 55, 0.1)",
-                      px: 2, // ลดความกว้างป้ายชื่อ
-                      py: 0.5, // ลดความสูงป้ายชื่อ
+                      px: 2,
+                      py: 0.5,
                       borderRadius: "50px",
                       border: "1px solid rgba(212, 175, 55, 0.3)",
                       mt: "auto",
                     }}
                   >
                     <AccountCircleIcon
-                      sx={{ color: "primary.main", fontSize: 18 }} // ไอคอนเล็กลง
+                      sx={{ color: "primary.main", fontSize: 18 }}
                     />
                     <Typography
-                      // 👇 ปรับจาก body2 เป็น caption ให้เครดิตผู้สร้างเล็กลง
                       variant="caption"
                       sx={{
                         color: "primary.main",
@@ -524,7 +578,6 @@ export const RandomArtifactPicker = () => {
           )}
         </Box>
 
-        {/* ปุ่มกดอัญเชิญ (ปุ่มโปร่งแสงสไตล์หน้าแรก) */}
         <Button
           onClick={handlePick}
           disabled={isPicking || isFlashing}
@@ -549,9 +602,7 @@ export const RandomArtifactPicker = () => {
               transform: "translateY(-3px) scale(1.02)",
               borderColor: "#D4AF37",
             },
-            "&:active": {
-              transform: "translateY(2px)",
-            },
+            "&:active": { transform: "translateY(2px)" },
             "&:disabled": {
               color: "rgba(212, 175, 55, 0.3)",
               borderColor: "rgba(212, 175, 55, 0.2)",
@@ -570,40 +621,6 @@ export const RandomArtifactPicker = () => {
   );
 };
 
-// ==========================================
-// 2. ข้อมูลสำหรับตู้สล็อต (กิจกรรมที่ 2)
-// ==========================================
-const SLOT_DATA = {
-  base: [
-    { label: "นาฬิกาพก", img: createTransparentMock("⏱️", "#555") },
-    { label: "แหวน", img: createTransparentMock("💍", "#555") },
-    { label: "ปากกาขนนก", img: createTransparentMock("🪶", "#555") },
-    { label: "สมุดบันทึก", img: createTransparentMock("📓", "#555") },
-    { label: "ตะเกียง", img: createTransparentMock("🏮", "#555") },
-    { label: "แว่นตา", img: createTransparentMock("👓", "#555") },
-  ],
-  color: [
-    { label: "สีแดง", img: createTransparentMock("🟥", "#9B111E") },
-    { label: "สีส้ม", img: createTransparentMock("🟧", "#FF8C00") },
-    { label: "สีเหลือง", img: createTransparentMock("🟨", "#D4AF37") },
-    { label: "สีเขียว", img: createTransparentMock("🟩", "#2E8B57") },
-    { label: "สีน้ำเงิน", img: createTransparentMock("🟦", "#0F52BA") },
-    { label: "สีม่วง", img: createTransparentMock("🟪", "#8A2BE2") },
-    { label: "สีน้ำตาล", img: createTransparentMock("🟫", "#B87333") },
-    { label: "สีดำ", img: createTransparentMock("⬛", "#333333") },
-    { label: "สีขาว", img: createTransparentMock("⬜", "#C0C0C0") },
-  ],
-  addon: [
-    { label: "เสียงกระซิบ", img: createTransparentMock("🗣️", "#4682B4") },
-    { label: "สลักอักษรรูน", img: createTransparentMock("🔣", "#D4AF37") },
-    { label: "เรืองแสงจางๆ", img: createTransparentMock("🌟", "#FFFDE4") },
-    { label: "ไอเย็นแผ่ออกมา", img: createTransparentMock("❄️", "#87CEFA") },
-    { label: "ตาเล็กๆ กลิ้งไปมา", img: createTransparentMock("👁️", "#9B111E") },
-  ],
-};
-// ==========================================
-// 2. คอมโพเนนต์ คันโยกคาสิโนสร้างสิ่งประดิษฐ์ (ตู้สล็อต)
-// ==========================================
 export const ArtifactSlotMachine = () => {
   useEffect(() => {
     const slotImages = [
@@ -762,23 +779,38 @@ export const ArtifactSlotMachine = () => {
         }}
       >
         <Box
-          component="img"
-          src={item.img}
           sx={{
-            width: { xs: "100px", sm: "140px" },
-            height: { xs: "100px", sm: "140px" },
-            objectFit: "contain",
+            width: { xs: "110px", sm: "150px" },
+            height: { xs: "110px", sm: "150px" },
             mb: 2,
             zIndex: 2,
-            filter: isSpinningSlot
-              ? "blur(3px) drop-shadow(0px 10px 5px rgba(0,0,0,0.8))"
-              : "drop-shadow(0px 15px 10px rgba(0,0,0,0.8))",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            // สร้างแสงวงกลมสีขาว/ทองด้านหลังภาพ
+            background:
+              "radial-gradient(circle, rgba(255,253,228,0.7) 0%, rgba(212,175,55,0.2) 50%, transparent 70%)",
+            borderRadius: "50%",
+            transition: "all 0.1s",
             transform: isSpinningSlot
               ? "scale(1.1) translateY(8px)"
               : "scale(1) translateY(0)",
-            transition: "all 0.1s",
           }}
-        />
+        >
+          <Box
+            component="img"
+            src={item.img}
+            sx={{
+              width: { xs: "90px", sm: "130px" },
+              height: { xs: "90px", sm: "130px" },
+              objectFit: "contain",
+              // ใช้เงาสีดำเพื่อเน้นเส้นให้ชัดขึ้นบนพื้นหลังสว่าง
+              filter: isSpinningSlot
+                ? "blur(2px)"
+                : "drop-shadow(0px 2px 4px rgba(0,0,0,0.8))",
+            }}
+          />
+        </Box>
         <Paper
           elevation={0}
           sx={{
@@ -855,7 +887,7 @@ export const ArtifactSlotMachine = () => {
           textShadow: "0 2px 4px rgba(0,0,0,0.5)",
         }}
       >
-        Arcane Forge
+        สุ่มสร้างสิ่งประดิษฐ์
       </Typography>
       <Typography
         variant="body1"
