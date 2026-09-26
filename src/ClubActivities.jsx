@@ -764,7 +764,7 @@ export const ArtifactSlotMachine = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          bgcolor: "#fffdf8",  
+          bgcolor: "#fffdf8",
           border: isSpinningSlot
             ? "2px solid #D4AF37"
             : "2px solid rgba(212, 175, 55, 0.4)",
@@ -900,12 +900,12 @@ export const ArtifactSlotMachine = () => {
           mx: "auto",
           lineHeight: 1.8,
         }}
-      > 
+      >
         <Box component="span" sx={{ color: "primary.main", fontWeight: 600 }}>
           วัตถุตั้งต้น → สี → ส่วนเสริม
         </Box>{" "}
         <br />
-         นำสิ่งที่สุ่มได้ทั้งหมดมาประกอบกันเป็นสิ่งประดิษฐ์หนึ่งชิ้น
+        นำสิ่งที่สุ่มได้ทั้งหมดมาประกอบกันเป็นสิ่งประดิษฐ์หนึ่งชิ้น
         <br />
         <Box
           component="span"
@@ -990,7 +990,7 @@ export const ArtifactSlotMachine = () => {
             "0 30px 60px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,0,0,0.9)",
           mr: { xs: 0, md: 8 },
         }}
-      > 
+      >
         <Box
           sx={{
             position: "absolute",
