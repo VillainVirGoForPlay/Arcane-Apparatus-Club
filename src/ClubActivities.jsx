@@ -6,7 +6,7 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 // ==========================================
-// ฟังก์ชันสร้างภาพจำลองแบบ "พื้นใส" (ปรับสีให้เข้ากับธีมหลัก)
+// ฟังก์ชันสร้างภาพจำลองแบบ "พื้นใส" (มีอีโมจิ สำหรับไอเทมปริศนา)
 // ==========================================
 const createTransparentMock = (emoji, glowColor = "#D4AF37") => {
   const svg = `
@@ -29,78 +29,101 @@ const createTransparentMock = (emoji, glowColor = "#D4AF37") => {
 };
 
 // ==========================================
+// ฟังก์ชันสร้างภาพจำลองสำหรับ "สี" (แสดงแค่ออร่าสี ไม่ใช้อีโมจิสี่เหลี่ยม)
+// ==========================================
+const createColorMock = (glowColor) => {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="${glowColor}" stop-opacity="0.9" />
+          <stop offset="50%" stop-color="${glowColor}" stop-opacity="0.4" />
+          <stop offset="100%" stop-color="${glowColor}" stop-opacity="0" />
+        </radialGradient>
+        <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+        </filter>
+      </defs>
+      <circle cx="100" cy="100" r="90" fill="url(#glow)" />
+      <circle cx="100" cy="100" r="40" fill="${glowColor}" filter="url(#drop-shadow)" />
+    </svg>
+  `;
+  return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
+};
+
+// ==========================================
 // ข้อมูลสำหรับสุ่มกิจกรรมแรก
 // ==========================================
 const MYSTERY_ARTIFACTS = [
   {
     name: "กระจกหน้าเปื้อน",
-    desc: "กระจกที่เมื่อส่องดูจะเห็นรอยเปื้อนคราบเขม่าดำๆติดที่แก้มอยู่ตลอด คุณสามารถถูๆคราบนั้นให้หายไปได้ แต่มันจะกลับมาในตำแหน่งใหม่เมื่อใช้งานกระจกอีกครั้ง",
+    desc: "กระจกที่เมื่อส่องดูจะเห็นรอยเปื้อนคราบเขม่าดำๆ ติดที่แก้มอยู่ตลอด\nคุณสามารถถูๆ คราบนั้นให้หายไปได้ แต่มันจะกลับมาในตำแหน่งใหม่เมื่อใช้งานกระจกอีกครั้ง",
     creator: "เฟิ่งเฉิน ฟ็อกซ์",
     img: "7.png",
   },
   {
     name: "ปากกาขนนกจดอัตโนมัติ",
-    desc: "ปากกาขนนกนี้จดทุกสิ่งที่มันได้ยิน ตั้งแต่คำพูด เสียงจาม หรือแม้แต่เสียงของตก และไม่รู้จักการเว้นระหว่างคำ ข้อความที่คุณได้จะติดกันเป็นพรืดจนกว่าเสียงรอบข้างมันจะเงียบลง มันถึงจะเริ่มประโยคใหม่",
+    desc: "ปากกาขนนกนี้จดทุกสิ่งที่มันได้ยิน ตั้งแต่คำพูด เสียงจาม หรือแม้แต่เสียงของตก\nและไม่รู้จักการเว้นระหว่างคำ ข้อความที่คุณได้จะติดกันเป็นพรืด\nจนกว่าเสียงรอบข้างมันจะเงียบลง มันถึงจะเริ่มประโยคใหม่",
     creator: "เบนจามิน รอสส์",
     img: "6.png",
   },
   {
     name: "เปือกก้วย",
-    desc: "คุณเจอมันซะแล้ว…ขยะย่อยสลายง่ายโดยสมาชิกลึกลับ งั้นฝากเอาไปทิ้งทีนะ !",
+    desc: "คุณเจอมันซะแล้ว… ขยะย่อยสลายง่ายโดยสมาชิกลึกลับ\nงั้นฝากเอาไปทิ้งทีนะ !",
     creator: "สมาชิกลึกลับ",
     img: createTransparentMock("🍌", "#D4AF37"),
   },
   {
     name: "หวีย้อมผม",
-    desc: "ผมในบริเวณที่ถูกหวีจะเปลี่ยนสีไปเรื่อยๆ และจะจางหายไปเองภายในเวลา 1 นาที",
+    desc: "ผมในบริเวณที่ถูกหวีจะเปลี่ยนสีไปเรื่อยๆ\nและจะจางหายไปเองภายในเวลา 1 นาที",
     creator: "เฟิ่งเฉิน ฟ็อกซ์",
     img: "8.png",
   },
   {
-    name: "โคมไฟปรับอุณหภูมิ (พัฟสไกน์)",
-    desc: "เมื่อลูบเบาๆ ที่ส่วนหัวจะทำงานโดยแผ่อุณหภูมิในรัศมี 1 เมตร (ได้ทั้งร้อนทั้งเย็น) และเรืองแสงสีนวลตาที่สว่างพอดีสำหรับการอ่านหนังสือ",
+    name: "โคมไฟปรับอุณหภูมิ",
+    desc: "เมื่อลูบเบาๆ ที่ส่วนหัวจะทำงานโดยแผ่อุณหภูมิในรัศมี 1 เมตร (ได้ทั้งร้อนทั้งเย็น)\nและเรืองแสงสีนวลตาที่สว่างพอดีสำหรับการอ่านหนังสือ",
     creator: "เนียโร แลงคาสเตอร์",
     img: createTransparentMock("🏮", "#D4AF37"),
   },
   {
     name: "ทรัมเป็ตที่ไม่ใช่ทรัมเป็ต",
-    desc: "เป็นทรัมเป็ตของเล่นชิ้นเล็ก ๆ เมื่อเป่าเข้าไป เสียงที่ออกมากลับไม่ใช่เสียงของทรัมเป็ตเลยแม้แต่นิดเดียว มันอาจจะเป็นเสียงฮาร์ป หรือเสียงหมูหมากาไก่ มันเป็นเสียงอะไรก็ได้ที่ไม่ใช่ทรัมเป็ตเลยล่ะ…",
+    desc: "เป็นทรัมเป็ตของเล่นชิ้นเล็ก ๆ เมื่อเป่าเข้าไป\nเสียงที่ออกมากลับไม่ใช่เสียงของทรัมเป็ตเลยแม้แต่นิดเดียว\nมันอาจจะเป็นเสียงฮาร์ป หรือเสียงหมูหมากาไก่\nมันเป็นเสียงอะไรก็ได้ที่ไม่ใช่ทรัมเป็ตเลยล่ะ…",
     creator: "กาเรธ อีแวนส์",
     img: createTransparentMock("🎺", "#D4AF37"),
   },
   {
     name: "ก้อนกระดาษ",
-    desc: "มันคือก้อนกระดาษที่ถูกโยนทิ้งอย่างน่าสงสาร คุณจะลองเอาสิ่งประดิษฐ์บนกระดาษยับยู่ยี่นี่ไปต่อยอดก็ได้ แต่เจ้าของเดิมของมันได้ยอมแพ้แล้วล่ะ",
+    desc: "มันคือก้อนกระดาษที่ถูกโยนทิ้งอย่างน่าสงสาร\nคุณจะลองเอาสิ่งประดิษฐ์บนกระดาษยับยู่ยี่นี่ไปต่อยอดก็ได้\nแต่เจ้าของเดิมของมันได้ยอมแพ้แล้วล่ะ",
     creator: "เบนจามิน รอสส์",
     img: "5.png",
   },
   {
     name: "รองเท้ายกลอย (ข้างเดียว)",
-    desc: "เมื่อสวมใส่ คุณจะสามารถลอยขึ้นจากพื้นได้ประมาณห้าถึงหกนิ้ว มันยังคงต้องปรับแก้อีกมากและมีความเสี่ยงสูงหากจะสวมใส่ โดยเฉพาะอย่างยิ่ง ตอนที่เหลือแค่ข้างเดียวแบบนี้",
+    desc: "เมื่อสวมใส่ คุณจะสามารถลอยขึ้นจากพื้นได้ประมาณห้าถึงหกนิ้ว\nมันยังคงต้องปรับแก้อีกมากและมีความเสี่ยงสูงหากจะสวมใส่\nโดยเฉพาะอย่างยิ่ง ตอนที่เหลือแค่ข้างเดียวแบบนี้\nดังนั้นถ้าคุณได้รับมัน กรุณาอย่าใส่และเอาไปคืนชมรมโดยด่วน!",
     creator: "เบนจามิน รอสส์",
-    img: createTransparentMock("👟", "#4682B4"),
+    img: "9.png",
   },
   {
     name: "ถุงเท้าเล่าความจริง",
-    desc: "มันเป็นถุงเท้าที่มักจะอยู่เป็นคู่กันเสมอ เมื่อสวมใส่แล้วเดินทุกก้าวที่เหยียบลงพื้นมันจะตะโกนร้องเรื่องหน้าอายของผู้ใส่ออกมา",
+    desc: "มันเป็นถุงเท้าที่มักจะอยู่เป็นคู่กันเสมอ\nเมื่อสวมใส่แล้วเดินทุกก้าวที่เหยียบลงพื้น\nมันจะตะโกนร้องเรื่องหน้าอายของผู้ใส่ออกมา",
     creator: "วิลโลว์ เบลรีฟ",
     img: "4.png",
   },
   {
     name: "ยางมัดผมหรรษา",
-    desc: "ยางมัดผมสุดน่ารักที่ใส่รสนิยมฉบับที่มักเกิ้ลชอบลงไปด้วย มันไม่ได้เป็นอุปกรณ์วิเศษอะไร เหมือนคนทำจะทำแก้ว่างเฉย ๆ เท่านั้น (ชื่ออย่างไม่เป็นทางการ)",
+    desc: "ยางมัดผมสุดน่ารักที่ใส่รสนิยมฉบับที่มักมักเกิ้ลชอบลงไปด้วย\nมันไม่ได้เป็นอุปกรณ์วิเศษอะไร\nเหมือนคนทำจะทำแก้ว่างเฉย ๆ เท่านั้น",
     creator: "วิลโลว์ เบลรีฟ",
     img: "3.png",
   },
   {
     name: "ของสมนาคุณจำกัด 20 เซ็ต",
-    desc: "รูปปั้นเสมือนจริงของรองประธานชมรม(คนปัจจุบัน)ไม่มีประโยชน์อะไร ได้ไปทำไมไม่ทราบ จะเพื่อบูชาประคองจิตใจสุดแล้วแต่สะดวกต้องการ",
+    desc: "รูปปั้นเสมือนจริงของรองประธานชมรม(คนปัจจุบัน)ไม่มีประโยชน์อะไร\nได้ไปทำไมไม่ทราบ จะเพื่อบูชาประคองจิตใจสุดแล้วแต่สะดวกต้องการ",
     creator: "วิลโลว์ เบลรีฟ",
     img: "2.png",
   },
   {
     name: "สมุดเก่าที่ดูมีพิรุธ",
-    desc: "เป็นสมุดที่สภาพค่อนข้างไปทางเน่า เมื่อเปิดออกมาก็พบว่าเนื้อความด้านในคือความลับของสมาชิกในชมรม และถ้ากำลังจะกวาดตาอ่านบรรทัดต่อไป สมาชิกสักคนในชมรมจะรีบวิ่งมาชาร์จแย่งมันออกไปจากมือคุณทันที",
+    desc: "เป็นสมุดที่สภาพค่อนข้างไปทางเน่า\nเมื่อเปิดออกมาก็พบว่าเนื้อความด้านในคือความลับของสมาชิกในชมรม\nและถ้ากำลังจะกวาดตาอ่านบรรทัดต่อไป\nสมาชิกสักคนในชมรมจะรีบวิ่งมาชาร์จแย่งมันออกไปจากมือคุณทันที",
     creator: "วิลโลว์ เบลรีฟ",
     img: "1.png",
   },
@@ -120,22 +143,23 @@ const SLOT_DATA = {
     { label: "ส้อม", img: "ส้อม.png" },
   ],
   color: [
-    { label: "สีแดง", img: createTransparentMock("🟥", "#9B111E") },
-    { label: "สีส้ม", img: createTransparentMock("🟧", "#FF8C00") },
-    { label: "สีเหลือง", img: createTransparentMock("🟨", "#D4AF37") },
-    { label: "สีเขียว", img: createTransparentMock("🟩", "#2E8B57") },
-    { label: "สีน้ำเงิน", img: createTransparentMock("🟦", "#0F52BA") },
-    { label: "สีม่วง", img: createTransparentMock("🟪", "#8A2BE2") },
-    { label: "สีน้ำตาล", img: createTransparentMock("🟫", "#B87333") },
-    { label: "สีดำ", img: createTransparentMock("⬛", "#333333") },
-    { label: "สีขาว", img: createTransparentMock("⬜", "#C0C0C0") },
+    { label: "สีแดง", img: createColorMock("#9B111E") },
+    { label: "สีส้ม", img: createColorMock("#FF8C00") },
+    { label: "สีเหลือง", img: createColorMock("#D4AF37") },
+    { label: "สีเขียว", img: createColorMock("#2E8B57") },
+    { label: "สีน้ำเงิน", img: createColorMock("#0F52BA") },
+    { label: "สีม่วง", img: createColorMock("#8A2BE2") },
+    { label: "สีน้ำตาล", img: createColorMock("#B87333") },
+    { label: "สีดำ", img: createColorMock("#333333") },
+    { label: "สีขาว", img: createColorMock("#F0F0F0") }, // ใช้สีเทาอ่อนเพื่อให้เห็นออร่าบนพื้นขาว
   ],
   addon: [
-    { label: "เสียงกระซิบ", img: createTransparentMock("🗣️", "#4682B4") },
-    { label: "สลักอักษรรูน", img: createTransparentMock("🔣", "#D4AF37") },
-    { label: "เรืองแสงจางๆ", img: createTransparentMock("🌟", "#FFFDE4") },
-    { label: "ไอเย็นแผ่ออกมา", img: createTransparentMock("❄️", "#87CEFA") },
-    { label: "ตาเล็กๆ กลิ้งไปมา", img: createTransparentMock("👁️", "#9B111E") },
+    { label: "ขา", img: "ขา.png" },
+    { label: "แขน", img: "แขน.png" },
+    { label: "งวง", img: "งวง.png" },
+    { label: "ปีก", img: "ปีก.png" },
+    { label: "หมวก", img: "หมวก.png" },
+    { label: "หาง", img: "หาง.png" },
   ],
 };
 
@@ -228,7 +252,6 @@ export const RandomArtifactPicker = () => {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-15px)" },
         },
-        // ✨ แอนิเมชันสำหรับ Particle ✨
         "@keyframes floatParticle": {
           "0%": { transform: "translateY(0) scale(1)", opacity: 0 },
           "50%": { opacity: 1 },
@@ -319,7 +342,7 @@ export const RandomArtifactPicker = () => {
             }}
           />
 
-          {/* ✨ Particles Effect (แสดงตอนกำลังสุ่มหรือได้ผลลัพธ์) ✨ */}
+          {/* ✨ Particles Effect ✨ */}
           {(isPicking || result) &&
             [...Array(15)].map((_, i) => (
               <Box
@@ -469,7 +492,6 @@ export const RandomArtifactPicker = () => {
                   width: "100%",
                 }}
               >
-                {/* ✨ ปรับ Responsive ให้รูปไม่ล้นมือถือ ✨ */}
                 <Box
                   component="img"
                   src={result.img}
@@ -496,7 +518,7 @@ export const RandomArtifactPicker = () => {
                     borderTop: "2px solid rgba(212, 175, 55, 0.8)",
                     borderRadius: "16px",
                     boxShadow:
-                      "0 20px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(212,175,55,0.1), 0 -10px 20px rgba(0,0,0,0.5)", // ✨ เพิ่มเงาด้านบนให้มิติชัดขึ้น
+                      "0 20px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(212,175,55,0.1), 0 -10px 20px rgba(0,0,0,0.5)",
                     maxWidth: "850px",
                     width: "95%",
                     display: "flex",
@@ -538,9 +560,10 @@ export const RandomArtifactPicker = () => {
                       mb: 3,
                       textAlign: "center",
                       lineHeight: 1.6,
+                      whiteSpace: "pre-line",
                     }}
                   >
-                    "{result.desc}"
+                    {result.desc}
                   </Typography>
 
                   <Box
@@ -741,41 +764,17 @@ export const ArtifactSlotMachine = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          bgcolor: "#05060A", // สีตู้ตามธีมหลัก
+          bgcolor: "#FFFFFF", // ✅ ปรับเป็นสีขาวทั้งหมดเพื่อให้ภาพลายเส้นชัดเจน
           border: isSpinningSlot
             ? "2px solid #D4AF37"
             : "2px solid rgba(212, 175, 55, 0.4)",
           boxShadow: isSpinningSlot
-            ? "inset 0 0 40px rgba(212, 175, 55, 0.3), 0 0 20px rgba(212,175,55,0.4)"
-            : "inset 0 20px 30px rgba(0,0,0,0.9)",
+            ? "inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 15px rgba(212,175,55,0.4)"
+            : "inset 0 4px 15px rgba(0,0,0,0.05)",
           borderRadius: "12px",
           overflow: "hidden",
           p: 1.5,
           position: "relative",
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "25%",
-            background:
-              "linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%)",
-            zIndex: 5,
-            pointerEvents: "none",
-          },
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "25%",
-            background:
-              "linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%)",
-            zIndex: 5,
-            pointerEvents: "none",
-          },
         }}
       >
         <Box
@@ -787,9 +786,9 @@ export const ArtifactSlotMachine = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            // สร้างแสงวงกลมสีขาว/ทองด้านหลังภาพ
+            // ลดแสงเรืองรองด้านหลังลงเพื่อให้กลืนกับพื้นสีขาว
             background:
-              "radial-gradient(circle, rgba(255,253,228,0.7) 0%, rgba(212,175,55,0.2) 50%, transparent 70%)",
+              "radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 60%)",
             borderRadius: "50%",
             transition: "all 0.1s",
             transform: isSpinningSlot
@@ -804,10 +803,9 @@ export const ArtifactSlotMachine = () => {
               width: { xs: "90px", sm: "130px" },
               height: { xs: "90px", sm: "130px" },
               objectFit: "contain",
-              // ใช้เงาสีดำเพื่อเน้นเส้นให้ชัดขึ้นบนพื้นหลังสว่าง
               filter: isSpinningSlot
                 ? "blur(2px)"
-                : "drop-shadow(0px 2px 4px rgba(0,0,0,0.8))",
+                : "drop-shadow(0px 2px 3px rgba(0,0,0,0.3))",
             }}
           />
         </Box>
@@ -815,7 +813,7 @@ export const ArtifactSlotMachine = () => {
           elevation={0}
           sx={{
             width: "95%",
-            bgcolor: "rgba(17, 20, 25, 0.8)",
+            bgcolor: "rgba(17, 20, 25, 0.9)", // ✅ คงพื้นหลังสีเข้มไว้ที่ป้ายกำกับด้านล่างเพื่อให้ตัวหนังสืออ่านง่าย
             px: 2,
             py: 1,
             borderRadius: "20px",
@@ -828,7 +826,7 @@ export const ArtifactSlotMachine = () => {
           <Typography
             variant="body1"
             sx={{
-              color: item.label === "?" ? "rgba(212, 175, 55, 0.3)" : "#FFFDE4",
+              color: item.label === "?" ? "rgba(212, 175, 55, 0.5)" : "#FFFDE4",
               fontFamily: "'Sarabun', sans-serif",
               fontWeight: 600,
               textAlign: "center",
@@ -852,7 +850,7 @@ export const ArtifactSlotMachine = () => {
     <Paper
       elevation={8}
       sx={{
-        bgcolor: "rgba(17, 20, 25, 0.7)", // ธีม Glassmorphism
+        bgcolor: "rgba(17, 20, 25, 0.7)",
         backdropFilter: "blur(12px)",
         border: "1px solid rgba(212, 175, 55, 0.15)",
         borderRadius: "8px",
@@ -889,11 +887,13 @@ export const ArtifactSlotMachine = () => {
       >
         สุ่มสร้างสิ่งประดิษฐ์
       </Typography>
+
+      {/* ส่วนอธิบายด้านบน */}
       <Typography
         variant="body1"
         sx={{
           color: "text.secondary",
-          mb: 6,
+          mb: 3,
           fontFamily: "'Sarabun', sans-serif",
           maxWidth: "800px",
           textAlign: "center",
@@ -901,18 +901,87 @@ export const ArtifactSlotMachine = () => {
           lineHeight: 1.8,
         }}
       >
-        ดึงคันโยกเพื่อส่งมอบวัตถุดิบเข้าสู่เตาหลอมเวทมนตร์
-        เครื่องจักรจะทำการสุ่ม <br />
-        <Box component="span" sx={{ color: "primary.main", fontWeight: 500 }}>
+        ผู้สุ่มจะได้รับการสุ่มทีละขั้น ตั้งแต่{" "}
+        <Box component="span" sx={{ color: "primary.main", fontWeight: 600 }}>
           วัตถุตั้งต้น → สี → ส่วนเสริม
         </Box>{" "}
-        เพื่อประกอบร่างเป็นสิ่งประดิษฐ์ชิ้นใหม่ของคุณ!
+        แล้วนำสิ่งที่สุ่มได้ทั้งหมดมาประกอบกันเป็นสิ่งประดิษฐ์หนึ่งชิ้น
+        <br />
+        <Box
+          component="span"
+          sx={{
+            color: "#FFFDE4",
+            fontStyle: "italic",
+            mt: 1,
+            display: "inline-block",
+          }}
+        >
+          "ลองจินตนาการต่อดูว่า สิ่งประดิษฐ์ชิ้นนี้มีหน้าตาเป็นอย่างไร
+          ใช้งานอย่างไร และมันมีพฤติกรรมประหลาดอะไรบ้าง?"
+        </Box>
       </Typography>
+
+      {/* กล่องข้อควรรู้ / กฎของสิ่งประดิษฐ์ */}
+      <Paper
+        elevation={0}
+        sx={{
+          maxWidth: "800px",
+          mx: "auto",
+          mb: 6,
+          p: { xs: 2.5, md: 3 },
+          bgcolor: "rgba(212, 175, 55, 0.08)",
+          border: "1px dashed rgba(212, 175, 55, 0.4)",
+          borderRadius: "12px",
+          backdropFilter: "blur(4px)",
+        }}
+      >
+        <Typography
+          variant="subtitle1"
+          sx={{
+            color: "primary.main",
+            fontWeight: 700,
+            mb: 1.5,
+            fontFamily: "'Sarabun', sans-serif",
+            textAlign: "center",
+          }}
+        >
+          ✨ กฎกติกาและพฤติกรรมของสิ่งประดิษฐ์ ✨
+        </Typography>
+        <Box
+          component="ul"
+          sx={{
+            color: "#EAE0D5",
+            fontFamily: "'Sarabun', sans-serif",
+            lineHeight: 1.7,
+            fontSize: { xs: "0.85rem", md: "0.95rem" },
+            pl: 3,
+            m: 0,
+            "& li": { mb: 1 },
+          }}
+        >
+          <li>
+            สิ่งประดิษฐ์จะไม่สามารถขยับได้จนกว่าจะโดน <b>ไม้กายสิทธิ์แตะ</b>{" "}
+            และหลังจากโดนจิ้มอีกรอบ
+            มันจะกลับไปแข็งทื่อและนำไปเป็นของประดับบ้านได้
+          </li>
+          <li>
+            พวกมัน <b>ไม่มีความคิดชั่วร้าย</b>{" "}
+            จุดมุ่งหมายสูงสุดคือทำหน้าที่ของวัตถุตั้งต้นให้ดีที่สุด เช่น
+            ช้อนจะตักอาหารให้คุณหากมันมีขา หรือขวดหมึกจะเปิด-ปิดฝาให้ถ้ามันมีแขน{" "}
+            <i>(แต่ถ้าสุ่มได้งวง... ก็ไปลุ้นเอาเองล่ะว่ามันจะทำอะไรได้!)</i>
+          </li>
+          <li>
+            การจะอำนวยความสะดวกให้ผู้สร้าง มันต้อง{" "}
+            <b>อยู่ใกล้สิ่งที่เป็นงานของมัน</b> ด้วย เช่น ช้อนอยู่ใกล้อาหาร
+            กล่องอยู่ใกล้เครื่องประดับ กระจกอยู่ใกล้เจ้าของ
+          </li>
+        </Box>
+      </Paper>
 
       <Box
         sx={{
           position: "relative",
-          background: "linear-gradient(145deg, #151A22 0%, #05060A 100%)", // สีตู้เป็นสีธีมหลักน้ำเงินเข้ม/ดำ
+          background: "linear-gradient(145deg, #151A22 0%, #05060A 100%)",
           border: "4px solid rgba(212, 175, 55, 0.6)",
           borderRadius: "20px",
           p: { xs: 3, sm: 5 },
@@ -1044,7 +1113,7 @@ export const ArtifactSlotMachine = () => {
           disabled={isSpinning}
           startIcon={<CasinoIcon sx={{ fontSize: 32 }} />}
           sx={{
-            background: "linear-gradient(180deg, #9B111E 0%, #440E0E 100%)", // ธีมสีแดงเลือดหมูแบบหลัก
+            background: "linear-gradient(180deg, #9B111E 0%, #440E0E 100%)",
             color: "#FFFDE4",
             border: "2px solid rgba(212, 175, 55, 0.8)",
             borderRadius: "40px",
