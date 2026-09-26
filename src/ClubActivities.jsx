@@ -764,13 +764,13 @@ export const ArtifactSlotMachine = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          bgcolor: "#FFFFFF", // ✅ ปรับเป็นสีขาวทั้งหมดเพื่อให้ภาพลายเส้นชัดเจน
+          bgcolor: "#fffdf8",  
           border: isSpinningSlot
             ? "2px solid #D4AF37"
             : "2px solid rgba(212, 175, 55, 0.4)",
           boxShadow: isSpinningSlot
             ? "inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 15px rgba(212,175,55,0.4)"
-            : "inset 0 4px 15px rgba(0,0,0,0.05)",
+            : "inset 0 4px 15px rgba(0,0,0,0.1)",
           borderRadius: "12px",
           overflow: "hidden",
           p: 1.5,
@@ -800,8 +800,8 @@ export const ArtifactSlotMachine = () => {
             component="img"
             src={item.img}
             sx={{
-              width: { xs: "90px", sm: "130px" },
-              height: { xs: "90px", sm: "130px" },
+              width: { xs: "90px", sm: "140px" },
+              height: { xs: "90px", sm: "140px" },
               objectFit: "contain",
               filter: isSpinningSlot
                 ? "blur(2px)"
@@ -900,12 +900,12 @@ export const ArtifactSlotMachine = () => {
           mx: "auto",
           lineHeight: 1.8,
         }}
-      >
-        ผู้สุ่มจะได้รับการสุ่มทีละขั้น ตั้งแต่{" "}
+      > 
         <Box component="span" sx={{ color: "primary.main", fontWeight: 600 }}>
           วัตถุตั้งต้น → สี → ส่วนเสริม
         </Box>{" "}
-        แล้วนำสิ่งที่สุ่มได้ทั้งหมดมาประกอบกันเป็นสิ่งประดิษฐ์หนึ่งชิ้น
+        <br />
+         นำสิ่งที่สุ่มได้ทั้งหมดมาประกอบกันเป็นสิ่งประดิษฐ์หนึ่งชิ้น
         <br />
         <Box
           component="span"
@@ -945,7 +945,7 @@ export const ArtifactSlotMachine = () => {
             textAlign: "center",
           }}
         >
-          ✨ กฎกติกาและพฤติกรรมของสิ่งประดิษฐ์ ✨
+          ✨ พฤติกรรมของสิ่งประดิษฐ์ ✨
         </Typography>
         <Box
           component="ul"
@@ -990,34 +990,7 @@ export const ArtifactSlotMachine = () => {
             "0 30px 60px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,0,0,0.9)",
           mr: { xs: 0, md: 8 },
         }}
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: -20,
-            left: "50%",
-            transform: "translateX(-50%)",
-            background: "rgba(155, 17, 30, 0.9)",
-            border: "2px solid #D4AF37",
-            borderRadius: "30px",
-            px: 4,
-            py: 0.5,
-            boxShadow: "0 8px 20px rgba(0,0,0,0.6)",
-          }}
-        >
-          <Typography
-            variant="caption"
-            sx={{
-              color: "#FFFDE4",
-              fontWeight: "bold",
-              letterSpacing: 2,
-              fontFamily: "'Sarabun', serif",
-            }}
-          >
-            สล็อตแมชชีนสร้างสิ่งประดิษฐ์
-          </Typography>
-        </Box>
-
+      > 
         <Box
           sx={{
             position: "absolute",
