@@ -4,7 +4,7 @@ import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import CasinoIcon from "@mui/icons-material/Casino";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import { Fade } from "@mui/material";
 // ==========================================
 // ฟังก์ชันสร้างภาพจำลองแบบ "พื้นใส" (มีอีโมจิ สำหรับไอเทมปริศนา)
 // ==========================================
@@ -312,7 +312,7 @@ export const RandomArtifactPicker = () => {
           sx={{
             position: "relative",
             width: "100%",
-            minHeight: { xs: "450px", sm: "600px" },
+            minHeight: { xs: "550px", sm: "650px" }, // เพิ่ม minHeight เผื่อไว้ให้กล่องคงที่เสมอ
             py: 4,
             display: "flex",
             flexDirection: "column",
@@ -480,7 +480,7 @@ export const RandomArtifactPicker = () => {
           )}
 
           {!isPicking && result && (
-            <Zoom in={!isPicking} timeout={800}>
+            <Fade in={!isPicking} timeout={800}>
               <Box
                 sx={{
                   textAlign: "center",
@@ -497,11 +497,10 @@ export const RandomArtifactPicker = () => {
                   src={result.img}
                   alt={result.name}
                   sx={{
-                    width: { xs: "65%", sm: 380, md: 420 },
-                    height: "auto",
-                    maxHeight: { xs: 240, sm: 380, md: 420 },
+                    width: { xs: "220px", sm: "380px" }, // ฟิกความกว้างคงที่
+                    height: { xs: "220px", sm: "380px" }, // ฟิกความสูงคงที่
                     objectFit: "contain",
-                    mb: { xs: -3, sm: -5 },
+                    mb: { xs: -2, sm: -4 },
                     zIndex: 2,
                     animation: "floatItem 4s ease-in-out infinite",
                     filter: "drop-shadow(0px 20px 25px rgba(0,0,0,0.9))",
@@ -521,9 +520,11 @@ export const RandomArtifactPicker = () => {
                       "0 20px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(212,175,55,0.1), 0 -10px 20px rgba(0,0,0,0.5)",
                     maxWidth: "850px",
                     width: "95%",
+                    minHeight: { xs: "180px", sm: "200px" }, // ฟิกความสูงขั้นต่ำของกล่องข้อความ
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    justifyContent: "center", // จัดให้อยู่ตรงกลางเสมอ
                   }}
                 >
                   <Typography
@@ -597,7 +598,7 @@ export const RandomArtifactPicker = () => {
                   </Box>
                 </Paper>
               </Box>
-            </Zoom>
+            </Fade>
           )}
         </Box>
 
@@ -643,7 +644,6 @@ export const RandomArtifactPicker = () => {
     </Paper>
   );
 };
-
 export const ArtifactSlotMachine = () => {
   useEffect(() => {
     const slotImages = [
@@ -1117,7 +1117,7 @@ export const ArtifactSlotMachine = () => {
             },
           }}
         >
-          {isSpinning ? "เครื่องกำลังทำงาน..." : "ดึงคันโยก!"}
+          {isSpinning ? "วิ้งงง!" : "ดึงคันโยก!"}
         </Button>
       </Box>
     </Paper>
